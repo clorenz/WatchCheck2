@@ -1,7 +1,9 @@
 package de.uhrenbastler.watchcheck.ui;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,9 +12,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -34,7 +33,7 @@ import de.uhrenbastler.watchcheck.data.Watch;
 import de.uhrenbastler.watchcheck.db.WatchCheckDBHelper;
 import de.uhrenbastler.watchcheck.tools.Logger;
 
-public class DisplayResultActivity extends ActionBarActivity implements android.app.ActionBar.OnNavigationListener {
+public class DisplayResultActivity extends Activity implements android.app.ActionBar.OnNavigationListener {
 
     private static final String PREFERENCE_CURRENT_WATCH = "currentWatch";
     private int selectedWatchId;
@@ -71,7 +70,7 @@ public class DisplayResultActivity extends ActionBarActivity implements android.
         actionBar.setListNavigationCallbacks(adapter, this);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
