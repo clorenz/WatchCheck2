@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:watchcheck="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="de.uhrenbastler.watchcheck.ui.DisplayResultActivity" >
+
+    <!-- Button for new measuring -->
+    <item android:id="@+id/action_compose"
+        android:icon="@drawable/ic_action_edit"
+        android:title="@string/action_measure"
+        watchcheck:showAsAction="always"/>
+
+    <!-- Overflow menu: edit watch, delete watch, import, export and about -->
+    <item android:id="@+id/menuEditThisWatch"
+        android:title="@string/edit_this_watch"
+        watchcheck:showAsAction="never" />
+    <item android:id="@+id/menuDeleteThisWatch"
+        android:title="@string/delete_this_watch"
+        watchcheck:showAsAction="never" />
+    <item android:id="@+id/menuExportData"
+        android:title="@string/export_data"
+        watchcheck:showAsAction="never" />
+    <item android:id="@+id/menuImportData"
+        android:title="@string/import_data"
+        watchcheck:showAsAction="never" />
+    <item android:id="@+id/menuAbout"
+        android:title="@string/about"
+        watchcheck:showAsAction="never" />
+</menu>

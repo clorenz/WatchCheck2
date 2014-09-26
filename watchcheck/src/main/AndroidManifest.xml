@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="de.uhrenbastler.watchcheck"
+    android:versionCode="17"
+    android:versionName="2.0"
+    >
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".ui.DisplayResultActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.DisplayResultActivity$FinActivity"></activity>
+        <activity android:name=".ui.EditWatchActivity" android:noHistory="true"></activity>
+
+        <provider android:name="de.uhrenbastler.watchcheck.data.WatchCheckLogContentProvider"
+            android:authorities="de.uhrenbastler.watchcheck.data.WatchCheckLogContentProvider"/>
+
+        <uses-sdk
+            android:minSdkVersion="14"
+            android:targetSdkVersion="18" />
+
+    </application>
+
+</manifest>
