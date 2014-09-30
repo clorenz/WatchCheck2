@@ -15,20 +15,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.uhrenbastler.watchcheck.R;
+import de.uhrenbastler.watchcheck.data.Watch;
 
 /**
  * Created by clorenz on 13.02.14.
  */
 public class SelectWatchArrayAdapter extends ArrayAdapter {
 
-    private final List<String> list;
+    private final List<Watch> list;
     private final Activity activity;
+    private final int currentWatchId;
 
-    public SelectWatchArrayAdapter(Activity activity, Context context, int resource, int textViewResourceId, List<String> list) {
+    public SelectWatchArrayAdapter(Activity activity, Context context, int resource, int textViewResourceId, List<Watch> list, int currentWatchId) {
         super(context, resource, textViewResourceId, list);
 
         this.list = list;
         this.activity = activity;
+        this.currentWatchId = currentWatchId;
 
     }
 
@@ -54,10 +57,9 @@ public class SelectWatchArrayAdapter extends ArrayAdapter {
         }
 
         // This defines, how the selected(!) item is displayed on the spinner selection field in the actionbar
-        String item = list.get(position);
+        String item = list.get(position).getName();
         view.watchCheckHeadline.setText(R.string.app_name);
         view.watchCheckHeadline.setVisibility(View.VISIBLE);
-        view.watchCheckHeadline.setPadding(0, -10, 0, 0);
         view.watchCheckHeadline.setTextColor(Color.WHITE);
         view.watchName.setText(item);
         view.watchName.setPadding(0,5,0,0);

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="6dip">
+    android:padding="1dip">
     <LinearLayout
         android:id="@+id/watchSelectLayout"
         android:orientation="vertical"
@@ -12,19 +12,22 @@
         <TextView
             android:id="@+id/watchCheckHeadline"
             android:text="@string/app_name"
-            android:layout_weight="1"
+            android:layout_weight="18"
             android:textSize="18sp"
             android:visibility="gone"
             android:layout_width="fill_parent"
-            android:layout_height="0sp" />
+            android:layout_height="0sp"
+            android:layout_gravity="center"
+            android:gravity="top" />
         <TextView
             android:id="@+id/watchName"
             android:layout_width="fill_parent"
             android:layout_marginTop="0dp"
             android:layout_height="0sp"
-            android:layout_weight="1"
-            android:layout_marginBottom="0dp"
+            android:layout_weight="16"
+            android:paddingBottom="2sp"
             android:textSize="16sp"
+            android:gravity="top"
             />
     </LinearLayout>
 </LinearLayout>

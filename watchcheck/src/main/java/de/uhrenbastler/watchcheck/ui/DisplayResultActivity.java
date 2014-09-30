@@ -37,6 +37,8 @@ public class DisplayResultActivity extends Activity implements android.app.Actio
 
     private static final String PREFERENCE_CURRENT_WATCH = "currentWatch";
     private int selectedWatchId;
+    SelectWatchArrayAdapter adapter;
+    List<Watch> watches;
 
     // TODO: Ensure, that the currently selected watch is shown!
     @Override
@@ -57,12 +59,12 @@ public class DisplayResultActivity extends Activity implements android.app.Actio
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
-        List<String> watches = WatchCheckDBHelper.getAllWatchesFromDatabaseAndPrependSelectedWatch(selectedWatchId,
+        watches = WatchCheckDBHelper.getAllWatchesFromDatabaseAndPrependSelectedWatch(selectedWatchId,
                 getResources().getString(R.string.addWatch), this.getContentResolver());
 
         // Specify a SpinnerAdapter to populate the dropdown list.
-        SelectWatchArrayAdapter adapter = new SelectWatchArrayAdapter(this, actionBar.getThemedContext(),
-                R.layout.watchcheck_spinner_dropdown_item, R.id.watchName, watches);
+        adapter = new SelectWatchArrayAdapter(this, actionBar.getThemedContext(),
+                R.layout.watchcheck_spinner_dropdown_item, R.id.watchName, watches, selectedWatchId);
 
         adapter.setDropDownViewResource(R.layout.watchcheck_spinner_dropdown_item);
 
@@ -193,17 +195,26 @@ public class DisplayResultActivity extends Activity implements android.app.Actio
 
 
     // Required for setting the watch
+    //
+    // TODO: Handle ID -1 = add watch
     @Override
     public boolean onNavigationItemSelected(int position, long id) {
         // When the given dropdown item is selected, show its contents in the
         // container view.
-        Logger.info("Selected item with id="+id+" at position "+position);  // TODO: Hier müssen die Items "Watch" abgefragt werden!!!
+        Watch selectedWatch = (Watch)(adapter.getItem(position));
+
+        Logger.info("Selected item with id="+id+" at position "+position+" with data id="+selectedWatch.getId()+", name="+selectedWatch.getName());
         android.app.Fragment fragment = new DummySectionFragment();
         Bundle args = new Bundle();
         args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
         fragment.setArguments(args);
         getFragmentManager().beginTransaction()
                 .replace(R.id.container, fragment).commit();
+        if ( selectedWatch.getId()>-1) {
+            persistCurrentWatch((int) selectedWatch.getId());
+        } else {
+            // Maybe insert an "edit watch" fragement???
+        }
         return true;
     }
 

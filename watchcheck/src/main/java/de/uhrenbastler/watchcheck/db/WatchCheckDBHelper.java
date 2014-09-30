@@ -58,10 +58,10 @@ public class WatchCheckDBHelper {
 
     // TODO: List<String> reicht hier nicht aus, da onNavigationItemSelected ja auch die ID der selektierten Watch benötigt!
     // TODO: And setting a fixed String here as addWatchName is also not very nice!
-    public static List<String> getAllWatchesFromDatabaseAndPrependSelectedWatch(int selectedWatchId,
+    public static List<Watch> getAllWatchesFromDatabaseAndPrependSelectedWatch(int selectedWatchId,
                                                                                 String addWatchName,
                                                                                 ContentResolver cr) {
-        List<String> watches = new ArrayList<String>();
+        List<Watch> watches = new ArrayList<Watch>();
 
         Uri uriWatches = Watch.Watches.CONTENT_URI;
         String[] columns = new String[] { Watch.Watches._ID, Watch.Watches.NAME,
@@ -83,19 +83,28 @@ public class WatchCheckDBHelper {
                     serial = cur.getString(cur.getColumnIndex(Watch.Watches.SERIAL));
                     comment = cur.getString(cur.getColumnIndex(Watch.Watches.COMMENT));
 
+                    Watch watch = new Watch();
+                    watch.setComment(comment);
+                    watch.setId(id);
+                    watch.setName(name);
+                    watch.setSerial(serial);
+
                     Logger.debug("Found watch with id=" + id + ", name="
                             + name + ", serial=" + serial);
 
                     if ( id == selectedWatchId ) {
                         // Put selected watch into first position
-                        watches.add(0, name);
+                        watches.add(0, watch);
                     } else {
-                        watches.add(name);
+                        watches.add(watch);
                     }
                 } while (cur.moveToNext());
             }
 
-            watches.add(addWatchName);
+            Watch addWatch = new Watch();
+            addWatch.setName(addWatchName);
+            addWatch.setId(-1);
+            watches.add(addWatch);
         } finally {
             if ( cur !=null ) {
                 cur.close();

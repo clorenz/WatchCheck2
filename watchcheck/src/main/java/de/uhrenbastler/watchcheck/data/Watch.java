@@ -56,12 +56,7 @@ public class Watch {
 
     @Override
     public String toString() {
-        return "Watch{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", serial='" + serial + '\'' +
-                ", comment='" + comment + '\'' +
-                '}';
+        return name;                // required for adapter
     }
 
     // ---------------------------------------------------
