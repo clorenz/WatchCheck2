@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="GPS Time: 00:00:00"
+        android:text="@string/timeSourceNone"
         android:id="@+id/gpstime"
         android:layout_gravity="left" />
 
@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="NTP Time: 00:00:00"
+        android:text="@string/referenceTime"
         android:id="@+id/ntptime"
         android:layout_gravity="left"/>
 
@@ -32,17 +32,25 @@
         android:id="@+id/timeYourWatch"
         android:layout_gravity="center_horizontal" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/secondsToZero"
+        android:id="@+id/secondsToZero"
+        android:layout_gravity="center_horizontal" />
+
     <TimePicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/timePicker"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp" />
 
     <LinearLayout android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="bottom"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
         <FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/frameLayout1" android:background="#AA999999"  android:padding="10dp" android:layout_gravity="bottom">
             <Button android:layout_height="wrap_content" android:id="@+id/buttonCheckTime" android:layout_width="fill_parent" android:text="@string/measure"></Button>
         </FrameLayout>
