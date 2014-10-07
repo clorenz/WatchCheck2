@@ -4,4 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="de.uhrenbastler.watchcheck.ui.DisplayResultActivity"
-    tools:ignore="MergeRootFrame"/>
+    tools:ignore="MergeRootFrame">
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/measureFragment"
+        class="de.uhrenbastler.watchcheck.ui.MeasureFragement">
+    </fragment>
+
+</FrameLayout>

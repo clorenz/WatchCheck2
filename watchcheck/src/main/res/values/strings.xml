@@ -21,5 +21,7 @@
     <string name="label_remarks">Remarks:</string>
     <string name="cancel">Cancel</string>
     <string name="OK">OK</string>
+    <string name="timeYourWatch">Time of your watch</string>
+    <string name="measure">Measure</string>
 
 </resources>

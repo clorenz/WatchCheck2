@@ -204,12 +204,21 @@ public class DisplayResultActivity extends Activity implements android.app.Actio
         Watch selectedWatch = (Watch)(adapter.getItem(position));
 
         Logger.info("Selected item with id="+id+" at position "+position+" with data id="+selectedWatch.getId()+", name="+selectedWatch.getName());
-        android.app.Fragment fragment = new DummySectionFragment();
+
+        /* android.app.Fragment fragment = new DummySectionFragment();
         Bundle args = new Bundle();
         args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
         fragment.setArguments(args);
         getFragmentManager().beginTransaction()
                 .replace(R.id.container, fragment).commit();
+                */
+
+        MeasureFragement measureFragment = (MeasureFragement) getFragmentManager().findFragmentById(R.id.measureFragment);
+        Logger.info("measureFragment="+measureFragment);
+        if ( measureFragment==null ) {
+            getFragmentManager().beginTransaction().replace(R.id.measureFragment, new MeasureFragement()).commit();
+        }
+
         if ( selectedWatch.getId()>-1) {
             persistCurrentWatch((int) selectedWatch.getId());
         } else {
