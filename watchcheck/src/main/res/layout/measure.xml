@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/timeSourceNone"
-        android:id="@+id/gpstime"
+        android:id="@+id/referencetimesource"
         android:layout_gravity="left" />
 
     <TextView
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/referenceTime"
-        android:id="@+id/ntptime"
+        android:id="@+id/referencetime"
         android:layout_gravity="left"/>
 
     <TextView

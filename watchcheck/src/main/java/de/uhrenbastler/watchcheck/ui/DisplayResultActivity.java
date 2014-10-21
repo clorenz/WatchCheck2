@@ -4,12 +4,14 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
@@ -217,7 +219,12 @@ public class DisplayResultActivity extends Activity implements android.app.Actio
         Logger.info("measureFragment="+measureFragment);
         if ( measureFragment==null ) {
             getFragmentManager().beginTransaction().replace(R.id.measureFragment, new MeasureFragement()).commit();
+            measureFragment = (MeasureFragement) getFragmentManager().findFragmentById(R.id.measureFragment);
         }
+
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        measureFragment.setLocationManager(lm);
+
 
         if ( selectedWatch.getId()>-1) {
             persistCurrentWatch((int) selectedWatch.getId());

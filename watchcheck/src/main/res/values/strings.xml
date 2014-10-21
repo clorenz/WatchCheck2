@@ -24,7 +24,9 @@
     <string name="timeYourWatch">Time of your watch</string>
     <string name="measure">Measure</string>
     <string name="timeSourceNone">Time Source: NONE  (enable Network or GPS)</string>
-    <string name="referenceTime">Reference Time: --:--:--</string>
+    <string name="timeSourceNtp">Time Source: NTP</string>
+    <string name="timeSourceGps">Time Source: GPS</string>
+    <string name="referenceTime">Reference Time: %1$s:%2$s:%3$s</string>
     <string name="secondsToZero">(Seconds to zero)</string>
 
 </resources>
