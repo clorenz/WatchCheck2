@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:watchcheck="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="de.uhrenbastler.watchcheck.ui.DisplayResultActivity" >
+    tools:context="de.uhrenbastler.watchcheck.ui.BaseActivity" >
 
     <!-- Button for new measuring -->
     <item android:id="@+id/action_compose"

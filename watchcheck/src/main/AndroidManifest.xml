@@ -18,15 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.DisplayResultActivity$FinActivity"></activity>
         <activity android:name=".ui.EditWatchActivity" android:noHistory="true"></activity>
 
         <provider android:name="de.uhrenbastler.watchcheck.data.WatchCheckLogContentProvider"
             android:authorities="de.uhrenbastler.watchcheck.data.WatchCheckLogContentProvider"/>
 
         <uses-sdk
-            android:minSdkVersion="16"
-            android:targetSdkVersion="20" />
+            android:minSdkVersion="14"
+            android:targetSdkVersion="21" />
 
     </application>
 
