@@ -4,13 +4,11 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -30,6 +28,7 @@ import de.uhrenbastler.watchcheck.data.Importer;
 import de.uhrenbastler.watchcheck.data.Watch;
 import de.uhrenbastler.watchcheck.db.WatchCheckDBHelper;
 import de.uhrenbastler.watchcheck.tools.Logger;
+import de.uhrenbastler.watchcheck.views.SelectWatchArrayAdapter;
 
 public class DisplayResultActivityOld extends Activity implements android.app.ActionBar.OnNavigationListener {
 
@@ -61,10 +60,12 @@ public class DisplayResultActivityOld extends Activity implements android.app.Ac
                 getResources().getString(R.string.addWatch), this.getContentResolver());
 
         // Specify a SpinnerAdapter to populate the dropdown list.
+        /*
         adapter = new SelectWatchArrayAdapter(this, actionBar.getThemedContext(),
                 R.layout.watchcheck_spinner_dropdown_item, R.id.watchName, watches, selectedWatchId);
 
         adapter.setDropDownViewResource(R.layout.watchcheck_spinner_dropdown_item);
+        */
 
         // Set up the dropdown list navigation in the action bar.
         actionBar.setListNavigationCallbacks(adapter, this);
@@ -201,9 +202,9 @@ public class DisplayResultActivityOld extends Activity implements android.app.Ac
     public boolean onNavigationItemSelected(int position, long id) {
         // When the given dropdown item is selected, show its contents in the
         // container view.
-        Watch selectedWatch = (Watch)(adapter.getItem(position));
+        //Watch selectedWatch = (Watch)(adapter.getItem(position));
 
-        Logger.info("Selected item with id="+id+" at position "+position+" with data id="+selectedWatch.getId()+", name="+selectedWatch.getName());
+        //Logger.info("Selected item with id="+id+" at position "+position+" with data id="+selectedWatch.getId()+", name="+selectedWatch.getName());
 
         /* android.app.Fragment fragment = new DummySectionFragment();
         Bundle args = new Bundle();
