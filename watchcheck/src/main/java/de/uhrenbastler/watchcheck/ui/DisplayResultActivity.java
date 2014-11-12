@@ -29,7 +29,10 @@ public class DisplayResultActivity extends BaseActivity {
     private ActionBarDrawerToggle drawerToggle;
     //private String title;
 
+    @InjectView(R.id.drawer_list)
     private ListView drawerList;
+
+    // For whatever reason, this cannot be injected
     private DrawerLayout drawer;
 
     SelectWatchArrayAdapter adapter;
@@ -62,7 +65,6 @@ public class DisplayResultActivity extends BaseActivity {
 
         adapter = new SelectWatchArrayAdapter(this, getApplicationContext(),
                 R.layout.drawer_list_item, R.id.watchName, R.id.watchSerial, watches, selectedWatchId);
-        drawerList = (ListView) findViewById(R.id.drawer_list);
         drawerList.setAdapter(adapter);
 
         drawerToggle = new ActionBarDrawerToggle(this, drawer, R.string.drawer_open, R.string.drawer_close) {
