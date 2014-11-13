@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     <LinearLayout
+        android:id="@+id/drawer_linear_layout"
         android:paddingTop="@dimen/abc_action_bar_default_height_material"
         android:orientation="vertical"
         android:layout_width="240dp"

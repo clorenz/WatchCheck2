@@ -1,12 +1,18 @@
 package de.uhrenbastler.watchcheck.ui;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -14,6 +20,7 @@ import java.util.List;
 
 import de.uhrenbastler.watchcheck.R;
 import de.uhrenbastler.watchcheck.managers.WatchManager;
+import de.uhrenbastler.watchcheck.models.Watch;
 import de.uhrenbastler.watchcheck.tools.Logger;
 import de.uhrenbastler.watchcheck.views.SelectWatchArrayAdapter;
 import roboguice.inject.InjectResource;
@@ -27,7 +34,6 @@ public class DisplayResultActivity extends BaseActivity {
     private static final String PREFERENCE_CURRENT_WATCH = "currentWatch";
     private int selectedWatchId;
     private ActionBarDrawerToggle drawerToggle;
-    //private String title;
 
     @InjectView(R.id.drawer_list)
     private ListView drawerList;
@@ -59,26 +65,24 @@ public class DisplayResultActivity extends BaseActivity {
 
         Logger.debug("Watches="+watches);
         setActionBarWatchName(selectedWatch.getName());
-        //title = getActionBarTitle();
+        getToolbar().setNavigationIcon(R.drawable.ic_drawer);
 
         adapter = new SelectWatchArrayAdapter(this, getApplicationContext(),
                 R.layout.drawer_list_item, R.id.watchName, R.id.watchSerial, watches, selectedWatchId);
         drawerList.setAdapter(adapter);
+        drawerList.setOnItemClickListener(new NavigationDrawerItemClickListener());
 
         drawerToggle = new ActionBarDrawerToggle(this, drawer, R.string.drawer_open, R.string.drawer_close) {
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                //setActionBarTitle(title);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                //title = getActionBarTitle();
-                //setActionBarTitle("Select watch");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
@@ -93,6 +97,23 @@ public class DisplayResultActivity extends BaseActivity {
         return R.layout.activity_display_result;
     }
 
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Logger.debug("Selected item "+item);
+        if ( drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        Logger.debug("Navigate up");
+        return super.onSupportNavigateUp();
+    }
 
     private void persistCurrentWatch(int currentWatchId) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -112,5 +133,26 @@ public class DisplayResultActivity extends BaseActivity {
         }
 
         return ret;
+    }
+
+    /**
+     * Listener, which receives the selected navigation drawer item
+     */
+    private class NavigationDrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+            drawerList.setItemChecked(position, true);
+            de.uhrenbastler.watchcheck.models.Watch selectedWatch = watches.get((int) id);
+            if ( selectedWatch.getId() != null) {
+                setActionBarWatchName(selectedWatch.getName());
+                Logger.debug("Selected item " + position + " with id " + id + "=" + selectedWatch);
+                drawer.closeDrawer((LinearLayout) findViewById(R.id.drawer_linear_layout));
+            } else {
+                Logger.debug("New watch selected. Starting new activity");
+                drawer.closeDrawer((LinearLayout) findViewById(R.id.drawer_linear_layout));
+                Intent createWatchIntent = new Intent(parent.getContext(), CreateWatchActivity.class);
+                startActivity(createWatchIntent);
+            }
+        }
     }
 }

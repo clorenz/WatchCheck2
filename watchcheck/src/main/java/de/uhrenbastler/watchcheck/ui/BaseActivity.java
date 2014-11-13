@@ -43,22 +43,19 @@ public abstract class BaseActivity extends RoboActionBarActivity {
         if (toolbar != null) {
             toolbar.setNavigationIcon(R.drawable.ic_drawer);
             setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayUseLogoEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
-            //toolbar.setLogo(R.drawable.ic_launcher);
-            //getSupportActionBar().setLogo(R.drawable.ic_launcher);
+            getSupportActionBar().setHomeButtonEnabled(false);
         }
     }
 
     protected abstract int getLayoutResource();
 
-    /*
     protected void setActionBarIcon(int iconRes) {
         if ( toolbar != null ) {
             toolbar.setNavigationIcon(iconRes);
         }
     }
-    */
 
     protected void setActionBarWatchName(String watchName) {
         if ( toolbar != null) {
