@@ -3,6 +3,9 @@ package de.uhrenbastler.watchcheck.views;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.uhrenbastler.watchcheck.R;
+import de.uhrenbastler.watchcheck.data.Log;
 import de.uhrenbastler.watchcheck.models.Watch;
 import de.uhrenbastler.watchcheck.tools.Logger;
 
@@ -53,10 +57,21 @@ public class SelectWatchArrayAdapter extends ArrayAdapter<Watch> {
             TextView watchSerial = (TextView) v.findViewById(R.id.watchSerial);
 
             if ( watchName!=null) {
-                watchName.setText(i.getName());
+                SpannableString addWatch = new SpannableString(i.getName());
+                if ( position == list.size()-1) {
+                    addWatch.setSpan(new StyleSpan(Typeface.ITALIC),0,addWatch.length(),0);
+                    watchName.setPadding(40, 10, 0, 10);
+                }  else if ( i.getId() == currentWatchId ) {
+                    addWatch.setSpan(new StyleSpan(Typeface.BOLD),0,addWatch.length(),0);
+                }
+                watchName.setText(addWatch);
             }
             if ( watchSerial!=null) {
-                watchSerial.setText(i.getSerial());
+                if ( position == list.size()-1) {
+                    watchSerial.setVisibility(View.GONE);
+                } else {
+                    watchSerial.setText(i.getSerial());
+                }
             }
         }
 

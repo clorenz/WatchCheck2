@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="AppTheme.Base"/>
+    <style name="AppTheme" parent="AppTheme.Base">
+    </style>
 
-    <style name="AppTheme.Base" parent="Theme.AppCompat">
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
@@ -15,5 +16,6 @@
         <item name="color">@android:color/white</item>
     </style>
 
-    <color name="colorPrimary">#999999</color>
+    <color name="colorPrimary">#CCC</color>
+    <color name="colorPrimaryDark">#999</color>
 </resources>

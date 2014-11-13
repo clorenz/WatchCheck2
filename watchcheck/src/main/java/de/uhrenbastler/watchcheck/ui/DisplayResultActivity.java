@@ -54,8 +54,6 @@ public class DisplayResultActivity extends BaseActivity {
         }
         Logger.debug("Current watch has got ID "+selectedWatchId);
 
-        setActionBarIcon(R.drawable.ic_drawer);
-
         watches = sortWithCurrentFirst(WatchManager.retrieveAllWatches(),selectedWatch);
         watches.add(new de.uhrenbastler.watchcheck.models.Watch(ADD_WATCH,null,null,null));
 
@@ -85,6 +83,7 @@ public class DisplayResultActivity extends BaseActivity {
             }
         };
 
+        drawerToggle.setDrawerIndicatorEnabled(true);
         // Set the drawer toggle as the DrawerListener
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.setDrawerListener(drawerToggle);

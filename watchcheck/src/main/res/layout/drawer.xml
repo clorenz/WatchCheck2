@@ -9,22 +9,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     <LinearLayout
+        android:paddingTop="@dimen/abc_action_bar_default_height_material"
         android:orientation="vertical"
         android:layout_width="240dp"
-        android:background="#333"
         android:layout_gravity="start"
         android:layout_height="match_parent">
         <TextView
             android:layout_width="240dp"
             android:layout_height="32dp"
             android:text="@string/selected_watch"
+            android:textAppearance="@style/Base.TextAppearance.Widget.AppCompat.ExpandedMenu.Item"
+            android:background="@color/colorPrimary"
             android:lineSpacingExtra="5sp"
-            android:layout_gravity="top" />
+            android:layout_gravity="top"
+            android:dividerHeight="1px"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentTop="true"
+            android:background="@color/colorPrimaryDark" />
         <ListView android:id="@+id/drawer_list"
             android:layout_width="240dp"
             android:layout_height="0dip"
             android:layout_weight="1"
             android:choiceMode="singleChoice"
-            android:dividerHeight="3dp"/>
+            android:background="@color/colorPrimary"
+            android:divider="@color/colorPrimaryDark"
+            android:dividerHeight="1px"/>
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

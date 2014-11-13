@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
 
 import com.google.inject.Inject;
 import com.google.inject.Key;
@@ -41,20 +45,26 @@ public abstract class BaseActivity extends RoboActionBarActivity {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
+            //toolbar.setLogo(R.drawable.ic_launcher);
+            //getSupportActionBar().setLogo(R.drawable.ic_launcher);
         }
     }
 
     protected abstract int getLayoutResource();
 
+    /*
     protected void setActionBarIcon(int iconRes) {
         if ( toolbar != null ) {
             toolbar.setNavigationIcon(iconRes);
         }
     }
+    */
 
     protected void setActionBarWatchName(String watchName) {
         if ( toolbar != null) {
-            toolbar.setSubtitle(watchName);
+            SpannableString subtitle = new SpannableString(watchName);
+            subtitle.setSpan(new RelativeSizeSpan(0.8f), 0, watchName.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            toolbar.setSubtitle(subtitle);
         }
     }
 
