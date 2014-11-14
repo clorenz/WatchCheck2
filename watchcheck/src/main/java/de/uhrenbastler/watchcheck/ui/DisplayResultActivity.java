@@ -50,8 +50,17 @@ public class DisplayResultActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setMenuAndHeadline();
+    }
 
-        de.uhrenbastler.watchcheck.models.Watch selectedWatch = WatchManager.retrieveCurrentWatch(this);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setMenuAndHeadline();
+    }
+
+    private void setMenuAndHeadline() {
+        Watch selectedWatch = WatchManager.retrieveCurrentWatch(this);
         selectedWatchId = (int)(selectedWatch!=null?selectedWatch.getId():-1);
         if ( selectedWatchId==-1) {
             selectedWatchId=1;
@@ -61,7 +70,7 @@ public class DisplayResultActivity extends BaseActivity {
         Logger.debug("Current watch has got ID "+selectedWatchId);
 
         watches = sortWithCurrentFirst(WatchManager.retrieveAllWatches(),selectedWatch);
-        watches.add(new de.uhrenbastler.watchcheck.models.Watch(ADD_WATCH,null,null,null));
+        watches.add(new Watch(ADD_WATCH,null,null,null));
 
         Logger.debug("Watches="+watches);
         setActionBarWatchName(selectedWatch.getName());
@@ -94,6 +103,8 @@ public class DisplayResultActivity extends BaseActivity {
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.setDrawerListener(drawerToggle);
     }
+
+
 
     @Override protected int getLayoutResource() {
         return R.layout.activity_display_result;
@@ -152,8 +163,8 @@ public class DisplayResultActivity extends BaseActivity {
             } else {
                 Logger.debug("New watch selected. Starting new activity");
                 drawer.closeDrawer((LinearLayout) findViewById(R.id.drawer_linear_layout));
-                Intent createWatchIntent = new Intent(parent.getContext(), CreateWatchActivity.class);
-                startActivity(createWatchIntent);
+                Intent editWatchIntent = new Intent(parent.getContext(), EditWatchActivity.class);
+                startActivity(editWatchIntent);
             }
         }
     }

@@ -26,8 +26,9 @@
     </TableLayout>
 
     <LinearLayout android:layout_height="wrap_content" android:id="@+id/linearLayout2" android:layout_width="fill_parent" android:layout_gravity="right" android:gravity="right" android:layout_marginTop="20dp">
+        <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/buttonDelete" android:text="@string/delete_this_watch" android:layout_marginRight="20dp" android:visibility="invisible"></Button>
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/buttonCancel" android:text="@string/cancel"></Button>
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/buttonOk" android:text="@string/OK"></Button>
-    </LinearLayout>
+    </LinearLayout>eft
 
 </LinearLayout>

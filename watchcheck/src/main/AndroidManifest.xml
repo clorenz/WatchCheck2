@@ -20,7 +20,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.EditWatchActivity" android:noHistory="true"></activity>
-        <activity android:name=".ui.CreateWatchActivity" android:noHistory="true"></activity>
 
         <meta-data android:name="DATABASE" android:value="watchcheck.db" />
         <meta-data android:name="VERSION" android:value="7" />
