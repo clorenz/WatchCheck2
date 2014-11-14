@@ -8,20 +8,23 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import de.uhrenbastler.watchcheck.R;
-import de.uhrenbastler.watchcheck.data.Watch;
-import de.uhrenbastler.watchcheck.db.WatchCheckDBHelper;
+import de.uhrenbastler.watchcheck.models.Watch;
 import de.uhrenbastler.watchcheck.tools.Logger;
 
 /**
  * Created by clorenz on 23.02.14.
  */
-public class EditWatchActivity extends Activity {
+// TODO: "Back" link in menu is confusing
+// Find a way to delete a watch
+public class EditWatchActivity extends BaseActivity {
+
+    @Override protected int getLayoutResource() {
+        return R.layout.activity_edit_watch;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.editwatch);
 
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
@@ -29,11 +32,10 @@ public class EditWatchActivity extends Activity {
             return;
         }
 
-        final int watchId = extras.getInt(Watch.Watches._ID);
+        final Watch watch = (Watch) extras.get("watch");
+        watch.setId((Long)extras.get("id"));
 
-        // Retrieve watch and fill fields
-        Watch watch = WatchCheckDBHelper.getWatchFromDatabase(watchId, this.getContentResolver());
-        Logger.debug("Editing watch with id=" + watchId + "=" + watch);
+        Logger.debug("Editing watch "+ watch);
 
         final EditText model = (EditText) findViewById(R.id.editTextModel);
         model.setText(watch.getName());
@@ -59,15 +61,12 @@ public class EditWatchActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                // Daten in die DB legen
-                ContentValues values = new ContentValues();
-                values.put(Watch.Watches.NAME, model.getEditableText().toString());
-                values.put(Watch.Watches.SERIAL, serial.getEditableText().toString());
-                values.put(Watch.Watches.COMMENT, remarks.getEditableText().toString());
+                watch.setName(model.getEditableText().toString());
+                watch.setSerial(serial.getEditableText().toString());
+                watch.setComment(remarks.getEditableText().toString());
+                watch.save();
 
-                int updatedRecords = getContentResolver().update(Watch.Watches.CONTENT_URI, values, Watch.Watches._ID+"="+watchId, null);
-
-                Logger.debug("Updated "+updatedRecords+" watches with id="+watchId+" and values="+values);
+                Logger.debug("Updated watch "+watch);
 
                 EditWatchActivity.this.finish();
                 return;

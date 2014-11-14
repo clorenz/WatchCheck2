@@ -1,13 +1,16 @@
 package de.uhrenbastler.watchcheck.models;
 
+import android.os.Parcelable;
+
 import com.orm.SugarRecord;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  * Created by clorenz on 12.11.14.
  */
-public class Watch extends SugarRecord<Watch> {
+public class Watch extends SugarRecord<Watch> implements Serializable {
 
     String name;
     String serial;

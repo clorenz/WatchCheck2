@@ -71,6 +71,8 @@ public class DisplayResultActivity extends BaseActivity {
                 R.layout.drawer_list_item, R.id.watchName, R.id.watchSerial, watches, selectedWatchId);
         drawerList.setAdapter(adapter);
         drawerList.setOnItemClickListener(new NavigationDrawerItemClickListener());
+        drawerList.setLongClickable(true);
+        drawerList.setOnItemLongClickListener(new NavigationDrawerItemLongClickListener());
 
         drawerToggle = new ActionBarDrawerToggle(this, drawer, R.string.drawer_open, R.string.drawer_close) {
 
@@ -153,6 +155,28 @@ public class DisplayResultActivity extends BaseActivity {
                 Intent createWatchIntent = new Intent(parent.getContext(), CreateWatchActivity.class);
                 startActivity(createWatchIntent);
             }
+        }
+    }
+
+    /**
+     * Listener, which recieves long clicks on the selected navigation drawer item which leads
+     * to editing the selected items
+     */
+    private class NavigationDrawerItemLongClickListener implements ListView.OnItemLongClickListener {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            drawerList.setItemChecked(position, true);
+            de.uhrenbastler.watchcheck.models.Watch selectedWatch = watches.get((int) id);
+            if ( selectedWatch.getId() != null) {
+                Logger.debug("Selected watch for edit: "+selectedWatch+". Starting new activity");
+                drawer.closeDrawer((LinearLayout) findViewById(R.id.drawer_linear_layout));
+                Intent editWatchIntent = new Intent(parent.getContext(), EditWatchActivity.class);
+                editWatchIntent.putExtra("watch", selectedWatch);
+                editWatchIntent.putExtra("id",selectedWatch.getId());
+                startActivity(editWatchIntent);
+                return true;
+            }
+            return false;
         }
     }
 }

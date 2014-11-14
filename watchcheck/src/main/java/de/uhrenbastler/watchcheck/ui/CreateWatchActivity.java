@@ -11,7 +11,7 @@ import de.uhrenbastler.watchcheck.R;
 public class CreateWatchActivity extends BaseActivity {
 
     @Override protected int getLayoutResource() {
-        return R.layout.activity_create_watch;
+        return R.layout.activity_edit_watch;
     }
 
     @Override
