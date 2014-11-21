@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -105,7 +106,6 @@ public class DisplayResultActivity extends BaseActivity {
     }
 
 
-
     @Override protected int getLayoutResource() {
         return R.layout.activity_display_result;
     }
@@ -190,4 +190,15 @@ public class DisplayResultActivity extends BaseActivity {
             return false;
         }
     }
+
+
+    // Datenbankberechnung: Referenzzeit = local_timestamp - ntpDiff
+    //                      Objektzeit = Referenzzeit + deviation
+    // Problem: Bei der Migration müßte Record für Record durchgegangen werden und immer dann, wenn
+    // reset=1 die Nummer der Testperiode um eins erhöht werden
+    //
+    // evtl. SugarDb.onUpgrade überschreiben? Und auch SugarApp überschreiben (auch im Manifest), so
+    // daß es eine eigene WatchCheckSugarDB zurüclgibt
+    //
+    // http://satyan.github.io/sugar/migration.html
 }
