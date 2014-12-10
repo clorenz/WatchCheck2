@@ -22,7 +22,7 @@
         <activity android:name=".ui.EditWatchActivity" android:noHistory="true"></activity>
 
         <meta-data android:name="DATABASE" android:value="watchcheck.db" />
-        <meta-data android:name="VERSION" android:value="7" />
+        <meta-data android:name="VERSION" android:value="9" />
         <meta-data android:name="QUERY_LOG" android:value="true" />
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="de.uhrenbastler.watchcheck.models" />
 

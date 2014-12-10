@@ -1,8 +1,14 @@
 package de.uhrenbastler.watchcheck.managers;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.preference.PreferenceManager;
+
+import com.orm.Database;
 
 import java.util.ArrayList;
 import java.util.Iterator;
