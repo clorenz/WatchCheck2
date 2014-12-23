@@ -1,1 +1,1 @@
-include ':watchcheck'
+include ':app'
