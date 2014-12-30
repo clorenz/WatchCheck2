@@ -1,10 +1,15 @@
 package de.uhrenbastler.watchcheck.managers;
 
+import android.content.Context;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.uhrenbastler.watchcheck.models.Log;
+import de.uhrenbastler.watchcheck.WatchCheckApplication;
+import de.uhrenbastler.watchcheck.tools.Logger;
+import watchcheck.db.Log;
+import watchcheck.db.LogDao;
 
 /**
  * Created by clorenz on 22.12.14.
@@ -13,12 +18,16 @@ public class ResultManager {
 
     static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
-    public static List<Log> getLogsForWatchAndPeriod(long watchId, int period) {
-        return Log.find(Log.class, "watch_id=? and period=?", new String[]{"" + watchId, "" + period});
+    public static List<Log> getLogsForWatchAndPeriod(Context context, long watchId, int period) {
+        LogDao logDao = ((WatchCheckApplication)context.getApplicationContext()).getDaoSession().getLogDao();
+        return logDao.queryBuilder().where(LogDao.Properties.WatchId.eq(watchId),
+                LogDao.Properties.Period.eq(period)).orderAsc(LogDao.Properties.ReferenceTime).list();
     }
 
-    public static List<List<Log>> getLogsForWatch(long watchId) {
-        List<Log> allLogs = Log.find(Log.class, "watch_id=?", new String[]{"" + watchId}, null, "period,reference_time asc",null);
+    public static List<List<Log>> getLogsForWatch(Context context, long watchId) {
+        LogDao logDao = ((WatchCheckApplication)context.getApplicationContext()).getDaoSession().getLogDao();
+        List<Log> allLogs = logDao.queryBuilder().where(LogDao.Properties.WatchId.eq(watchId)).
+                orderAsc(LogDao.Properties.Period, LogDao.Properties.ReferenceTime).list();
 
         List<List<Log>> ret = new ArrayList<List<Log>>();
         ret.add(allLogs);
@@ -26,8 +35,11 @@ public class ResultManager {
         return ret;
     }
 
-    public static List<Integer> getPeriodsForWatch(long watchId) {
-        List<Log> periodLogs =  Log.findWithQuery(Log.class,"Select * from Log where watch_id=? group by period",watchId+"");
+    public static List<Integer> getPeriodsForWatch(Context context,  long watchId) {
+        //TODO List<Log> periodLogs =  Log.findWithQuery(Log.class,"Select * from Log where watch_id=? group by period",watchId+"");
+        LogDao logDao = ((WatchCheckApplication)context.getApplicationContext()).getDaoSession().getLogDao();
+        List<Log> periodLogs = logDao.queryRawCreate("where watch_id=? group by period", watchId).list();
+
         List<Integer> ret = new ArrayList<Integer>();
         for ( Log log : periodLogs ) {
             ret.add(log.getPeriod());
@@ -36,8 +48,10 @@ public class ResultManager {
         return ret;
     }
 
-    public static String getPeriodStartDate(long watchId, int period) {
-        List<Log> startLogs = Log.find(Log.class, "watch_id=? and period=?", new String[]{"" + watchId, "" + period},null,"reference_time asc","1");
+    public static String getPeriodStartDate(Context context, long watchId, int period) {
+        LogDao logDao = ((WatchCheckApplication)context.getApplicationContext()).getDaoSession().getLogDao();
+        List<Log> startLogs = getLogsForWatchAndPeriod(context, watchId, period);
+
         if ( startLogs!=null && !startLogs.isEmpty()) {
             return sdf.format(startLogs.get(0).getReferenceTime());
         } else {
@@ -45,10 +59,12 @@ public class ResultManager {
         }
     }
 
-    public static String getPeriodEndDate(long watchId, int period) {
-        List<Log> endLogs = Log.find(Log.class, "watch_id=? and period=?", new String[]{"" + watchId, "" + period},null,"reference_time desc","1");
+    public static String getPeriodEndDate(Context context, long watchId, int period) {
+        LogDao logDao = ((WatchCheckApplication)context.getApplicationContext()).getDaoSession().getLogDao();
+        List<Log> endLogs = getLogsForWatchAndPeriod(context, watchId, period);
+
         if ( endLogs!=null && !endLogs.isEmpty()) {
-            return sdf.format(endLogs.get(0).getReferenceTime());
+            return sdf.format(endLogs.get(endLogs.size()-1).getReferenceTime());
         } else {
             return "";
         }

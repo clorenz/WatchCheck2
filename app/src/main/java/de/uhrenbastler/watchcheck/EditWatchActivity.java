@@ -17,8 +17,9 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import de.uhrenbastler.watchcheck.managers.WatchManager;
-import de.uhrenbastler.watchcheck.models.Watch;
 import de.uhrenbastler.watchcheck.tools.Logger;
+import watchcheck.db.Watch;
+import watchcheck.db.WatchDao;
 
 // Sollte das nicht besser ein Fragement sein??
 
@@ -28,10 +29,12 @@ import de.uhrenbastler.watchcheck.tools.Logger;
 public class EditWatchActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     boolean isNewWatch=false;
+    private WatchDao watchDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        watchDao = ((WatchCheckApplication)getApplicationContext()).getDaoSession().getWatchDao();
         setContentView(R.layout.activity_edit_watch);
 
         Bundle extras = getIntent().getExtras();
@@ -74,7 +77,7 @@ public class EditWatchActivity extends ActionBarActivity implements NavigationDr
                 watch.setName(((TextView)findViewById(R.id.editTextModel)).getEditableText().toString());
                 watch.setSerial(((TextView)findViewById(R.id.editTextSerial)).getEditableText().toString());
                 watch.setComment(((TextView)findViewById(R.id.editTextRemarks)).getEditableText().toString());
-                watch.save();
+                watchDao.insertOrReplace(watch);
 
                 Logger.debug("Updated watch "+watch);
 
@@ -96,7 +99,7 @@ public class EditWatchActivity extends ActionBarActivity implements NavigationDr
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
-                            watch.delete();
+                            watchDao.delete(watch);
                             updateNavigationDrawerAndHeadline(isNewWatch ? null : watch);
                             Toast.makeText(getApplicationContext(), String.format(getString(R.string.deletedWatch),
                                     watch.getName()), Toast.LENGTH_SHORT).show();
@@ -150,7 +153,8 @@ public class EditWatchActivity extends ActionBarActivity implements NavigationDr
 
         
         // Re-Fetch all watches and re-populate the navigation drawer
-        List<Watch> watches = WatchManager.retrieveAllWatchesWithCurrentFirstAndAddWatch(currentWatch);
+        List<Watch> watches = WatchManager.retrieveAllWatchesWithCurrentFirstAndAddWatch(
+                (WatchCheckApplication)getApplicationContext(),currentWatch);
 
         /*
         NavigationDrawerFragment mNavigationDrawerFragment = (NavigationDrawerFragment)

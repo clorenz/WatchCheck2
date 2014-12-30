@@ -18,11 +18,10 @@ import android.support.v4.widget.DrawerLayout;
 
 import java.util.List;
 
-import de.uhrenbastler.watchcheck.managers.DatabaseUpgradeManager9;
 import de.uhrenbastler.watchcheck.managers.WatchManager;
-import de.uhrenbastler.watchcheck.models.Watch;
 import de.uhrenbastler.watchcheck.tools.Logger;
 import de.uhrenbastler.watchcheck.views.*;
+import watchcheck.db.Watch;
 
 
 public class MainActivity extends ActionBarActivity
@@ -47,8 +46,6 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        new DatabaseUpgradeManager9(this.getApplicationContext());
-
         // For whatever reason, WatchManager has got problems and crashes in line 60
         // Maybe it helps to rename everything to watchcheck again
 
@@ -62,7 +59,7 @@ public class MainActivity extends ActionBarActivity
             updateTitle(selectedWatch.getName());
         }
         Logger.debug("Current watch has got ID " + selectedWatchId);
-        watches =  WatchManager.retrieveAllWatchesWithCurrentFirstAndAddWatch(selectedWatch);
+        watches =  WatchManager.retrieveAllWatchesWithCurrentFirstAndAddWatch(getApplicationContext(), selectedWatch);
 
         Logger.debug("Watches="+watches);
 
@@ -80,23 +77,13 @@ public class MainActivity extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
-        adapterViewPager = new DisplayResultPagerAdapter(getSupportFragmentManager(), selectedWatchId);
+        adapterViewPager = new DisplayResultPagerAdapter(getApplicationContext(), getSupportFragmentManager(), selectedWatchId);
         vpPager.setAdapter(adapterViewPager);
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         Logger.debug("Watch in position "+position+"="+watches.get(position));
-
-        // update the main content by replacing fragments
-        ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
-        adapterViewPager = new DisplayResultPagerAdapter(getSupportFragmentManager(), watches.get(position).getId());
-        vpPager.setAdapter(adapterViewPager);
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, DisplayResultFragment.newInstance(watches.get(position).getId(), 0))
-                .commit();
 
 
         // Only persist, if a real watch (and not "add watch") is selected
@@ -111,7 +98,7 @@ public class MainActivity extends ActionBarActivity
             Logger.debug("New watch selected. Starting new activity");
             Fragment editWatchFragment = new EditWatchFragment();
             Bundle bundle = new Bundle();
-            bundle.putSerializable("watch", watches.get(position));
+            bundle.putSerializable("watch", null);
             bundle.putSerializable("currentWatch", watches.get(0));
             editWatchFragment.setArguments(bundle);
 
@@ -119,6 +106,16 @@ public class MainActivity extends ActionBarActivity
             transaction.replace(R.id.container, editWatchFragment);
             transaction.addToBackStack(null);
             transaction.commit();
+        } else {
+            // Otherwise: update the main content by replacing fragments
+            ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
+            adapterViewPager = new DisplayResultPagerAdapter(getApplicationContext(), getSupportFragmentManager(), watches.get(position).getId());
+            vpPager.setAdapter(adapterViewPager);
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, DisplayResultFragment.newInstance(watches.get(position).getId(), 0))
+                    .commit();
         }
     }
 

@@ -1,6 +1,7 @@
 package de.uhrenbastler.watchcheck.managers;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -8,8 +9,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import de.uhrenbastler.watchcheck.models.Watch;
+import de.uhrenbastler.watchcheck.WatchCheckApplication;
 import de.uhrenbastler.watchcheck.tools.Logger;
+import watchcheck.db.Watch;
+import watchcheck.db.WatchDao;
 
 /**
  * Created by clorenz on 12.11.14.
@@ -32,26 +35,22 @@ public class WatchManager {
 
         Logger.debug("Retrieving current watch with ID=" + currentWatchId);
 
-        if ( currentWatchId>=0)
-            return Watch.findById(Watch.class, Long.valueOf(currentWatchId));
+        if ( currentWatchId>=0) {
+            WatchDao watchDao = ((WatchCheckApplication)activity.getApplicationContext()).getDaoSession().getWatchDao();
+            return watchDao.load(Long.valueOf(currentWatchId));
+        }
 
         return null;
     }
 
-    public static List<Watch> retrieveAllWatches() {
-        List<Watch> watches = new ArrayList<Watch>();
-
-        Iterator<Watch> watchesIterator = Watch.findAll(Watch.class);
-        while ( watchesIterator.hasNext()) {
-            watches.add(watchesIterator.next());
-        }
-
-        return watches;
+    public static List<Watch> retrieveAllWatches(Context context) {
+        WatchDao watchDao = ((WatchCheckApplication)context.getApplicationContext()).getDaoSession().getWatchDao();
+        return watchDao.loadAll();
     }
 
 
-    public static List<Watch> retrieveAllWatchesWithCurrentFirstAndAddWatch(Watch firstItem) {
-        List<Watch> origList = retrieveAllWatches();
+    public static List<Watch> retrieveAllWatchesWithCurrentFirstAndAddWatch(Context context, Watch firstItem) {
+        List<Watch> origList = retrieveAllWatches(context);
         List<Watch> ret = new ArrayList<Watch>();
 
         if ( firstItem!=null ) {
@@ -64,7 +63,7 @@ public class WatchManager {
             }
         }
 
-        ret.add(new Watch("add watch", null, null, null));
+        ret.add(new Watch(null, "add watch", null, null, null));
 
         return ret;
     }

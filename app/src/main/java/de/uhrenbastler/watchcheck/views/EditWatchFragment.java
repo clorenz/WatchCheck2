@@ -23,9 +23,11 @@ import de.uhrenbastler.watchcheck.DisplayResultFragment;
 import de.uhrenbastler.watchcheck.MainActivity;
 import de.uhrenbastler.watchcheck.NavigationDrawerFragment;
 import de.uhrenbastler.watchcheck.R;
+import de.uhrenbastler.watchcheck.WatchCheckApplication;
 import de.uhrenbastler.watchcheck.managers.WatchManager;
-import de.uhrenbastler.watchcheck.models.Watch;
 import de.uhrenbastler.watchcheck.tools.Logger;
+import watchcheck.db.Watch;
+import watchcheck.db.WatchDao;
 
 /**
  * Created by clorenz on 22.12.14.
@@ -34,10 +36,13 @@ public class EditWatchFragment extends Fragment {
 
     boolean isNewWatch=false;
     Watch currentWatch=null;
+    WatchDao watchDao;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        watchDao = ((WatchCheckApplication)getActivity().getApplicationContext()).getDaoSession().getWatchDao();
     }
 
 
@@ -48,11 +53,6 @@ public class EditWatchFragment extends Fragment {
         final Watch watch = (Watch) (bundle.getSerializable("watch")!=null?bundle.getSerializable("watch"):new Watch());
         currentWatch = (Watch) bundle.getSerializable("currentWatch");
 
-        if (watch == null) {
-            // Indicator, that we will add a new watch
-            TextView headline = (TextView) view.findViewById(R.id.textViewAddWatch);
-            headline.setText(getString(R.string.addWatchHeadline));
-        }
 
         if ( watch.getName() != null || watch.getSerial()!=null || watch.getComment()!=null || watch.getCreatedAt()!=null ) {
             Logger.debug("Editing watch " + watch);
@@ -64,6 +64,8 @@ public class EditWatchFragment extends Fragment {
         } else {
             Logger.debug("Creating new watch");
             isNewWatch=true;
+            TextView headline = (TextView) view.findViewById(R.id.textViewAddWatch);
+            headline.setText(getString(R.string.addWatchHeadline));
             watch.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         }
 
@@ -84,7 +86,7 @@ public class EditWatchFragment extends Fragment {
                 watch.setName(((TextView)view.findViewById(R.id.editTextModel)).getEditableText().toString());
                 watch.setSerial(((TextView)view.findViewById(R.id.editTextSerial)).getEditableText().toString());
                 watch.setComment(((TextView)view.findViewById(R.id.editTextRemarks)).getEditableText().toString());
-                watch.save();
+                watchDao.insertOrReplace(watch);
 
                 Logger.debug("Updated watch "+watch);
 
@@ -106,7 +108,7 @@ public class EditWatchFragment extends Fragment {
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
-                            watch.delete();
+                            watchDao.delete(watch);
                             updateNavigationDrawerAndHeadline(isNewWatch ? null : watch, currentWatch);
                             Toast.makeText(getActivity().getApplicationContext(), String.format(getString(R.string.deletedWatch),
                                     watch.getName()), Toast.LENGTH_SHORT).show();
@@ -167,15 +169,19 @@ public class EditWatchFragment extends Fragment {
 
     public void updateNavigationDrawerAndHeadline(Watch editWatch, Watch currentWatch) {
         Logger.debug("editWatch="+editWatch+", currentWatch="+currentWatch);
-
+        if ( editWatch==null) {
+            editWatch = currentWatch;
+        }
 
         // Re-Fetch all watches and re-populate the navigation drawer
-        List<Watch> watches = WatchManager.retrieveAllWatchesWithCurrentFirstAndAddWatch(currentWatch);
+        List<Watch> watches = WatchManager.retrieveAllWatchesWithCurrentFirstAndAddWatch(
+                getActivity().getApplicationContext(),currentWatch);
 
 
         NavigationDrawerFragment mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getActivity().getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mNavigationDrawerFragment.setWatches(watches);
+
         if ( currentWatch!=null && editWatch.getId()==currentWatch.getId() ) {
             mNavigationDrawerFragment.setSelectedWatch(currentWatch);
             updateTitle(currentWatch.getName());

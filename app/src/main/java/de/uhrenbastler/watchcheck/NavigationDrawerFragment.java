@@ -26,10 +26,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.uhrenbastler.watchcheck.models.Watch;
 import de.uhrenbastler.watchcheck.tools.Logger;
 import de.uhrenbastler.watchcheck.views.EditWatchFragment;
 import de.uhrenbastler.watchcheck.views.SelectWatchArrayAdapter;
+import watchcheck.db.Watch;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.

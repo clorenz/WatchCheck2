@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.uhrenbastler.watchcheck.R;
-import de.uhrenbastler.watchcheck.models.Watch;
+import watchcheck.db.Watch;
 
 /**
  * Created by clorenz on 13.02.14.

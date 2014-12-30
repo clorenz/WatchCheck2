@@ -10,8 +10,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.uhrenbastler.watchcheck.managers.ResultManager;
-import de.uhrenbastler.watchcheck.models.Log;
 import de.uhrenbastler.watchcheck.tools.Logger;
+import watchcheck.db.Log;
 
 /**
  * Created by clorenz on 17.12.14.
@@ -38,7 +38,7 @@ public class DisplayResultFragment extends Fragment {
         super.onCreate(savedInstanceState);
         long watchId=getArguments().getLong("watchId");
         int period=getArguments().getInt("period");
-        log = ResultManager.getLogsForWatchAndPeriod(watchId, period);
+        log = ResultManager.getLogsForWatchAndPeriod(getActivity().getApplicationContext(),watchId, period);
 
         Logger.debug("watchId="+watchId+", period="+period+"="+log);
     }
