@@ -5,12 +5,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import java.util.List;
 
 import de.uhrenbastler.watchcheck.managers.ResultManager;
 import de.uhrenbastler.watchcheck.tools.Logger;
+import de.uhrenbastler.watchcheck.views.ResultListAdapter;
 import watchcheck.db.Log;
 
 /**
@@ -47,8 +49,10 @@ public class DisplayResultFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_display_result, container, false);
-        TextView tvLabel = (TextView) view.findViewById(R.id.tvLabel);
-        tvLabel.setText(log.toString());
+        ListView listView = (ListView) view.findViewById(R.id.resultListView);
+        ListAdapter resultListAdapter = new ResultListAdapter(this.getActivity().getApplicationContext(), log);
+        listView.setAdapter(resultListAdapter);
+
         return view;
     }
 

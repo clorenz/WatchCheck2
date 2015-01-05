@@ -8,6 +8,14 @@
         <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
 
+    <style name="SmallListItem" parent="Base.TextAppearance.AppCompat.Small">
+        <item name="android:textSize">10dp</item>
+    </style>
+
+    <style name="SmallListItemCenter" parent="SmallListItem">
+        <item name="android:layout_gravity">center</item>
+    </style>
+
     <color name="colorPrimary">#CCC</color>
     <color name="colorPrimaryBack">#999</color>
     <color name="colorPrimaryDark">#333</color>

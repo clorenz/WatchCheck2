@@ -9,12 +9,25 @@
     tools:context="de.uhrenbastler.watchcheck.ui.BaseActivity$PlaceholderFragment">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="hello"
-        android:id="@+id/tvLabel"
-        android:layout_gravity="left" />
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="2">
+
+            <ListView
+                android:id="@+id/resultListView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+            </ListView>
+
+        </TableRow>
+    </TableLayout>
 </RelativeLayout>

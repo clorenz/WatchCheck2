@@ -80,9 +80,24 @@ public class DBMigrationHelper4to5 extends AbstractMigratorHelper {
                     period=-1;
                 }
 
-                Timestamp origTime = new Timestamp(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(cursor.getString(3)).getTime() -
+                Timestamp machineTime = new Timestamp(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(cursor.getString(3)).getTime());
+                Timestamp referenceTime = new Timestamp(machineTime.getTime() -
                         (int)(1000d * cursor.getDouble(4)));
-                Timestamp watchTime = new Timestamp(origTime.getTime() + (int)(1000d * cursor.getDouble(5)));
+
+                long differenceInMillis = (long) (1000d * cursor.getDouble(5));     // Precise difference in milliseconds
+
+                long watchTimeInMillis = referenceTime.getTime() + differenceInMillis;
+
+                // We assume, that the seconds of the timed watch are always exact zero!
+                long watchTimeInMillisPrecisionSeconds = (long)Math.ceil((double)watchTimeInMillis / 1000) * 1000;
+
+                long millisForWatchToZero =  watchTimeInMillisPrecisionSeconds - watchTimeInMillis;
+
+                // This number of millisForWatchToZero has now to be added to the referenceTime
+                referenceTime = new Timestamp(referenceTime.getTime() + millisForWatchToZero);
+
+                Timestamp watchTime = new Timestamp(watchTimeInMillisPrecisionSeconds);
+
                 if ( cursor.getInt(6) == 1) {
                     // Reset
                     period++;
@@ -93,7 +108,7 @@ public class DBMigrationHelper4to5 extends AbstractMigratorHelper {
                 ContentValues insertValues = new ContentValues();
                 insertValues.put("watch_id",watchId);
                 insertValues.put("PERIOD",period);
-                insertValues.put("reference_time",origTime.getTime());
+                insertValues.put("reference_time",referenceTime.getTime());
                 insertValues.put("watch_time",watchTime.getTime());
                 insertValues.put("POSITION",position);
                 insertValues.put("TEMPERATURE",temperature);
