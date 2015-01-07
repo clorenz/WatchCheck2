@@ -1,10 +1,16 @@
 package de.uhrenbastler.watchcheck;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
+import android.text.style.TextAppearanceSpan;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import de.uhrenbastler.watchcheck.managers.ResultManager;
@@ -47,6 +53,11 @@ public class DisplayResultPagerAdapter extends FragmentPagerAdapter {
             String start = ResultManager.getPeriodStartDate(context, watchId, periods.get(position));
             String end = ResultManager.getPeriodEndDate(context, watchId, periods.get(position));
 
-            return start+" - "+end;
+            String titleString = start + " - " + end;
+            SpannableStringBuilder sb = new SpannableStringBuilder(titleString);
+            TextAppearanceSpan headerSpan = new TextAppearanceSpan(null, 0, 14, null, null);
+            sb.setSpan(headerSpan,0,titleString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            return sb;
         }
 }

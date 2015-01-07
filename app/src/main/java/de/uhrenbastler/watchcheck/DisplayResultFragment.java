@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.shamanland.fab.FloatingActionButton;
+import com.shamanland.fab.ShowHideOnScroll;
+
 import java.util.List;
 
 import de.uhrenbastler.watchcheck.managers.ResultManager;
@@ -42,6 +45,7 @@ public class DisplayResultFragment extends Fragment {
         int period=getArguments().getInt("period");
         log = ResultManager.getLogsForWatchAndPeriod(getActivity().getApplicationContext(),watchId, period);
 
+
         Logger.debug("watchId="+watchId+", period="+period+"="+log);
     }
 
@@ -52,6 +56,16 @@ public class DisplayResultFragment extends Fragment {
         ListView listView = (ListView) view.findViewById(R.id.resultListView);
         ListAdapter resultListAdapter = new ResultListAdapter(this.getActivity().getApplicationContext(), log);
         listView.setAdapter(resultListAdapter);
+
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.buttonAddLog);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Logger.debug("Click: "+v);
+            }
+        });
+        listView.setOnTouchListener(new ShowHideOnScroll(fab));
+
 
         return view;
     }

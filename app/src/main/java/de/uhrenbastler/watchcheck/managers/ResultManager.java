@@ -16,7 +16,7 @@ import watchcheck.db.LogDao;
  */
 public class ResultManager {
 
-    static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+    static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
     public static List<Log> getLogsForWatchAndPeriod(Context context, long watchId, int period) {
         LogDao logDao = ((WatchCheckApplication)context.getApplicationContext()).getDaoSession().getLogDao();
