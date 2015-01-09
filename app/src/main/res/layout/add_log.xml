@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:id="@+id/addLogView"
+    android:layout_margin="10dp"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/gps_time"
+        android:id="@+id/gpstime"
+        android:layout_gravity="left" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/ntp_time"
+        android:id="@+id/ntptime"
+        android:layout_gravity="left"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/measure"
+        android:layout_marginTop="40dp"
+        android:id="@+id/timeYourWatch"
+        android:layout_gravity="center_horizontal" />
+
+    <TimePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/timePicker"
+        android:layout_gravity="center_horizontal"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp" />
+
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
+        <FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/frameLayout1" android:background="#AA999999"  android:padding="10dp" android:layout_gravity="bottom">
+            <Button android:layout_height="wrap_content" android:id="@+id/buttonCheckTime" android:layout_width="fill_parent" android:text="@string/measure"></Button>
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

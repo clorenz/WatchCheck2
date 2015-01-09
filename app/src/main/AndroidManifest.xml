@@ -17,7 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EditWatchActivity" android:noHistory="true"></activity>
+        <activity android:name=".EditWatchActivity" android:noHistory="true"/>
+        <activity android:name=".AddLogActivity" android:noHistory="true" android:theme="@android:style/Theme.Dialog"/>
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
 
 </manifest>

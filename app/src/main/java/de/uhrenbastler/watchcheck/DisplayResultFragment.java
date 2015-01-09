@@ -1,12 +1,17 @@
 package de.uhrenbastler.watchcheck;
 
+import android.app.ActionBar;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 
 import com.shamanland.fab.FloatingActionButton;
 import com.shamanland.fab.ShowHideOnScroll;
@@ -51,7 +56,7 @@ public class DisplayResultFragment extends Fragment {
 
     // Inflate the view for the fragment based on layout XML
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_display_result, container, false);
         ListView listView = (ListView) view.findViewById(R.id.resultListView);
         ListAdapter resultListAdapter = new ResultListAdapter(this.getActivity().getApplicationContext(), log);
@@ -61,7 +66,8 @@ public class DisplayResultFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Logger.debug("Click: "+v);
+                Intent addLogIntent = new Intent(getActivity(),AddLogActivity.class);
+                startActivity(addLogIntent);
             }
         });
         listView.setOnTouchListener(new ShowHideOnScroll(fab));
