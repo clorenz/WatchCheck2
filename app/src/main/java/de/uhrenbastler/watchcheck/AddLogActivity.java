@@ -52,9 +52,16 @@ public class AddLogActivity extends Activity {
         referenceTimeUpdater = new ReferenceTimeUpdater(new ITimeProvider[]{gpsTimeProvider,ntpTimeProvider},
                 new Integer[]{R.id.gpstime,R.id.ntptime}, timePicker);
 
-        referenceTimeUpdater.execute(this);
+        referenceTimeUpdater.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        referenceTimeUpdater.cancel(true);
+    }
+    
 
     // ------------------------------------------------------------------
     private class ReferenceTimeUpdater extends AsyncTask<Context, Integer, Integer> {
@@ -67,6 +74,7 @@ public class AddLogActivity extends Activity {
         TimePicker timepicker;
         int colorRed;
         int colorGreen;
+        boolean valid=false;
 
         ReferenceTimeUpdater(ITimeProvider[] timeProviders, Integer[] viewIds, TimePicker timepicker) {
             int number=0;
@@ -85,6 +93,8 @@ public class AddLogActivity extends Activity {
 
             colorRed=getResources().getColor(R.color.measure_red);
             colorGreen=getResources().getColor(R.color.measure_green);
+
+            Logger.info("Starting reference time update. Runnable="+runnable);
         }
 
         @Override
@@ -106,21 +116,22 @@ public class AddLogActivity extends Activity {
                 tvTime[number].setText(String.format(format[number], timestamp[number]));
                 number++;
             }
+            timepicker.setBackgroundColor(valid?colorGreen:colorRed);
         }
 
         @Override
         protected Integer doInBackground(Context... params) {
+            Logger.info(this.hashCode()+": Runnable="+runnable);
+
             int progress=0;
 
             while ( runnable ) {
                 int number=0;
-                boolean isValid=false;
+                valid=false;
                 for ( ITimeProvider timeProvider : timeProviders) {
                     timestamp[number++] = timeProvider.getTime();
-                    isValid |= timeProvider.isValid();
+                    valid |= timeProvider.isValid();
                 }
-                timepicker.setBackgroundColor(isValid?colorGreen:colorRed);
-
                 publishProgress((++progress % 2));
                 try {
                     Thread.sleep(100);

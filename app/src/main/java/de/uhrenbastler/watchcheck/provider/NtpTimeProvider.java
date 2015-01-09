@@ -47,14 +47,15 @@ public class NtpTimeProvider implements ITimeProvider{
         if ( offset==null) {
             if ( reconnectAttempt==0) {
                 calculateNtpOffset();
-                Logger.info("Calculating NTP offset="+offset);
+                Logger.info("Calculating NTP offset="+offset+" seconds");
                 reconnectAttempt = reconnectCounter;
             } else {
                 reconnectAttempt--;
             }
         }
         if ( offset!=null) {
-            timestamp = new Date((long)((double)System.currentTimeMillis() - offset));   // = Localtime - Localtime + Referencetime
+            Date now = new Date();
+            timestamp = new Date((long)((double)System.currentTimeMillis() + 1000*offset));   // = Localtime - Localtime + Referencetime
             validCount--;
         }
 
@@ -107,7 +108,7 @@ public class NtpTimeProvider implements ITimeProvider{
                         ((msg.receiveTimestamp - msg.originateTimestamp) +
                                 (msg.transmitTimestamp - destinationTimestamp)) / 2;
 
-                // offset = LocalTime - ReferenceTime
+                // offset = ReferenceTime - LocalTime
 
 
                 // Display response
