@@ -54,7 +54,7 @@ public class NtpTimeProvider implements ITimeProvider{
             }
         }
         if ( offset!=null) {
-            timestamp = new Date((long)((double)System.currentTimeMillis() + offset));
+            timestamp = new Date((long)((double)System.currentTimeMillis() - offset));   // = Localtime - Localtime + Referencetime
             validCount--;
         }
 
@@ -76,7 +76,7 @@ public class NtpTimeProvider implements ITimeProvider{
         if ( networkInfo!=null && networkInfo.isConnected()) {
             try {
                 DatagramSocket socket = new DatagramSocket();
-                socket.setSoTimeout(2000);
+                socket.setSoTimeout(1000);
                 InetAddress address = InetAddress.getByName("europe.pool.ntp.org");
                 byte[] buf = new NtpMessage().toByteArray();
                 DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 123);
@@ -106,6 +106,8 @@ public class NtpTimeProvider implements ITimeProvider{
                 offset =
                         ((msg.receiveTimestamp - msg.originateTimestamp) +
                                 (msg.transmitTimestamp - destinationTimestamp)) / 2;
+
+                // offset = LocalTime - ReferenceTime
 
 
                 // Display response

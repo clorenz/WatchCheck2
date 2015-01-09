@@ -2,6 +2,7 @@ package de.uhrenbastler.watchcheck;
 
 import android.app.Activity;
 import android.content.Context;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.Window;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import de.uhrenbastler.watchcheck.provider.GpsTimeProvider;
 import de.uhrenbastler.watchcheck.provider.ITimeProvider;
 import de.uhrenbastler.watchcheck.provider.LocalTimeProvider;
 import de.uhrenbastler.watchcheck.provider.NtpTimeProvider;
@@ -21,7 +23,7 @@ public class AddLogActivity extends Activity {
 
     TimePicker timePicker;
     AsyncTask<Context, Integer, Integer> referenceTimeUpdater;
-    ITimeProvider gpsTimeProvider = new LocalTimeProvider();
+    ITimeProvider gpsTimeProvider;
     ITimeProvider ntpTimeProvider;
 
     @Override
@@ -36,7 +38,10 @@ public class AddLogActivity extends Activity {
         timePicker.setKeepScreenOn(true);
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        ntpTimeProvider = new NtpTimeProvider(cm,50,20);            // TODO: The last one shall be 6000 or so  (10 per second => 10 minutes)
+        ntpTimeProvider = new NtpTimeProvider(cm,50,6000);            // TODO: The last one shall be 6000 or so  (10 per second => 10 minutes)
+
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        gpsTimeProvider = new GpsTimeProvider(lm);
     }
 
 
