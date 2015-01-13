@@ -40,6 +40,16 @@ public class GpsTimeProvider implements ITimeProvider {
         return valid;
     }
 
+    @Override
+    public boolean isGps() {
+        return true;
+    }
+
+    @Override
+    public long getMillis() {
+        return valid ? System.currentTimeMillis()-offset : -1;
+    }
+
 
     private class GpsLocationListener implements LocationListener {
         @Override

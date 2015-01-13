@@ -17,4 +17,14 @@ public class LocalTimeProvider implements ITimeProvider{
     public boolean isValid() {
         return false;
     }
+
+    @Override
+    public boolean isGps() {
+        return false;
+    }
+
+    @Override
+    public long getMillis() {
+        return System.currentTimeMillis();
+    }
 }

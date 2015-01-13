@@ -24,6 +24,15 @@ public class ResultManager {
                 LogDao.Properties.Period.eq(period)).orderAsc(LogDao.Properties.ReferenceTime).list();
     }
 
+    public static Log getLastLogForWatch(Context context, long watchId) {
+        LogDao logDao = ((WatchCheckApplication)context.getApplicationContext()).getDaoSession().getLogDao();
+        List<Log> logs = logDao.queryBuilder().where(LogDao.Properties.WatchId.eq(watchId)).orderDesc(LogDao.Properties.ReferenceTime).list();
+        if (logs!=null && !logs.isEmpty())
+            return logs.get(0);
+
+        return null;
+    }
+
     public static List<List<Log>> getLogsForWatch(Context context, long watchId) {
         LogDao logDao = ((WatchCheckApplication)context.getApplicationContext()).getDaoSession().getLogDao();
         List<Log> allLogs = logDao.queryBuilder().where(LogDao.Properties.WatchId.eq(watchId)).
@@ -69,4 +78,6 @@ public class ResultManager {
             return "";
         }
     }
+
+
 }

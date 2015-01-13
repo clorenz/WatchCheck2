@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center_horizontal"
-    android:id="@+id/addLogView"
+    android:id="@+id/checkWatchView"
     android:layout_margin="10dp"
     >
 
@@ -27,11 +27,22 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/measure"
-        android:layout_marginTop="40dp"
-        android:id="@+id/timeYourWatch"
-        android:layout_gravity="center_horizontal" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/last_deviation"
+        android:id="@+id/lastdeviation"
+        android:layout_marginTop="20dp"
+        android:paddingRight="40dp"
+        android:layout_gravity="left"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/current_deviation"
+        android:id="@+id/currentdeviation"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="left"/>
+
 
     <TimePicker
         android:layout_width="wrap_content"
@@ -47,7 +58,7 @@
         android:layout_gravity="bottom"
         android:orientation="horizontal">
         <FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/frameLayout1" android:background="#AA999999"  android:padding="10dp" android:layout_gravity="bottom">
-            <Button android:layout_height="wrap_content" android:id="@+id/buttonCheckTime" android:layout_width="fill_parent" android:text="@string/measure"></Button>
+            <Button android:layout_height="wrap_content" android:id="@+id/buttonMeasure" android:layout_width="fill_parent" android:text="@string/measure"></Button>
         </FrameLayout>
     </LinearLayout>
 

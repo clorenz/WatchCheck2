@@ -1,17 +1,13 @@
 package de.uhrenbastler.watchcheck;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 
 import com.shamanland.fab.FloatingActionButton;
 import com.shamanland.fab.ShowHideOnScroll;
@@ -22,6 +18,8 @@ import de.uhrenbastler.watchcheck.managers.ResultManager;
 import de.uhrenbastler.watchcheck.tools.Logger;
 import de.uhrenbastler.watchcheck.views.ResultListAdapter;
 import watchcheck.db.Log;
+import watchcheck.db.Watch;
+import watchcheck.db.WatchDao;
 
 /**
  * Created by clorenz on 17.12.14.
@@ -29,7 +27,9 @@ import watchcheck.db.Log;
 public class DisplayResultFragment extends Fragment {
 
     // Store instance variables
+    private Watch currentWatch;
     private List<Log> log;
+    private Log lastLog;
 
     // newInstance constructor for creating fragment with arguments
     public static DisplayResultFragment newInstance(Long watchId, int page) {
@@ -49,9 +49,11 @@ public class DisplayResultFragment extends Fragment {
         long watchId=getArguments().getLong("watchId");
         int period=getArguments().getInt("period");
         log = ResultManager.getLogsForWatchAndPeriod(getActivity().getApplicationContext(),watchId, period);
+        lastLog = ResultManager.getLastLogForWatch(getActivity().getApplicationContext(),watchId);
+        WatchDao watchDao = ((WatchCheckApplication)getActivity().getApplicationContext()).getDaoSession().getWatchDao();
+        currentWatch = watchDao.load(watchId);
 
-
-        Logger.debug("watchId="+watchId+", period="+period+"="+log);
+        Logger.debug("watch="+currentWatch+", period="+period+"="+log);
     }
 
     // Inflate the view for the fragment based on layout XML
@@ -66,7 +68,9 @@ public class DisplayResultFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent addLogIntent = new Intent(getActivity(),AddLogActivity.class);
+                Intent addLogIntent = new Intent(getActivity(),CheckWatchActivity.class);
+                addLogIntent.putExtra(CheckWatchActivity.EXTRA_WATCH, currentWatch);
+                addLogIntent.putExtra(CheckWatchActivity.EXTRA_LAST_LOG, lastLog);
                 startActivity(addLogIntent);
             }
         });

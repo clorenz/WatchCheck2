@@ -71,6 +71,16 @@ public class NtpTimeProvider implements ITimeProvider{
         return valid;
     }
 
+    @Override
+    public boolean isGps() {
+        return false;
+    }
+
+    @Override
+    public long getMillis() {
+        return valid ? timestamp.getTime() : -1;
+    }
+
 
     private void calculateNtpOffset() {
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();

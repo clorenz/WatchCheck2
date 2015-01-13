@@ -7,20 +7,29 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import de.uhrenbastler.watchcheck.provider.GpsTimeProvider;
 import de.uhrenbastler.watchcheck.provider.ITimeProvider;
-import de.uhrenbastler.watchcheck.provider.LocalTimeProvider;
 import de.uhrenbastler.watchcheck.provider.NtpTimeProvider;
 import de.uhrenbastler.watchcheck.tools.Logger;
+import watchcheck.db.Log;
+import watchcheck.db.Watch;
 
 /**
  * Created by clorenz on 09.01.15.
  */
-public class AddLogActivity extends Activity {
+public class CheckWatchActivity extends Activity {
 
+    public static final String EXTRA_WATCH = "watch";
+    public static final String EXTRA_LAST_LOG = "last_log";
+    Watch currentWatch;
+    Log lastLog;
     TimePicker timePicker;
     AsyncTask<Context, Integer, Integer> referenceTimeUpdater;
     ITimeProvider gpsTimeProvider;
@@ -31,11 +40,12 @@ public class AddLogActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.add_log);
+        setContentView(R.layout.check_watch);
+
+        currentWatch = (Watch) getIntent().getSerializableExtra(EXTRA_WATCH);
+        lastLog = (Log) getIntent().getSerializableExtra(EXTRA_LAST_LOG);
 
         timePicker = (TimePicker) findViewById(R.id.timePicker);
-        timePicker.setIs24HourView(true);
-        timePicker.setKeepScreenOn(true);
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         ntpTimeProvider = new NtpTimeProvider(cm,50,6000);            // TODO: The last one shall be 6000 or so  (10 per second => 10 minutes)
@@ -53,6 +63,28 @@ public class AddLogActivity extends Activity {
                 new Integer[]{R.id.gpstime,R.id.ntptime}, timePicker);
 
         referenceTimeUpdater.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        timePicker.setIs24HourView(true);
+        timePicker.setKeepScreenOn(true);
+
+        TextView tvLastDeviation= (TextView) findViewById(R.id.lastdeviation);
+
+        // Set timepicker to next minute PLUS last known deviation
+        GregorianCalendar now = new GregorianCalendar();
+        now.add(Calendar.MINUTE, 1);
+        if ( lastLog != null) {
+            Logger.debug("LastLog="+lastLog.getWatchTime()+" vs "+lastLog.getReferenceTime());
+            int deviation = (int) (lastLog.getWatchTime().getTime() - lastLog.getReferenceTime().getTime()) / 1000;
+            now.add(Calendar.SECOND, deviation);
+
+            tvLastDeviation.setText(String.format(tvLastDeviation.getText().toString(), ((deviation > 0 ? "+" : "") + deviation + " sec.")));
+        } else {
+            tvLastDeviation.setText(String.format(tvLastDeviation.getText().toString(),"-"));
+        }
+        timePicker.setCurrentHour(now.get(Calendar.HOUR_OF_DAY));
+        timePicker.setCurrentMinute(now.get(Calendar.MINUTE));
+
+
     }
 
 
@@ -70,11 +102,15 @@ public class AddLogActivity extends Activity {
         TextView[] tvTime;
         String[] timestamp;
         String[] format;
+        String formatTvDeviation;
+        TextView tvDeviation;
         ITimeProvider[] timeProviders;
         TimePicker timepicker;
         int colorRed;
         int colorGreen;
+        double deviation = Double.MIN_VALUE;
         boolean valid=false;
+        Button btnMeasure;
 
         ReferenceTimeUpdater(ITimeProvider[] timeProviders, Integer[] viewIds, TimePicker timepicker) {
             int number=0;
@@ -93,6 +129,11 @@ public class AddLogActivity extends Activity {
 
             colorRed=getResources().getColor(R.color.measure_red);
             colorGreen=getResources().getColor(R.color.measure_green);
+
+            tvDeviation = (TextView) findViewById(R.id.currentdeviation);
+            formatTvDeviation = tvDeviation.getText().toString();
+
+            btnMeasure = (Button) findViewById(R.id.buttonMeasure);
 
             Logger.info("Starting reference time update. Runnable="+runnable);
         }
@@ -116,7 +157,13 @@ public class AddLogActivity extends Activity {
                 tvTime[number].setText(String.format(format[number], timestamp[number]));
                 number++;
             }
-            timepicker.setBackgroundColor(valid?colorGreen:colorRed);
+            if ( deviation != Double.MIN_VALUE) {
+                tvDeviation.setText(String.format(formatTvDeviation, deviation));
+            } else {
+                tvDeviation.setText(getString(R.string.no_current_deviation));
+            }
+            timepicker.setBackgroundColor(valid ? colorGreen : colorRed);
+            btnMeasure.setEnabled(valid);
         }
 
         @Override
@@ -127,11 +174,22 @@ public class AddLogActivity extends Activity {
 
             while ( runnable ) {
                 int number=0;
-                valid=false;
+                
+                boolean localValid=false;
+                long referenceMillis=-1;
+
                 for ( ITimeProvider timeProvider : timeProviders) {
                     timestamp[number++] = timeProvider.getTime();
-                    valid |= timeProvider.isValid();
+                    localValid |= timeProvider.isValid();
+
+                    // We prefer GPS. Only if no GPS, use other time providers, if they provide valid data
+                    if ( timeProvider.isValid() && ( timeProvider.isGps() || (referenceMillis==-1))) {
+                        referenceMillis = timeProvider.getMillis();
+                    }
                 }
+
+                valid = localValid;
+                deviation = (((double)getMillisFromTimePicker(timePicker) - (double)referenceMillis )/1000);
                 publishProgress((++progress % 2));
                 try {
                     Thread.sleep(100);
@@ -139,6 +197,16 @@ public class AddLogActivity extends Activity {
             }
 
             return null;
+        }
+
+        private long getMillisFromTimePicker(TimePicker timePicker) {
+            GregorianCalendar pickerTime = new GregorianCalendar();
+            pickerTime.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
+            pickerTime.set(Calendar.MINUTE, timePicker.getCurrentMinute());
+            pickerTime.set(Calendar.SECOND,0);
+            pickerTime.set(Calendar.MILLISECOND,0);
+
+            return pickerTime.getTime().getTime();
         }
     }
 }

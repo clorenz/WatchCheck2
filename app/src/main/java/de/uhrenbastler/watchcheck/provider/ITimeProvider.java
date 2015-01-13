@@ -10,4 +10,6 @@ public interface ITimeProvider {
 
     String getTime();
     boolean isValid();
+    boolean isGps();
+    long getMillis();
 }
