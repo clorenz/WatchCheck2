@@ -68,10 +68,10 @@ public class DisplayResultFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent addLogIntent = new Intent(getActivity(),CheckWatchActivity.class);
-                addLogIntent.putExtra(CheckWatchActivity.EXTRA_WATCH, currentWatch);
-                addLogIntent.putExtra(CheckWatchActivity.EXTRA_LAST_LOG, lastLog);
-                startActivity(addLogIntent);
+                Intent checkWatchIntent = new Intent(getActivity(),CheckWatchActivity.class);
+                checkWatchIntent.putExtra(CheckWatchActivity.EXTRA_WATCH, currentWatch);
+                checkWatchIntent.putExtra(CheckWatchActivity.EXTRA_LAST_LOG, lastLog);
+                startActivity(checkWatchIntent);
             }
         });
         listView.setOnTouchListener(new ShowHideOnScroll(fab));

@@ -19,6 +19,7 @@
         </activity>
         <activity android:name=".EditWatchActivity" android:noHistory="true"/>
         <activity android:name=".CheckWatchActivity" android:noHistory="true" android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".AddLogActivity" android:noHistory="true" android:theme="@android:style/Theme.Dialog"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>

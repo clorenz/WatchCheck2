@@ -2,16 +2,19 @@ package de.uhrenbastler.watchcheck;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import de.uhrenbastler.watchcheck.provider.GpsTimeProvider;
@@ -52,6 +55,36 @@ public class CheckWatchActivity extends Activity {
 
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         gpsTimeProvider = new GpsTimeProvider(lm);
+
+        Button btnMeasure = (Button) findViewById(R.id.buttonMeasure);
+        btnMeasure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long referenceTime = getReferenceTimeMillis();
+                long objectTime = getMillisFromTimePicker(timePicker);
+                referenceTimeUpdater.cancel(true);
+                Intent addLogIntent = new Intent(CheckWatchActivity.this,AddLogActivity.class);
+                addLogIntent.putExtra(AddLogActivity.EXTRA_WATCH, currentWatch);
+                addLogIntent.putExtra(AddLogActivity.EXTRA_REFERENCE_TIME, referenceTime);
+                addLogIntent.putExtra(AddLogActivity.EXTRA_LOG_TIME, objectTime);
+                addLogIntent.putExtra(AddLogActivity.EXTRA_LAST_LOG, lastLog);
+                startActivity(addLogIntent);
+                CheckWatchActivity.this.finish();
+            }
+        });
+    }
+
+    private long getReferenceTimeMillis() {
+        ITimeProvider[] timeProviders = new ITimeProvider[]{gpsTimeProvider,ntpTimeProvider};
+        long referenceMillis=-1;
+
+        for ( ITimeProvider timeProvider : timeProviders) {
+            // We prefer GPS. Only if no GPS, use other time providers, if they provide valid data
+            if ( timeProvider.isValid() && ( timeProvider.isGps() || (referenceMillis==-1))) {
+                referenceMillis = timeProvider.getMillis();
+            }
+        }
+        return referenceMillis;
     }
 
 
@@ -92,6 +125,17 @@ public class CheckWatchActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         referenceTimeUpdater.cancel(true);
+    }
+
+
+    private long getMillisFromTimePicker(TimePicker timePicker) {
+        GregorianCalendar pickerTime = new GregorianCalendar();
+        pickerTime.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
+        pickerTime.set(Calendar.MINUTE, timePicker.getCurrentMinute());
+        pickerTime.set(Calendar.SECOND,0);
+        pickerTime.set(Calendar.MILLISECOND,0);
+
+        return pickerTime.getTime().getTime();
     }
     
 
@@ -199,14 +243,6 @@ public class CheckWatchActivity extends Activity {
             return null;
         }
 
-        private long getMillisFromTimePicker(TimePicker timePicker) {
-            GregorianCalendar pickerTime = new GregorianCalendar();
-            pickerTime.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
-            pickerTime.set(Calendar.MINUTE, timePicker.getCurrentMinute());
-            pickerTime.set(Calendar.SECOND,0);
-            pickerTime.set(Calendar.MILLISECOND,0);
 
-            return pickerTime.getTime().getTime();
-        }
     }
 }

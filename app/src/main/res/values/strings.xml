@@ -28,5 +28,12 @@
     <string name="last_deviation">Last deviation: %s</string>
     <string name="current_deviation">Current deviation: %+.1f sec.</string>
     <string name="no_current_deviation">Current deviation: -</string>
+    <string name="deviation">Deviation:</string>
+    <string name="deviation_format">%+.1f sec.</string>
+    <string name="newPeriod">New period:</string>
+    <string name="position">Position:</string>
+    <string name="temperature">Temperature:</string>
+    <string name="comment">Comment:</string>
+    <string name="save">Save</string>
 
 </resources>

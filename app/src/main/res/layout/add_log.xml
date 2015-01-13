@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+   	<TableLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableLayoutLog1" android:stretchColumns="1">
+        <TableRow android:id="@+id/tableRowLog1" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        	<TextView android:layout_height="wrap_content" android:id="@+id/textViewDeviation" android:layout_width="fill_parent" android:gravity="left" android:text="@string/deviation" android:layout_gravity="center_vertical" android:paddingLeft="10dp"></TextView>
+        	<TextView android:layout_height="wrap_content" android:id="@+id/textViewDeviationValue" android:layout_width="fill_parent" android:gravity="left" android:layout_gravity="left" android:text="@string/deviation_format" android:textAppearance="?android:attr/textAppearanceLarge"></TextView>
+        </TableRow>
+        <TableRow android:id="@+id/tableRowLog2" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        	<TextView android:layout_height="wrap_content" android:id="@+id/textViewNewPeriod" android:layout_width="fill_parent" android:gravity="left" android:text="@string/newPeriod" android:layout_gravity="center_vertical" android:paddingLeft="10dp"></TextView>
+        	<CheckBox android:id="@+id/logCheckBoxNewPeriod" android:layout_width="wrap_content" android:layout_height="wrap_content"></CheckBox>
+        </TableRow>
+        <TableRow android:id="@+id/tableRowLog3" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        	<TextView android:layout_height="wrap_content" android:id="@+id/textViewPosition" android:layout_width="fill_parent" android:gravity="left" android:text="@string/position" android:layout_gravity="center_vertical" android:paddingLeft="10dp"></TextView>
+        	<Spinner android:id="@+id/logSpinnerPosition" android:layout_width="wrap_content" android:layout_height="wrap_content"></Spinner>
+        </TableRow>
+        <TableRow android:id="@+id/tableRowLog4" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        	<TextView android:layout_height="wrap_content" android:id="@+id/textViewTemperature" android:layout_width="fill_parent" android:gravity="left" android:text="@string/temperature" android:layout_gravity="center_vertical" android:paddingLeft="10dp"></TextView>
+        	<Spinner android:id="@+id/logSpinnerTemperature" android:layout_width="wrap_content" android:layout_height="wrap_content"></Spinner>
+        </TableRow>
+        <TableRow android:id="@+id/tableRowLog5" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        	<TextView android:layout_height="wrap_content" android:id="@+id/textViewComment" android:layout_width="fill_parent" android:gravity="left" android:text="@string/comment" android:layout_gravity="center_vertical" android:paddingLeft="10dp"></TextView>
+        	<EditText android:id="@+id/logComment" android:layout_height="wrap_content" android:layout_width="fill_parent">
+        		<requestFocus></requestFocus>
+        	</EditText>	
+        </TableRow>
+    </TableLayout>  
+    
+    <LinearLayout android:layout_width="fill_parent"
+	  	android:layout_height="fill_parent"
+	  	android:layout_gravity="bottom"
+	  	android:orientation="horizontal">
+		<FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/logFrameLayout1" android:background="#AA999999"  android:padding="10dp" android:layout_gravity="bottom">	
+			<Button android:layout_height="wrap_content" android:id="@+id/buttonSave" android:layout_width="fill_parent" android:text="@string/save"></Button>
+		</FrameLayout>
+	</LinearLayout>
+
+</LinearLayout>
