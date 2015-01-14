@@ -16,9 +16,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.sql.Timestamp;
 import java.util.List;
 
+import de.greenrobot.dao.query.DeleteQuery;
+import de.greenrobot.dao.query.Query;
 import de.uhrenbastler.watchcheck.DisplayResultFragment;
 import de.uhrenbastler.watchcheck.MainActivity;
 import de.uhrenbastler.watchcheck.NavigationDrawerFragment;
@@ -26,6 +30,7 @@ import de.uhrenbastler.watchcheck.R;
 import de.uhrenbastler.watchcheck.WatchCheckApplication;
 import de.uhrenbastler.watchcheck.managers.WatchManager;
 import de.uhrenbastler.watchcheck.tools.Logger;
+import watchcheck.db.LogDao;
 import watchcheck.db.Watch;
 import watchcheck.db.WatchDao;
 
@@ -37,12 +42,14 @@ public class EditWatchFragment extends Fragment {
     boolean isNewWatch=false;
     Watch currentWatch=null;
     WatchDao watchDao;
+    LogDao logDao;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         watchDao = ((WatchCheckApplication)getActivity().getApplicationContext()).getDaoSession().getWatchDao();
+        logDao = ((WatchCheckApplication)getActivity().getApplicationContext()).getDaoSession().getLogDao();
     }
 
 
@@ -108,6 +115,9 @@ public class EditWatchFragment extends Fragment {
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
+                            DeleteQuery deleteLogQuery = logDao.queryBuilder().where(
+                                    LogDao.Properties.WatchId.eq(watch.getId())).buildDelete();
+                            deleteLogQuery.executeDeleteWithoutDetachingEntities();
                             watchDao.delete(watch);
                             updateNavigationDrawerAndHeadline(isNewWatch ? null : watch, currentWatch);
                             Toast.makeText(getActivity().getApplicationContext(), String.format(getString(R.string.deletedWatch),
@@ -124,7 +134,7 @@ public class EditWatchFragment extends Fragment {
             public void onClick(View v) {
                 AlertDialog.Builder deleteWatchAlertDialog = new AlertDialog.Builder(v.getContext());
                 deleteWatchAlertDialog.setMessage(String.format(getString(R.string.deleteWatchQuestion),
-                        watch.getName()+(watch.getSerial()!=null?"/"+watch.getSerial():"")))
+                        watch.getName()+(StringUtils.isNotBlank(watch.getSerial())?"/"+watch.getSerial():"")))
                         .setPositiveButton(getString(R.string.yes), dialogClickListener)
                         .setNegativeButton(getString(R.string.no), dialogClickListener)
                         .show();

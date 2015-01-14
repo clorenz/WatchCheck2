@@ -17,7 +17,7 @@
     <string name="delete_this_watch">Delete this watch</string>
     <string name="addWatchHeadline">Add watch</string>
     <string name="createdWatch">Created watch: %s</string>
-    <string name="deleteWatchQuestion">Do you want to delete the watch %s?</string>
+    <string name="deleteWatchQuestion">Do you want to delete the watch %s and all of its logs?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="deletedWatch">Deleted watch %s</string>

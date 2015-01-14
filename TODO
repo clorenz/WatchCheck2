@@ -1,0 +1,16 @@
+- Adding new watch totally confuses the app!
+  It should automatically select that new watch as current watch!!
+- First log on a screen display data twice or too high. Looks, like the fragment and pager are broken
+- Default temperature is -273. Is this really useful??
+
+- Splash screen with update notes
+- "about" screen, point to localized URLs
+- import data (old and new format)
+- export data (new format only)
+- finish log dialog and save data
+- delete data from lists (long press)
+- display averages on lists (keep an eye on former error!)
+- white background for dialogs
+- more polishing
+- create two new webpages (international and german)
+- after deleting a watch, display different logs and update menu!
