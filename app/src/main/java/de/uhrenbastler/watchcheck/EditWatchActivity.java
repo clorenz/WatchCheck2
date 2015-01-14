@@ -156,6 +156,8 @@ public class EditWatchActivity extends ActionBarActivity implements NavigationDr
         List<Watch> watches = WatchManager.retrieveAllWatchesWithCurrentFirstAndAddWatch(
                 (WatchCheckApplication)getApplicationContext(),currentWatch);
 
+        // TODO ListView of NavigationDrawer re-populaten
+
         /*
         NavigationDrawerFragment mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);

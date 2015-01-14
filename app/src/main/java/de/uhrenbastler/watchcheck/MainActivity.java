@@ -1,6 +1,10 @@
 package de.uhrenbastler.watchcheck;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -12,9 +16,11 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
+import android.view.View;
 
 import java.util.List;
 
@@ -29,6 +35,9 @@ public class MainActivity extends ActionBarActivity
 
     private static final String PREFERENCE_CURRENT_WATCH = "currentWatch";
     private List<Watch> watches;
+    private static final String PRIVATE_PREF = "myapp";
+    private static final String VERSION_KEY = "version_number";
+
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -79,7 +88,50 @@ public class MainActivity extends ActionBarActivity
         ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
         adapterViewPager = new DisplayResultPagerAdapter(getApplicationContext(), getSupportFragmentManager(), selectedWatchId);
         vpPager.setAdapter(adapterViewPager);
+
+        init();
     }
+
+    private void init() {
+        SharedPreferences sharedPref    = getSharedPreferences(PRIVATE_PREF, Context.MODE_PRIVATE);
+        int currentVersionNumber        = 0;
+
+        int savedVersionNumber          = sharedPref.getInt(VERSION_KEY, 0);
+
+        try {
+            PackageInfo pi          = getPackageManager().getPackageInfo(getPackageName(), 0);
+            currentVersionNumber    = pi.versionCode;
+        } catch (Exception e) {}
+
+        if (currentVersionNumber > savedVersionNumber) {
+            showWhatsNewDialog();
+
+            SharedPreferences.Editor editor   = sharedPref.edit();
+
+            editor.putInt(VERSION_KEY, currentVersionNumber);
+            editor.commit();
+        }
+    }
+
+
+    private void showWhatsNewDialog() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+
+        View view               = inflater.inflate(R.layout.dialog_whatsnew, null);
+
+        AlertDialog.Builder builder         = new AlertDialog.Builder(this);
+
+        builder.setView(view).setTitle("Whats New")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        builder.create().show();
+    }
+
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
