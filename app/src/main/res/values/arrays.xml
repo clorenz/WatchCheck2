@@ -15,4 +15,8 @@
         <item>+20°</item>
         <item>+36°</item>
     </string-array>
+    <string-array name="resultlist_contextmenu">
+        <item>edit</item>
+        <item>delete</item>
+    </string-array>
 </resources>
