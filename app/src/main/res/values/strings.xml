@@ -35,5 +35,7 @@
     <string name="temperature">Temperature:</string>
     <string name="comment">Comment:</string>
     <string name="save">Save</string>
+    <string name="deleteLogQuestion">Do you really want to delete the selected log entry of %s?</string>
+    <string name="deletedLogEntry">Successfully deleted log entry of %s</string>
 
 </resources>

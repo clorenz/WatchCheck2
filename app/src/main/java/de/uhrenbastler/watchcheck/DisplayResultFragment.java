@@ -1,5 +1,7 @@
 package de.uhrenbastler.watchcheck;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.service.media.MediaBrowserService;
@@ -14,13 +16,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.shamanland.fab.FloatingActionButton;
 import com.shamanland.fab.ShowHideOnScroll;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import de.greenrobot.dao.query.DeleteQuery;
 import de.uhrenbastler.watchcheck.managers.ResultManager;
 import de.uhrenbastler.watchcheck.tools.Logger;
 import de.uhrenbastler.watchcheck.views.ResultListAdapter;
@@ -42,6 +49,8 @@ public class DisplayResultFragment extends Fragment {
     private int period;
     private ArrayAdapter resultListAdapter;
     private ListView listView;
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+
 
     // newInstance constructor for creating fragment with arguments
     public static DisplayResultFragment newInstance(Long watchId, int page) {
@@ -121,7 +130,7 @@ public class DisplayResultFragment extends Fragment {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
             Log logToHandle = (Log)listView.getAdapter().getItem(info.position);
             info.id=logToHandle.getId();            // Yuck!
-            menu.setHeaderTitle("Log from "+logToHandle.getReferenceTime());
+            menu.setHeaderTitle("Log from "+sdf.format(logToHandle.getReferenceTime()));
             String[] menuItems = getResources().getStringArray(R.array.resultlist_contextmenu);
             for (int i = 0; i<menuItems.length; i++) {
                 menu.add(Menu.NONE, i, i, menuItems[i]);
@@ -144,6 +153,7 @@ public class DisplayResultFragment extends Fragment {
             case 0: Logger.debug("Edit item "+logToHandle.getReferenceTime());
                 break;
             case 1: Logger.debug("Delete item "+logToHandle.getReferenceTime());
+                displayDeleteDialog(info.id,sdf.format(logToHandle.getReferenceTime()) );
                 break;
         }
 
@@ -151,4 +161,37 @@ public class DisplayResultFragment extends Fragment {
 
         return true;
     }
+
+
+    private void displayDeleteDialog(final long logId, final String dateString) {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        Logger.debug("Delete log "+logId);
+                        LogDao logDao = ((WatchCheckApplication)getActivity().getApplicationContext()).getDaoSession().getLogDao();
+                        logDao.deleteByKey(logId);
+                        Toast.makeText(getActivity().getApplicationContext(), String.format(getString(R.string.deletedLogEntry),
+                                dateString), Toast.LENGTH_SHORT).show();
+                        log = ResultManager.getLogsForWatchAndPeriod(getActivity().getApplicationContext(),watchId, period);
+                        if ( listView!=null ) {
+                            resultListAdapter.clear();
+                            resultListAdapter.addAll(log);
+                            resultListAdapter.notifyDataSetChanged();
+                            listView.invalidateViews();
+                        }
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder deleteWatchAlertDialog = new AlertDialog.Builder(DisplayResultFragment.this.getActivity());
+        deleteWatchAlertDialog.setMessage(String.format(getString(R.string.deleteLogQuestion), dateString))
+                .setPositiveButton(getString(R.string.yes), dialogClickListener)
+                .setNegativeButton(getString(R.string.no), dialogClickListener)
+                .show();
+    };
 }
