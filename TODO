@@ -12,3 +12,7 @@
 - more polishing
 - create two new webpages (international and german)
 - after deleting a watch, display different logs and update menu!
+- As long, as no reliable time source is found, the add log screen is garbled!
+- For whatever reason, GPS time is 1sec ahead NTP time
+- App terminates after a few minutes
+- landscape?
