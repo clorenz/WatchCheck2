@@ -1,12 +1,15 @@
 package de.uhrenbastler.watchcheck.views;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -23,6 +26,8 @@ public class ResultListAdapter extends ArrayAdapter<Log> {
     private final Context context;
     private final List<Log> logs;
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy\nHH:mm:ss");
+    private static final String[] POSITIONARR = { "","DU","DD","12U","3U","6U","9U" };
+    private static final int[] TEMPARR = { -273, 4, 20, 36 };
 
     public ResultListAdapter(Context context, List<Log> logs) {
         super(context, R.layout.result_row, logs);
@@ -40,9 +45,6 @@ public class ResultListAdapter extends ArrayAdapter<Log> {
         TextView tvTimestampReference = (TextView) rowView.findViewById(R.id.result_timestamp_reference);
         tvTimestampReference.setText(sdf.format(log.getReferenceTime()));
 
-        TextView tvTimestampWatch = (TextView) rowView.findViewById(R.id.result_timestamp_watch);
-        tvTimestampWatch.setText(sdf.format(log.getWatchTime()));
-
         double offset = ((double)(log.getWatchTime().getTime() - log.getReferenceTime().getTime())) / 1000d;
         TextView tvOffset = (TextView) rowView.findViewById(R.id.result_offset);
         tvOffset.setText(String.format("%+.1f s", offset));
@@ -59,6 +61,26 @@ public class ResultListAdapter extends ArrayAdapter<Log> {
 
             TextView tvDeviation = (TextView) rowView.findViewById(R.id.result_deviation_per_day);
             tvDeviation.setText(String.format("%+.1f s/d", deviation));
+        }
+
+        Resources res = rowView.getResources();
+        String[] positions = res.getStringArray(R.array.result_positions);
+        String[] temperatures = res.getStringArray(R.array.temperatures);
+
+        int posIndex = ArrayUtils.indexOf(POSITIONARR, log.getPosition());
+        if ( posIndex==-1) {
+            posIndex=0;
+        }
+        TextView tvPosition = (TextView) rowView.findViewById(R.id.result_position);
+        tvPosition.setText(positions[posIndex]);
+
+        if ( posIndex>0) {
+            // Watch was not worn
+            int tempIndex = ArrayUtils.indexOf(TEMPARR, log.getTemperature());
+            if (tempIndex > -1) {
+                TextView tvTemperature = (TextView) rowView.findViewById(R.id.result_temperature);
+                tvTemperature.setText(temperatures[tempIndex]);
+            }
         }
 
         return rowView;

@@ -201,7 +201,7 @@ public class CheckWatchActivity extends Activity {
                 tvTime[number].setText(String.format(format[number], timestamp[number]));
                 number++;
             }
-            if ( deviation != Double.MIN_VALUE) {
+            if ( deviation > -1440 && deviation < 1440) {
                 tvDeviation.setText(String.format(formatTvDeviation, deviation));
             } else {
                 tvDeviation.setText(getString(R.string.no_current_deviation));

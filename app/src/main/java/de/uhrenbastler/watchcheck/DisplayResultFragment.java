@@ -151,6 +151,16 @@ public class DisplayResultFragment extends Fragment {
 
         switch ( menuItemIndex ) {
             case 0: Logger.debug("Edit item "+logToHandle.getReferenceTime());
+                Intent addLogIntent = new Intent(this.getActivity(),AddLogActivity.class);
+                addLogIntent.putExtra(AddLogActivity.EXTRA_WATCH, currentWatch);
+                addLogIntent.putExtra(AddLogActivity.EXTRA_EDIT_LOG, logToHandle);
+                startActivity(addLogIntent);
+                if ( listView!=null ) {
+                    resultListAdapter.clear();
+                    resultListAdapter.addAll(log);
+                    resultListAdapter.notifyDataSetChanged();
+                    listView.invalidateViews();
+                }
                 break;
             case 1: Logger.debug("Delete item "+logToHandle.getReferenceTime());
                 displayDeleteDialog(info.id,sdf.format(logToHandle.getReferenceTime()) );

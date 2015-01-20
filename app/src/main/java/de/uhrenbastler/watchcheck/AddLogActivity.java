@@ -19,7 +19,6 @@ import de.uhrenbastler.watchcheck.tools.Logger;
 import watchcheck.db.Log;
 import watchcheck.db.LogDao;
 import watchcheck.db.Watch;
-import watchcheck.db.WatchDao;
 
 /**
  * Created by clorenz on 13.01.15.
@@ -34,12 +33,14 @@ public class AddLogActivity extends Activity {
     private EditText comment;
 
     private Log lastLog;
+    private Log editLog;
 
 
     public static final String EXTRA_WATCH = "watch";
     public static final String EXTRA_REFERENCE_TIME = "reference_time";
     public static final String EXTRA_LOG_TIME = "log_time";
     public static final String EXTRA_LAST_LOG = "last_log";     // To pre-fill the spinners of temperature and position
+    public static final String EXTRA_EDIT_LOG = "edit_log";     // current log to be edited
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +50,12 @@ public class AddLogActivity extends Activity {
         setContentView(R.layout.add_log);
 
         lastLog = (Log) getIntent().getSerializableExtra(EXTRA_LAST_LOG);
-        final Watch currentWatch = (Watch) getIntent().getSerializableExtra(EXTRA_WATCH);
-        final long referenceTime = getIntent().getLongExtra(EXTRA_REFERENCE_TIME, -1);
-        final long watchTime = getIntent().getLongExtra(EXTRA_LOG_TIME, -1);
+
+        editLog = (Log) getIntent().getSerializableExtra(EXTRA_EDIT_LOG);
+
+        final long currentWatchId = (editLog!=null?editLog.getWatchId():((Watch) getIntent().getSerializableExtra(EXTRA_WATCH)).getId());
+        final long referenceTime = editLog!=null ? editLog.getReferenceTime().getTime() : getIntent().getLongExtra(EXTRA_REFERENCE_TIME, -1);
+        final long watchTime = editLog!=null ? editLog.getWatchTime().getTime() : getIntent().getLongExtra(EXTRA_LOG_TIME, -1);
 
         double deviation = (double)(watchTime - referenceTime)/1000d;
 
@@ -59,30 +63,49 @@ public class AddLogActivity extends Activity {
         ((TextView) findViewById(R.id.logDeviation)).setText(String.format(deviationFormat, deviation));
 
         saveButton = (Button) findViewById(R.id.buttonSave);
+        if ( editLog!=null ) {
+            saveButton.setText(R.string.button_update);
+        }
         comment = (EditText) findViewById(R.id.logComment);
 
-        prefillFormByLastLog(lastLog);
+        prefillForm(editLog != null ? editLog : lastLog, editLog != null);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int period=0;
-                if ( lastLog!=null) {
-                    period = startFlag.isChecked()?lastLog.getPeriod()+1:lastLog.getPeriod();
+                if ( editLog!=null) {
+                    updateLogEntry(editLog);
+                } else {
+                    createNewLogEntry(currentWatchId, referenceTime, watchTime);
                 }
-                saveLog(currentWatch.getId(), period,
-                        referenceTime, watchTime,
-                        POSITIONARR[(int)positionSpinner.getSelectedItemId()],
-                        TEMPARR[(int)temperatureSpinner.getSelectedItemId()],
-                        comment.getEditableText().toString());
                 finish();
             }
         });
     }
 
+    private void createNewLogEntry(long currentWatchId, long referenceTime, long watchTime) {
+        int period = 0;
+        if (lastLog != null) {
+            period = startFlag.isChecked() ? lastLog.getPeriod() + 1 : lastLog.getPeriod();
+        }
+        createLog(currentWatchId, period,
+                referenceTime, watchTime,
+                POSITIONARR[(int) positionSpinner.getSelectedItemId()],
+                TEMPARR[(int) temperatureSpinner.getSelectedItemId()],
+                comment.getEditableText().toString());
+    }
 
-    private void saveLog(long watchId, int period, long referenceTime, long watchTime,
-                         String position, int temperature, String comment) {
+    private void updateLogEntry(Log editLog) {
+        updateLog(editLog.getWatchId(), editLog.getId(), editLog.getPeriod(), editLog.getReferenceTime().getTime(),
+                editLog.getWatchTime().getTime(),
+                POSITIONARR[(int) positionSpinner.getSelectedItemId()],
+                TEMPARR[(int) temperatureSpinner.getSelectedItemId()],
+                comment.getEditableText().toString());
+    }
+
+
+    private void createLog(long watchId, int period, long referenceTime, long watchTime,
+                           String position, int temperature, String comment) {
         LogDao logDao = ((WatchCheckApplication)getApplicationContext()).getDaoSession().getLogDao();
         Log log = new Log(null, watchId, period, new Date(referenceTime), new Date(watchTime),
                 position, temperature, comment);
@@ -90,8 +113,17 @@ public class AddLogActivity extends Activity {
         Logger.info("Added log "+log);
     }
 
+    private void updateLog(long watchId, long logId, int period, long referenceTime, long watchTime,
+                                String position, int temperature, String comment) {
+        LogDao logDao = ((WatchCheckApplication)getApplicationContext()).getDaoSession().getLogDao();
+        Log log = new Log(logId, watchId, period, new Date(referenceTime), new Date(watchTime),
+                position, temperature, comment);
+        logDao.update(log);
+        Logger.info("Updated log "+log);
+    }
 
-    private void prefillFormByLastLog(Log lastLog) {
+
+    private void prefillForm(Log lastLog, boolean hideStartflag) {
         positionSpinner = (Spinner) findViewById(R.id.logSpinnerPosition);
         ArrayAdapter<?> positionAdapter = ArrayAdapter.createFromResource( getApplicationContext(),
                         R.array.positions,android.R.layout.simple_spinner_item);
@@ -118,5 +150,11 @@ public class AddLogActivity extends Activity {
         startFlag = (CheckBox) findViewById(R.id.logCheckBoxNewPeriod);
         startFlag.setChecked(lastLog==null);
         startFlag.setEnabled(lastLog!=null);
+        startFlag.setVisibility(hideStartflag?View.INVISIBLE:View.VISIBLE);
+
+        if ( lastLog!=null ) {
+            TextView startFlagLabel = (TextView) findViewById(R.id.textViewNewPeriod);
+            startFlagLabel.setVisibility(View.INVISIBLE);
+        }
     }
 }

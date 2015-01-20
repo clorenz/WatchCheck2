@@ -37,5 +37,14 @@
     <string name="save">Save</string>
     <string name="deleteLogQuestion">Do you really want to delete the selected log entry of %s?</string>
     <string name="deletedLogEntry">Successfully deleted log entry of %s</string>
+    <string name="button_update">update</string>
+    <string name="reference">Reference</string>
+    <string name="watch">Watch</string>
+    <string name="rate">Rate</string>
+    <string name="list_header_reference">Reference</string>
+    <string name="list_header_deviation">Deviation</string>
+    <string name="list_header_rate">Rate</string>
+    <string name="list_header_position">Pos.</string>
+    <string name="list_header_temperature">Temp.</string>
 
 </resources>

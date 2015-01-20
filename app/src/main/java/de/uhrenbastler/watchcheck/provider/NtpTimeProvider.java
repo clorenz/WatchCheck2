@@ -84,6 +84,7 @@ public class NtpTimeProvider implements ITimeProvider{
 
     private void calculateNtpOffset() {
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+
         if ( networkInfo!=null && networkInfo.isConnected()) {
             try {
                 DatagramSocket socket = new DatagramSocket();

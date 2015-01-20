@@ -9,6 +9,15 @@
         <item>vertical, 6 up</item>
         <item>vertical, 9 up</item>
     </string-array>
+    <string-array name="result_positions">
+        <item>worn</item>
+        <item>dial up</item>
+        <item>dial down</item>
+        <item>12 up</item>
+        <item>3 up</item>
+        <item>6 up</item>
+        <item>9 up</item>
+    </string-array>
     <string-array name="temperatures">
         <item>skin</item>
         <item>+4°</item>

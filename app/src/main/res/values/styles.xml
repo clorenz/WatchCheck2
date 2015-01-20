@@ -9,6 +9,10 @@
         <item name="floatingActionButtonStyle">@style/AppTheme.Fab</item>
     </style>
 
+    <style name="ListHeadline" parent="Base.TextAppearance.AppCompat.SearchResult.Title">
+        <item name="android:textSize">11dp</item>
+    </style>
+
     <style name="SmallListItem" parent="Base.TextAppearance.AppCompat.Small">
         <item name="android:textSize">10dp</item>
     </style>
@@ -19,6 +23,9 @@
 
     <style name="AppTheme.Fab" parent="FloatingActionButton">
         <item name="floatingActionButtonColor">@color/my_fab_color</item>
+    </style>
+
+    <style name="MediumListItem" parent="Base.TextAppearance.AppCompat.Small">
     </style>
 
     <color name="colorPrimary">#CCC</color>
