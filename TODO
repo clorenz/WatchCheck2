@@ -5,7 +5,7 @@
 
 - Vibrate on logging
 - "about" screen, point to localized URLs
-- import data (old and new format, with file chooser)
+- import data (old and new format, with file chooser) http://stackoverflow.com/questions/7856959/android-file-chooser
 - display averages on lists (keep an eye on former error!)
 - white background for dialogs
 - more polishing
