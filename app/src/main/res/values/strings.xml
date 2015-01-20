@@ -46,5 +46,9 @@
     <string name="list_header_rate">Rate</string>
     <string name="list_header_position">Pos.</string>
     <string name="list_header_temperature">Temp.</string>
+    <string name="menu_about">About</string>
+    <string name="app_about">(C) 2011-2015 by Christoph Lorenz, www.uhrenbastler.de.\n\nAll rights reserved, no warranty at all!\nUse at your own risk!</string>
+    <string name="menu_export">Export data</string>
+    <string name="dataExported">Data exported</string>
 
 </resources>

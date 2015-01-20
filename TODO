@@ -3,9 +3,9 @@
 - First log on a screen display data twice or too high. Looks, like the fragment and pager are broken
 - Default temperature is -273. Is this really useful??
 
+- Vibrate on logging
 - "about" screen, point to localized URLs
-- import data (old and new format)
-- export data (new format only)
+- import data (old and new format, with file chooser)
 - display averages on lists (keep an eye on former error!)
 - white background for dialogs
 - more polishing
@@ -14,3 +14,5 @@
 - For whatever reason, GPS time is 1sec ahead NTP time
 - App terminates after a few minutes
 - landscape?
+
+- localization

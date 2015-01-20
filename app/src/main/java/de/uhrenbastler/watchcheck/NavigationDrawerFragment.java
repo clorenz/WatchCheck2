@@ -1,5 +1,8 @@
 package de.uhrenbastler.watchcheck;
 
+import android.app.AlertDialog;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
@@ -26,6 +29,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.uhrenbastler.watchcheck.tools.DataExporter;
 import de.uhrenbastler.watchcheck.tools.Logger;
 import de.uhrenbastler.watchcheck.views.EditWatchFragment;
 import de.uhrenbastler.watchcheck.views.SelectWatchArrayAdapter;
@@ -321,10 +325,34 @@ public class NavigationDrawerFragment extends Fragment {
             return true;
         }
 
-        if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
-            return true;
+        switch (item.getItemId()) {
+            case R.id.menu_about: {
+                PackageInfo pInfo=null;
+                try {
+                    pInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), PackageManager.GET_META_DATA);
+                } catch (PackageManager.NameNotFoundException e) {}
+                new AlertDialog.Builder(getActivity()).setTitle(this.getString(R.string.app_name)+
+                        "\nVersion: "+(pInfo!=null?pInfo.versionName:"unknown"))
+                        .setCancelable(true).setIcon(R.drawable.ic_drawer)
+                        .setMessage(this.getString(R.string.app_about))
+                        .setPositiveButton(this.getString(android.R.string.ok), null).create().show();
+                return true;
+            }
+            case R.id.menu_export: {
+                try {
+                    String filename = new DataExporter().export(getActivity());
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle(getActivity().getString(R.string.dataExported))
+                            .setMessage(filename)
+                            .setCancelable(true)
+                            .setPositiveButton(this.getString(android.R.string.ok), null).create().show();
+                } catch (Exception e) {
+                    Logger.error(e.getMessage(),e);
+                }
+                return true;
+            }
         }
+
 
         return super.onOptionsItemSelected(item);
     }
