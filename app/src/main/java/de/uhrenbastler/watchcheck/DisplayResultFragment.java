@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shamanland.fab.FloatingActionButton;
@@ -49,6 +50,7 @@ public class DisplayResultFragment extends Fragment {
     private int period;
     private ArrayAdapter resultListAdapter;
     private ListView listView;
+    private TextView averageDeviation;
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
 
@@ -86,6 +88,31 @@ public class DisplayResultFragment extends Fragment {
             resultListAdapter.notifyDataSetChanged();
             listView.invalidateViews();
         }
+        calculateAverageDeviation();
+
+
+    }
+
+    private void calculateAverageDeviation() {
+        Logger.debug("Avg.deviation");
+        // avg. deviation
+        if ( averageDeviation!=null) {
+            String avgDeviationFormat = getString(R.string.list_average_deviation);
+            if (log.size() > 1) {
+                // We can calculate the avg. deviation only if we have at least one daily rate!
+                long diffReferenceMillis = log.get(log.size() - 1).getReferenceTime().getTime() - log.get(0).getReferenceTime().getTime();
+                long diffWatchMillis = log.get(log.size() - 1).getWatchTime().getTime() - log.get(0).getWatchTime().getTime();
+
+                double diffReferenceInDays = (double) diffReferenceMillis / (double) 86400000d;
+                double avgDeviation = ((double) diffWatchMillis / diffReferenceInDays) / 1000 - 86400d;
+
+                Logger.debug("Avg deviation=" + avgDeviation);
+
+                averageDeviation.setText(String.format(avgDeviationFormat, avgDeviation));
+            } else {
+                averageDeviation.setText(getString(R.string.list_no_average_deviation));
+            }
+        }
     }
 
     // Inflate the view for the fragment based on layout XML
@@ -93,6 +120,7 @@ public class DisplayResultFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_display_result, container, false);
         listView = (ListView) view.findViewById(R.id.resultListView);
+        averageDeviation = (TextView) view.findViewById(R.id.result_footer);
         resultListAdapter = new ResultListAdapter(this.getActivity().getApplicationContext(), log);
         listView.setAdapter(resultListAdapter);
         registerForContextMenu(listView);
@@ -120,6 +148,8 @@ public class DisplayResultFragment extends Fragment {
         });
         */
 
+        Logger.debug("Before avg. deviation");
+        calculateAverageDeviation();
 
         return view;
     }

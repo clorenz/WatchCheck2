@@ -50,5 +50,7 @@
     <string name="app_about">(C) 2011-2015 by Christoph Lorenz, www.uhrenbastler.de.\n\nAll rights reserved, no warranty at all!\nUse at your own risk!</string>
     <string name="menu_export">Export data</string>
     <string name="dataExported">Data exported</string>
+    <string name="list_average_deviation">Average deviation: %+.1f s/d</string>
+    <string name="list_no_average_deviation">No average deviation yet</string>
 
 </resources>
