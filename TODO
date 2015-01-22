@@ -1,12 +1,14 @@
 - Adding new watch totally confuses the app and the navigation drawer
   It should automatically select that new watch as current watch!!
+- It should automatically select the last tab (last period)
 - First log on a screen display data twice or too high. Looks, like the fragment and pager are broken
 - Default temperature is -273. Is this really useful??
 
 - Vibrate on logging
+- (+)-Button sometimes disappears and should be above the average
 - "about" screen, point to localized URLs
 - import data (old and new format, with file chooser) http://stackoverflow.com/questions/7856959/android-file-chooser
-- display averages on lists (keep an eye on former error!)
+- import/export data from and to Google Drive
 - white background for dialogs
 - more polishing
 - create two new webpages (international and german)
