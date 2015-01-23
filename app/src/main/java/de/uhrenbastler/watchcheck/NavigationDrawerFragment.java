@@ -1,6 +1,7 @@
 package de.uhrenbastler.watchcheck;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.v4.app.FragmentTransaction;
@@ -25,6 +26,9 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.devpaul.filepickerlibrary.FilePickerActivity;
+import com.devpaul.filepickerlibrary.enums.FileType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -351,10 +355,30 @@ public class NavigationDrawerFragment extends Fragment {
                 }
                 return true;
             }
+            case R.id.menu_import: {
+                Intent filePickerIntent = new Intent(getActivity(), FilePickerActivity.class);
+                filePickerIntent.putExtra(FilePickerActivity.REQUEST_CODE, FilePickerActivity.REQUEST_DIRECTORY);
+                startActivityForResult(filePickerIntent, FilePickerActivity.REQUEST_DIRECTORY);
+            }
         }
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == FilePickerActivity.REQUEST_DIRECTORY && resultCode == Activity.RESULT_OK) {
+            Toast.makeText(getActivity(), "File Selected: " + data
+                            .getStringExtra(FilePickerActivity.FILE_EXTRA_DATA_PATH),
+                    Toast.LENGTH_LONG).show();
+        } else if (requestCode == FilePickerActivity.REQUEST_FILE && resultCode == Activity.RESULT_OK) {
+            Toast.makeText(getActivity(), "File Selected: " + data
+                            .getStringExtra(FilePickerActivity.FILE_EXTRA_DATA_PATH),
+                    Toast.LENGTH_LONG).show();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**
