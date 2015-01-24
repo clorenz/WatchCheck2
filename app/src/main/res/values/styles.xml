@@ -1,14 +1,5 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="theme">@style/Base.V21.Theme.AppCompat.Light</item>
-        <item name="floatingActionButtonStyle">@style/AppTheme.Fab</item>
-    </style>
-
     <style name="ListHeadline" parent="Base.TextAppearance.AppCompat.SearchResult.Title">
         <item name="android:textSize">11dp</item>
     </style>
@@ -31,6 +22,7 @@
     <color name="colorPrimary">#CCC</color>
     <color name="colorPrimaryBack">#999</color>
     <color name="colorPrimaryDark">#333</color>
+    <color name="accent">#AFF</color>
     <color name="my_fab_color">#369</color>
 
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -58,7 +59,10 @@
         android:layout_gravity="bottom"
         android:orientation="horizontal">
         <FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/frameLayout1" android:background="#AA999999"  android:padding="10dp" android:layout_gravity="bottom">
-            <Button android:layout_height="wrap_content" android:id="@+id/buttonMeasure" android:layout_width="fill_parent" android:text="@string/measure"></Button>
+            <com.gc.materialdesign.views.ButtonRectangle
+                android:background="#1E88E5"
+                materialdesign:animate="false"
+                android:layout_height="wrap_content" android:id="@+id/buttonMeasure" android:layout_width="fill_parent" android:text="@string/measure"></com.gc.materialdesign.views.ButtonRectangle>
         </FrameLayout>
     </LinearLayout>
 

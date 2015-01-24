@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.gc.materialdesign.views.ButtonRectangle;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -56,7 +58,7 @@ public class CheckWatchActivity extends Activity {
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         gpsTimeProvider = new GpsTimeProvider(lm);
 
-        Button btnMeasure = (Button) findViewById(R.id.buttonMeasure);
+        ButtonRectangle btnMeasure = (ButtonRectangle) findViewById(R.id.buttonMeasure);
         btnMeasure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,7 +156,7 @@ public class CheckWatchActivity extends Activity {
         int colorGreen;
         double deviation = Double.MIN_VALUE;
         boolean valid=false;
-        Button btnMeasure;
+        ButtonRectangle btnMeasure;
 
         ReferenceTimeUpdater(ITimeProvider[] timeProviders, Integer[] viewIds, TimePicker timepicker) {
             int number=0;
@@ -177,7 +179,7 @@ public class CheckWatchActivity extends Activity {
             tvDeviation = (TextView) findViewById(R.id.currentdeviation);
             formatTvDeviation = tvDeviation.getText().toString();
 
-            btnMeasure = (Button) findViewById(R.id.buttonMeasure);
+            btnMeasure = (ButtonRectangle) findViewById(R.id.buttonMeasure);
 
             Logger.info("Starting reference time update. Runnable="+runnable);
         }

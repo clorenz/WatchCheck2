@@ -53,6 +53,19 @@ public class DisplayResultPagerAdapter extends FragmentPagerAdapter {
             String start = ResultManager.getPeriodStartDate(context, watchId, periods.get(position));
             String end = ResultManager.getPeriodEndDate(context, watchId, periods.get(position));
 
+            String[] startParts = start.split("\\.");
+            String[] endParts = end.split("\\.");
+
+            if ( endParts[2].equals(startParts[2])) {
+                // Same year. Omit this from start!
+                if ( endParts[1].equals(startParts[1])) {
+                    // Even the same month! Omit this from start, too
+                    start = startParts[0]+".";
+                } else {
+                    start = startParts[0] + "." + startParts[1]+".";
+                }
+            }
+
             String titleString = start + " - " + end;
             SpannableStringBuilder sb = new SpannableStringBuilder(titleString);
             TextAppearanceSpan headerSpan = new TextAppearanceSpan(null, 0, 14, null, null);

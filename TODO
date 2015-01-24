@@ -8,6 +8,8 @@
 - Vibrate on logging
 - (+)-Button sometimes disappears and should be above the average
 - "about" screen, point to localized URLs
+- importer crashes and does not update results below
+- "Help" goes to the localized webpages
 - import/export data from and to Google Drive
 - Material design: https://github.com/navasmdc/MaterialDesignLibrary
 - white background for dialogs

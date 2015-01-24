@@ -16,7 +16,59 @@
         </TableRow>
         <TableRow android:id="@+id/tableRowLog3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="5dp">
         	<TextView android:textColor="@color/abc_primary_text_material_light" android:layout_height="wrap_content" android:id="@+id/textViewPosition" android:layout_width="fill_parent" android:gravity="left" android:text="@string/position" android:layout_gravity="center_vertical"></TextView>
-        	<Spinner android:textColor="@color/abc_primary_text_material_light" android:id="@+id/logSpinnerPosition" android:layout_width="wrap_content" android:layout_height="wrap_content"></Spinner>
+        	<RadioGroup
+                android:id="@+id/logPosition">
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+                    <RadioButton
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/worn"
+                        android:id="@+id/pos_worn"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+                    <RadioButton
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/dial_up"
+                        android:id="@+id/pos_DU"/>
+                    <RadioButton
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/dial_down"
+                        android:id="@+id/pos_DD"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+                    <RadioButton
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/pos_12o"
+                        android:id="@+id/pos_12O"/>
+                    <RadioButton
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/pos_3o"
+                        android:id="@+id/pos_3O"/>
+                    <RadioButton
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/pos_6o"
+                        android:id="@+id/pos_6O"/>
+                    <RadioButton
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/pos_9o"
+                        android:id="@+id/pos_9O"/>
+                </LinearLayout>
+        	</RadioGroup>
+            <!--
+            <Spinner android:textColor="@color/abc_primary_text_material_light" android:id="@+id/logSpinnerPosition" android:layout_width="wrap_content" android:layout_height="wrap_content"></Spinner>
+            -->
         </TableRow>
         <TableRow android:id="@+id/tableRowLog4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="5dp">
         	<TextView android:textColor="@color/abc_primary_text_material_light" android:layout_height="wrap_content" android:id="@+id/textViewTemperature" android:layout_width="fill_parent" android:gravity="left" android:text="@string/temperature" android:layout_gravity="center_vertical"></TextView>

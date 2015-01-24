@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item android:id="@+id/menu_about" android:title="@string/menu_about"
         android:showAsAction="withText|ifRoom" />
+    <item android:id="@+id/menu_help" android:title="@string/menu_help"
+        android:showAsAction="withText|ifRoom" />
+    <item android:id="@+id/menu_whatsnew" android:title="@string/menu_whatsnew"
+        android:showAsAction="withText|ifRoom" />
     <item android:id="@+id/menu_export" android:title="@string/menu_export"
         android:orderInCategory="100" android:showAsAction="never" />
     <item android:id="@+id/menu_import" android:title="@string/menu_import"

@@ -124,6 +124,7 @@ public class AddLogActivity extends Activity {
 
 
     private void prefillForm(Log lastLog, boolean hideStartflag) {
+        /*
         positionSpinner = (Spinner) findViewById(R.id.logSpinnerPosition);
         ArrayAdapter<?> positionAdapter = ArrayAdapter.createFromResource( getApplicationContext(),
                         R.array.positions,android.R.layout.simple_spinner_item);
@@ -134,6 +135,7 @@ public class AddLogActivity extends Activity {
                 positionSpinner.setSelection(ArrayUtils.indexOf(POSITIONARR, lastLog.getPosition()));
         else
                 positionSpinner.setSelection(0);
+        */
 
         temperatureSpinner = (Spinner) findViewById(R.id.logSpinnerTemperature);
         ArrayAdapter<?> temperatureAdapter = ArrayAdapter.createFromResource( getApplicationContext(),

@@ -1,9 +1,11 @@
 package de.uhrenbastler.watchcheck;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
@@ -25,7 +27,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.gc.materialdesign.views.ButtonFlat;
+import com.gc.materialdesign.widgets.Dialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -333,11 +339,12 @@ public class NavigationDrawerFragment extends Fragment {
                 try {
                     pInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), PackageManager.GET_META_DATA);
                 } catch (PackageManager.NameNotFoundException e) {}
-                new AlertDialog.Builder(getActivity()).setTitle(this.getString(R.string.app_name)+
-                        "\nVersion: "+(pInfo!=null?pInfo.versionName:"unknown"))
-                        .setCancelable(true).setIcon(R.drawable.ic_drawer)
-                        .setMessage(this.getString(R.string.app_about))
-                        .setPositiveButton(this.getString(android.R.string.ok), null).create().show();
+                final Dialog aboutDialog = new Dialog(getActivity(),
+                        this.getString(R.string.app_name)+" "+
+                                (pInfo!=null?pInfo.versionName:"unknown"),
+                        this.getString(R.string.app_about));
+                aboutDialog.setButtonCancel(null);
+                aboutDialog.show();
                 return true;
             }
             case R.id.menu_export: {
@@ -375,6 +382,29 @@ public class NavigationDrawerFragment extends Fragment {
                 ); //You can change the default filename using the public variable "Default_File_Name"
                 FileOpenDialog.Default_File_Name = "";
                 FileOpenDialog.chooseFile_or_Dir();
+                return true;
+            }
+            case R.id.menu_whatsnew: {
+                LayoutInflater inflater = LayoutInflater.from(getActivity());
+                View view               = inflater.inflate(R.layout.dialog_whatsnew, null);
+
+                AlertDialog.Builder builder         = new AlertDialog.Builder(getActivity());
+
+                builder.setView(view).setTitle("Whats New")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                builder.create().show();
+                return true;
+            }
+            case R.id.menu_help: {
+                String helpUrl = getActivity().getString(R.string.url_help);
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl));
+                startActivity(browserIntent);
             }
         }
 

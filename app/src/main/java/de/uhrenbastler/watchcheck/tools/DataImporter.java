@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -98,6 +99,7 @@ public class DataImporter {
     }
 
 
+    // TODO: Buggy, when watches change, periods are broken!! TODO: Sort strings according to watchIDs
     private void importDataVersion1() throws Exception {
         watchDao.deleteAll();
         logDao.deleteAll();
@@ -122,6 +124,15 @@ public class DataImporter {
             Watch watch = new Watch(watchId, watchName, serial, createDate, comment);
             watchDao.insert(watch);
         }
+
+        Collections.sort(logsData, new LogsDataSorter());
+        Logger.debug("Sorted logsData = ");
+        for ( String logData : logsData ) {
+            String[] logDataParts = logData.split("\\|");
+            Logger.debug(ArrayUtils.toString(logDataParts));
+        }
+        Logger.debug("-----------------------");
+
 
         int period=-1;
         int oldWatchId=-1;
@@ -203,6 +214,29 @@ public class DataImporter {
             String comment = logDataParts[7];
             Log log = new Log(logId, watchId, period, referenceTime, watchTime, position, temperature, comment);
             logDao.insert(log);
+        }
+    }
+
+    private class LogsDataSorter implements java.util.Comparator<String> {
+        @Override
+        public int compare(String o1, String o2) {
+            if ( o1.equals(o2))
+                return 0;
+
+            String[] o1Parts = o1.split("\\|");
+            String[] o2Parts = o2.split("\\|");
+
+            int o1WatchId = Integer.parseInt(o1Parts[1]);
+            int o2WatchId = Integer.parseInt(o2Parts[1]);
+
+            if ( o1WatchId==o2WatchId) {
+                // sort according to log id
+                long o1LogId = Long.parseLong(o1Parts[0]);
+                long o2LogId = Long.parseLong(o2Parts[0]);
+
+                return Long.valueOf(o1LogId).compareTo(o2LogId);
+            } else
+                return Integer.valueOf(o1WatchId).compareTo(o2WatchId);
         }
     }
 }

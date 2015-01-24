@@ -54,5 +54,15 @@
     <string name="list_no_average_deviation">No average deviation yet</string>
     <string name="menu_import">Import data</string>
     <string name="dataImported">Data imported</string>
-
+    <string name="menu_whatsnew">What\'s new?</string>
+    <string name="worn">worn</string>
+    <string name="dial_up">dial up</string>
+    <string name="dial_down">dial down</string>
+    <string name="pos_12o">12 up</string>
+    <string name="pos_3o">3 up</string>
+    <string name="pos_6o">6 up</string>
+    <string name="pos_9o">9 up</string>
+    <string name="menu_help">Help</string>
+    <string name="url_help">http://17jewels.info/</string>
+    <string name="whatsnew">What\'s New</string>
 </resources>
