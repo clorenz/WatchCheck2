@@ -3,6 +3,7 @@
 - It should automatically select the last tab (last period)
 - First log on a screen display data twice or too high. Looks, like the fragment and pager are broken
 - Default temperature is -273. Is this really useful??
+- Log dialog with radio buttons instead of spinner
 
 - Vibrate on logging
 - (+)-Button sometimes disappears and should be above the average
