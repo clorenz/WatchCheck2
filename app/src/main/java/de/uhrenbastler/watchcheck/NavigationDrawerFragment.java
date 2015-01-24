@@ -18,6 +18,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -385,20 +386,14 @@ public class NavigationDrawerFragment extends Fragment {
                 return true;
             }
             case R.id.menu_whatsnew: {
-                LayoutInflater inflater = LayoutInflater.from(getActivity());
-                View view               = inflater.inflate(R.layout.dialog_whatsnew, null);
-
-                AlertDialog.Builder builder         = new AlertDialog.Builder(getActivity());
-
-                builder.setView(view).setTitle("Whats New")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                builder.create().show();
+                final Dialog whatsNewDialog = new Dialog(getActivity(),
+                        this.getString(R.string.whatsnew),"");
+                whatsNewDialog.setButtonCancel(null);
+                whatsNewDialog.show();
+                whatsNewDialog.getButtonAccept().setText(getString(R.string.ok));
+                TextView tvWhatsNew = whatsNewDialog.getMessageTextView();
+                Logger.debug("MessageTextView="+tvWhatsNew);
+                tvWhatsNew.setText(Html.fromHtml(getString(R.string.changelog)));
                 return true;
             }
             case R.id.menu_help: {

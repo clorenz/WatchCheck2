@@ -14,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
@@ -22,6 +23,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.widget.TextView;
+
+import com.gc.materialdesign.widgets.Dialog;
 
 import java.util.List;
 
@@ -123,21 +127,14 @@ public class MainActivity extends ActionBarActivity
 
 
     private void showWhatsNewDialog() {
-        LayoutInflater inflater = LayoutInflater.from(this);
-
-        View view               = inflater.inflate(R.layout.dialog_whatsnew, null);
-
-        AlertDialog.Builder builder         = new AlertDialog.Builder(this);
-
-        builder.setView(view).setTitle("Whats New")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-        builder.create().show();
+        final Dialog whatsNewDialog = new Dialog(this,
+                this.getString(R.string.whatsnew),"");
+        whatsNewDialog.setButtonCancel(null);
+        whatsNewDialog.show();
+        whatsNewDialog.getButtonAccept().setText(getString(R.string.ok));
+        TextView tvWhatsNew = whatsNewDialog.getMessageTextView();
+        Logger.debug("MessageTextView="+tvWhatsNew);
+        tvWhatsNew.setText(Html.fromHtml(getString(R.string.changelog)));
     }
 
 
