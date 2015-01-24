@@ -8,9 +8,7 @@
 - Vibrate on logging
 - (+)-Button sometimes disappears and should be above the average
 - "about" screen, point to localized URLs
-- import data (old and new format, with file chooser) http://stackoverflow.com/questions/7856959/android-file-chooser
 - import/export data from and to Google Drive
-- FilePickerLibrary: https://github.com/DeveloperPaul123/FilePickerLibrary
 - Material design: https://github.com/navasmdc/MaterialDesignLibrary
 - white background for dialogs
 - more polishing

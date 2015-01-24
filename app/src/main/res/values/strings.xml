@@ -53,5 +53,6 @@
     <string name="list_average_deviation">Average deviation: %+.1f s/d</string>
     <string name="list_no_average_deviation">No average deviation yet</string>
     <string name="menu_import">Import data</string>
+    <string name="dataImported">Data imported</string>
 
 </resources>

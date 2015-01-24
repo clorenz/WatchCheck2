@@ -27,13 +27,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.devpaul.filepickerlibrary.FilePickerActivity;
-import com.devpaul.filepickerlibrary.enums.FileType;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import de.uhrenbastler.watchcheck.tools.DataExporter;
+import de.uhrenbastler.watchcheck.tools.DataImporter;
 import de.uhrenbastler.watchcheck.tools.Logger;
 import de.uhrenbastler.watchcheck.views.EditWatchFragment;
 import de.uhrenbastler.watchcheck.views.SelectWatchArrayAdapter;
@@ -317,7 +315,7 @@ public class NavigationDrawerFragment extends Fragment {
         // If the drawer is open, show the global app actions in the action bar. See also
         // showGlobalContextActionBar, which controls the top-left area of the action bar.
         if (mDrawerLayout != null && isDrawerOpen()) {
-            inflater.inflate(R.menu.global, menu);
+            inflater.inflate(R.menu.main, menu);
             showGlobalContextActionBar();
         }
         super.onCreateOptionsMenu(menu, inflater);
@@ -356,9 +354,27 @@ public class NavigationDrawerFragment extends Fragment {
                 return true;
             }
             case R.id.menu_import: {
-                Intent filePickerIntent = new Intent(getActivity(), FilePickerActivity.class);
-                filePickerIntent.putExtra(FilePickerActivity.REQUEST_CODE, FilePickerActivity.REQUEST_DIRECTORY);
-                startActivityForResult(filePickerIntent, FilePickerActivity.REQUEST_DIRECTORY);
+                SimpleFileDialog FileOpenDialog =  new SimpleFileDialog(getActivity(), "Import",
+						new SimpleFileDialog.SimpleFileDialogListener(){
+                            @Override public void onChosenDir(String chosenDir) {
+                                // The code in this function will be executed when the dialog OK button is pushed
+                                String filename = chosenDir;
+                                try {
+                                    new DataImporter().doImport(getActivity(), filename);
+                                    updateDrawer();
+                                    new AlertDialog.Builder(getActivity())
+                                            .setTitle(R.string.dataImported)
+                                            .setMessage(filename)
+                                            .setCancelable(true)
+                                            .setPositiveButton(getActivity().getString(android.R.string.ok), null).create().show();
+                                } catch (Exception e) {
+                                    Logger.error(e.getMessage(),e);
+                                }
+                            }
+                        }
+                ); //You can change the default filename using the public variable "Default_File_Name"
+                FileOpenDialog.Default_File_Name = "";
+                FileOpenDialog.chooseFile_or_Dir();
             }
         }
 
@@ -367,19 +383,6 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == FilePickerActivity.REQUEST_DIRECTORY && resultCode == Activity.RESULT_OK) {
-            Toast.makeText(getActivity(), "File Selected: " + data
-                            .getStringExtra(FilePickerActivity.FILE_EXTRA_DATA_PATH),
-                    Toast.LENGTH_LONG).show();
-        } else if (requestCode == FilePickerActivity.REQUEST_FILE && resultCode == Activity.RESULT_OK) {
-            Toast.makeText(getActivity(), "File Selected: " + data
-                            .getStringExtra(FilePickerActivity.FILE_EXTRA_DATA_PATH),
-                    Toast.LENGTH_LONG).show();
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
     /**
      * Per the navigation drawer design guidelines, updates the action bar to show the global app
@@ -414,4 +417,5 @@ public class NavigationDrawerFragment extends Fragment {
          */
         void onNavigationDrawerItemSelected(int position);
     }
+
 }
