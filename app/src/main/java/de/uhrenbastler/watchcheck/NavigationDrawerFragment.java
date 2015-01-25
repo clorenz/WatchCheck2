@@ -29,9 +29,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.widgets.Dialog;
 
 import java.util.ArrayList;

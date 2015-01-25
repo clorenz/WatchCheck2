@@ -12,17 +12,8 @@
         <item name="android:layout_gravity">center</item>
     </style>
 
-    <style name="AppTheme.Fab" parent="FloatingActionButton">
-        <item name="floatingActionButtonColor">@color/my_fab_color</item>
-    </style>
-
     <style name="MediumListItem" parent="Base.TextAppearance.AppCompat.Small">
     </style>
 
-    <color name="colorPrimary">#CCC</color>
-    <color name="colorPrimaryBack">#999</color>
-    <color name="colorPrimaryDark">#333</color>
-    <color name="accent">#AFF</color>
-    <color name="my_fab_color">#369</color>
 
 </resources>

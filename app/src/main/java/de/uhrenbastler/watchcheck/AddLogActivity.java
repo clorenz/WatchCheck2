@@ -2,6 +2,8 @@ package de.uhrenbastler.watchcheck;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
@@ -11,7 +13,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.gc.materialdesign.views.ButtonRectangle;
+
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 
@@ -19,17 +24,18 @@ import de.uhrenbastler.watchcheck.tools.Logger;
 import watchcheck.db.Log;
 import watchcheck.db.LogDao;
 import watchcheck.db.Watch;
+import watchcheck.db.WatchDao;
 
 /**
  * Created by clorenz on 13.01.15.
  */
-public class AddLogActivity extends Activity {
+public class AddLogActivity extends ActionBarActivity {
     private static final String[] POSITIONARR = { "","DU","DD","12U","3U","6U","9U" };
     private static final int[] TEMPARR = { -273, 4, 20, 36 };
     private Spinner positionSpinner;
     private Spinner temperatureSpinner;
     private CheckBox startFlag;
-    private Button saveButton;
+    private ButtonRectangle saveButton;
     private EditText comment;
 
     private Log lastLog;
@@ -46,8 +52,15 @@ public class AddLogActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        WatchDao watchDao = ((WatchCheckApplication)getApplicationContext()).getDaoSession().getWatchDao();
+
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.add_log);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+        getSupportActionBar().setTitle(R.string.add_log);
 
         lastLog = (Log) getIntent().getSerializableExtra(EXTRA_LAST_LOG);
 
@@ -62,9 +75,17 @@ public class AddLogActivity extends Activity {
         String deviationFormat = ((TextView) findViewById(R.id.logDeviation)).getText().toString();
         ((TextView) findViewById(R.id.logDeviation)).setText(String.format(deviationFormat, deviation));
 
-        saveButton = (Button) findViewById(R.id.buttonSave);
+        Watch currentWatch = watchDao.load(currentWatchId);
+        ((TextView) findViewById(R.id.logWatchName)).setText(currentWatch.getName());
+        if ( !StringUtils.isBlank(currentWatch.getSerial())) {
+            ((TextView) findViewById(R.id.logWatchSerial)).setText(currentWatch.getSerial());
+        } else {
+            ((TextView) findViewById(R.id.logWatchSerial)).setVisibility(View.INVISIBLE);
+        }
+
+        saveButton = (ButtonRectangle) findViewById(R.id.buttonSave);
         if ( editLog!=null ) {
-            saveButton.setText(R.string.button_update);
+            saveButton.setText(getString(R.string.button_update));
         }
         comment = (EditText) findViewById(R.id.logComment);
 
@@ -124,7 +145,6 @@ public class AddLogActivity extends Activity {
 
 
     private void prefillForm(Log lastLog, boolean hideStartflag) {
-        /*
         positionSpinner = (Spinner) findViewById(R.id.logSpinnerPosition);
         ArrayAdapter<?> positionAdapter = ArrayAdapter.createFromResource( getApplicationContext(),
                         R.array.positions,android.R.layout.simple_spinner_item);
@@ -135,7 +155,6 @@ public class AddLogActivity extends Activity {
                 positionSpinner.setSelection(ArrayUtils.indexOf(POSITIONARR, lastLog.getPosition()));
         else
                 positionSpinner.setSelection(0);
-        */
 
         temperatureSpinner = (Spinner) findViewById(R.id.logSpinnerTemperature);
         ArrayAdapter<?> temperatureAdapter = ArrayAdapter.createFromResource( getApplicationContext(),
@@ -148,15 +167,18 @@ public class AddLogActivity extends Activity {
         else
             temperatureSpinner.setSelection(0);
 
-
         startFlag = (CheckBox) findViewById(R.id.logCheckBoxNewPeriod);
         startFlag.setChecked(lastLog==null);
         startFlag.setEnabled(lastLog!=null);
         startFlag.setVisibility(hideStartflag?View.INVISIBLE:View.VISIBLE);
 
-        if ( lastLog!=null ) {
+        if ( editLog!=null ) {
             TextView startFlagLabel = (TextView) findViewById(R.id.textViewNewPeriod);
             startFlagLabel.setVisibility(View.INVISIBLE);
+            startFlag.setVisibility(View.INVISIBLE);
         }
+
+        Logger.debug("startflag: "+startFlag.getVisibility());
+
     }
 }

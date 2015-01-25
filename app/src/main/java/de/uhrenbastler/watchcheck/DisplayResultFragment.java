@@ -4,31 +4,24 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.service.media.MediaBrowserService;
 import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.shamanland.fab.FloatingActionButton;
-import com.shamanland.fab.ShowHideOnScroll;
-
-import org.apache.commons.lang3.StringUtils;
-
+import com.gc.materialdesign.views.ButtonFloat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
-import de.greenrobot.dao.query.DeleteQuery;
 import de.uhrenbastler.watchcheck.managers.ResultManager;
 import de.uhrenbastler.watchcheck.tools.Logger;
 import de.uhrenbastler.watchcheck.views.ResultListAdapter;
@@ -125,7 +118,7 @@ public class DisplayResultFragment extends Fragment {
         listView.setAdapter(resultListAdapter);
         registerForContextMenu(listView);
 
-        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.buttonAddLog);
+        ButtonFloat fab = (ButtonFloat) getActivity().findViewById(R.id.buttonAddLog);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +128,12 @@ public class DisplayResultFragment extends Fragment {
                 startActivity(checkWatchIntent);
             }
         });
-        listView.setOnTouchListener(new ShowHideOnScroll(fab));
+        listView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return false;
+            }
+        });
 
         /*
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

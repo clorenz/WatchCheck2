@@ -7,7 +7,19 @@
     android:gravity="center_horizontal"
     android:id="@+id/checkWatchView"
     android:layout_margin="10dp"
+    android:background="@color/background_floating_material_light"
+    android:padding="16px"
     >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/check_your_watch"
+        android:id="@+id/check_watch"
+        android:textColor="@color/abc_primary_text_material_light"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -15,6 +27,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/gps_time"
         android:id="@+id/gpstime"
+        android:textColor="@color/abc_primary_text_material_light"
         android:layout_gravity="left" />
 
     <TextView
@@ -23,6 +36,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/ntp_time"
         android:id="@+id/ntptime"
+        android:textColor="@color/abc_primary_text_material_light"
         android:layout_gravity="left"/>
 
     <TextView
@@ -33,6 +47,7 @@
         android:id="@+id/lastdeviation"
         android:layout_marginTop="20dp"
         android:paddingRight="40dp"
+        android:textColor="@color/abc_primary_text_material_light"
         android:layout_gravity="left"/>
 
     <TextView
@@ -42,6 +57,7 @@
         android:text="@string/current_deviation"
         android:id="@+id/currentdeviation"
         android:layout_marginTop="20dp"
+        android:textColor="@color/abc_primary_text_material_light"
         android:layout_gravity="left"/>
 
 
@@ -52,6 +68,7 @@
         android:layout_gravity="center_horizontal"
         android:padding="10dp"
         android:layout_marginTop="20dp"
+        android:textColor="@color/abc_primary_text_material_light"
         android:layout_marginBottom="20dp" />
 
     <LinearLayout android:layout_width="fill_parent"

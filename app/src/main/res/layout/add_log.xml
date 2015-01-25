@@ -5,90 +5,106 @@
   android:background="@color/background_floating_material_light"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
-   	<TableLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableLayoutLog1" android:stretchColumns="1">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"/>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:padding="16dp"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <!-- Header: Name of the watch -->
+            <TextView android:textColor="@color/textColorPrimary"
+                android:id="@+id/logWatchName"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:gravity="left"
+                android:layout_gravity="left"
+                style="@style/Base.TextAppearance.AppCompat.Title"></TextView>
+            <!-- Header: Serial number, if possible -->
+            <TextView android:textColor="@color/textColorPrimary"
+                android:id="@+id/logWatchSerial"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:gravity="left"
+                android:layout_gravity="left"
+                style="@style/Base.TextAppearance.AppCompat.Subhead"></TextView>
+
+
+            <TextView
+                android:textColor="@color/textColorPrimary"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewDeviation"
+                android:layout_width="fill_parent"
+                android:gravity="left"
+                android:text="@string/deviation"
+                android:layout_gravity="center_vertical"
+                style="@style/Base.TextAppearance.AppCompat.Caption"></TextView>
+            <TextView
+                android:textColor="@color/textColorPrimary"
+                android:id="@+id/logDeviation"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:gravity="left"
+                android:layout_gravity="left"
+                android:text="@string/deviation_format"
+                style="@style/Base.TextAppearance.AppCompat.Body2"></TextView>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+
+        <TableLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableLayoutLog1" android:stretchColumns="1" android:padding="16px">
+        <!--
         <TableRow android:id="@+id/tableRowLog1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="5dp">
         	<TextView android:textColor="@color/abc_primary_text_material_light" android:layout_height="wrap_content" android:id="@+id/textViewDeviation" android:layout_width="fill_parent" android:gravity="left" android:text="@string/deviation" android:layout_gravity="center_vertical"></TextView>
         	<TextView android:textColor="@color/abc_primary_text_material_light" android:id="@+id/logDeviation" android:layout_height="wrap_content" android:layout_width="wrap_content" android:gravity="left" android:layout_gravity="left" android:text="@string/deviation_format" android:textAppearance="?android:attr/textAppearanceLarge"></TextView>
         </TableRow>
+        -->
         <TableRow android:id="@+id/tableRowLog2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="5dp">
-        	<TextView android:textColor="@color/abc_primary_text_material_light" android:layout_height="wrap_content" android:id="@+id/textViewNewPeriod" android:layout_width="fill_parent" android:gravity="left" android:text="@string/newPeriod" android:layout_gravity="center_vertical"></TextView>
-        	<CheckBox android:textColor="@color/abc_primary_text_material_light" android:id="@+id/logCheckBoxNewPeriod" android:layout_width="wrap_content" android:layout_height="wrap_content"></CheckBox>
+        	<TextView android:textColor="@color/textColorPrimary" android:layout_height="wrap_content" android:id="@+id/textViewNewPeriod" android:layout_width="fill_parent" android:gravity="left" android:text="@string/newPeriod" android:layout_gravity="center_vertical"></TextView>
+            <CheckBox
+                android:textColor="@color/textColorPrimary"
+                android:id="@+id/logCheckBoxNewPeriod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/abc_btn_check_material"
+                android:buttonTint="@color/textColorPrimary">
+            </CheckBox>
         </TableRow>
         <TableRow android:id="@+id/tableRowLog3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="5dp">
-        	<TextView android:textColor="@color/abc_primary_text_material_light" android:layout_height="wrap_content" android:id="@+id/textViewPosition" android:layout_width="fill_parent" android:gravity="left" android:text="@string/position" android:layout_gravity="center_vertical"></TextView>
-        	<RadioGroup
-                android:id="@+id/logPosition">
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
-                    <RadioButton
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:text="@string/worn"
-                        android:id="@+id/pos_worn"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
-                    <RadioButton
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:text="@string/dial_up"
-                        android:id="@+id/pos_DU"/>
-                    <RadioButton
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:text="@string/dial_down"
-                        android:id="@+id/pos_DD"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
-                    <RadioButton
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:text="@string/pos_12o"
-                        android:id="@+id/pos_12O"/>
-                    <RadioButton
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:text="@string/pos_3o"
-                        android:id="@+id/pos_3O"/>
-                    <RadioButton
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:text="@string/pos_6o"
-                        android:id="@+id/pos_6O"/>
-                    <RadioButton
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:text="@string/pos_9o"
-                        android:id="@+id/pos_9O"/>
-                </LinearLayout>
-        	</RadioGroup>
-            <!--
-            <Spinner android:textColor="@color/abc_primary_text_material_light" android:id="@+id/logSpinnerPosition" android:layout_width="wrap_content" android:layout_height="wrap_content"></Spinner>
-            -->
+        	<TextView android:textColor="@color/textColorPrimary" android:layout_height="wrap_content" android:id="@+id/textViewPosition" android:layout_width="fill_parent" android:gravity="left" android:text="@string/position" android:layout_gravity="center_vertical"></TextView>
+            <Spinner android:textColor="@color/textColorPrimary" android:id="@+id/logSpinnerPosition" android:layout_width="fill_parent" android:layout_height="wrap_content"></Spinner>
         </TableRow>
         <TableRow android:id="@+id/tableRowLog4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="5dp">
-        	<TextView android:textColor="@color/abc_primary_text_material_light" android:layout_height="wrap_content" android:id="@+id/textViewTemperature" android:layout_width="fill_parent" android:gravity="left" android:text="@string/temperature" android:layout_gravity="center_vertical"></TextView>
-        	<Spinner android:textColor="@color/abc_primary_text_material_light" android:id="@+id/logSpinnerTemperature" android:layout_width="wrap_content" android:layout_height="wrap_content"></Spinner>
+        	<TextView android:textColor="@color/textColorPrimary" android:layout_height="wrap_content" android:id="@+id/textViewTemperature" android:layout_width="fill_parent" android:gravity="left" android:text="@string/temperature" android:layout_gravity="center_vertical"></TextView>
+        	<Spinner android:textColor="@color/textColorPrimary" android:id="@+id/logSpinnerTemperature" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:spinnerMode="dropdown"
+                android:visibility="visible"></Spinner>
         </TableRow>
         <TableRow android:id="@+id/tableRowLog5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="5dp">
-        	<TextView android:textColor="@color/abc_primary_text_material_light" android:layout_height="wrap_content" android:id="@+id/textViewComment" android:layout_width="fill_parent" android:gravity="left" android:text="@string/comment" android:layout_gravity="center_vertical"></TextView>
-        	<EditText android:textColor="@color/abc_primary_text_material_light" android:id="@+id/logComment" android:layout_height="wrap_content" android:layout_width="fill_parent">
+        	<TextView android:textColor="@color/textColorPrimary" android:layout_height="wrap_content" android:id="@+id/textViewComment" android:layout_width="fill_parent" android:gravity="left" android:text="@string/comment" android:layout_gravity="center_vertical"></TextView>
+        	<EditText android:textColor="@color/textColorPrimary" android:id="@+id/logComment" android:layout_height="wrap_content" android:layout_width="fill_parent">
         		<requestFocus></requestFocus>
         	</EditText>	
         </TableRow>
-    </TableLayout>  
-    
-    <LinearLayout android:layout_width="fill_parent"
-	  	android:layout_height="fill_parent"
-	  	android:layout_gravity="bottom"
-	  	android:orientation="horizontal">
-		<FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/logFrameLayout1" android:background="#AA999999"  android:padding="10dp" android:layout_gravity="bottom">	
-			<Button android:layout_height="wrap_content" android:id="@+id/buttonSave" android:layout_width="fill_parent" android:text="@string/save"></Button>
-		</FrameLayout>
-	</LinearLayout>
+    </TableLayout>
+
+      <com.gc.materialdesign.views.ButtonRectangle
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom"
+          android:id="@+id/buttonSave" android:layout_width="fill_parent" android:text="@string/save"></com.gc.materialdesign.views.ButtonRectangle>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

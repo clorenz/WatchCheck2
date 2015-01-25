@@ -21,3 +21,12 @@
 - landscape?
 
 - localization
+
+- check if imported data now fixes the average!
+
+------------------------------------------------
+Colors: http://www.google.com/design/spec/style/color.html#
+Typography: http://www.google.com/design/spec/style/typography.html#typography-roboto-noto
+
+Spinners are buggy and don't display code!
+https://code.google.com/p/android/issues/detail?id=78118

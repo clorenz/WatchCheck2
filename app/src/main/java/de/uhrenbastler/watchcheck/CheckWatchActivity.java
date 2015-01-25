@@ -7,6 +7,8 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Vibrator;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -46,6 +48,7 @@ public class CheckWatchActivity extends Activity {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.check_watch);
+        setTheme(R.style.AppTheme);
 
         currentWatch = (Watch) getIntent().getSerializableExtra(EXTRA_WATCH);
         lastLog = (Log) getIntent().getSerializableExtra(EXTRA_LAST_LOG);
@@ -70,6 +73,8 @@ public class CheckWatchActivity extends Activity {
                 addLogIntent.putExtra(AddLogActivity.EXTRA_REFERENCE_TIME, referenceTime);
                 addLogIntent.putExtra(AddLogActivity.EXTRA_LOG_TIME, objectTime);
                 addLogIntent.putExtra(AddLogActivity.EXTRA_LAST_LOG, lastLog);
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                vibrator.vibrate(100);
                 startActivity(addLogIntent);
                 CheckWatchActivity.this.finish();
             }
@@ -203,12 +208,13 @@ public class CheckWatchActivity extends Activity {
                 tvTime[number].setText(String.format(format[number], timestamp[number]));
                 number++;
             }
-            if ( deviation > -1440 && deviation < 1440) {
+            if ( deviation > -86400 && deviation < 86400) {
                 tvDeviation.setText(String.format(formatTvDeviation, deviation));
             } else {
                 tvDeviation.setText(getString(R.string.no_current_deviation));
             }
-            timepicker.setBackgroundColor(valid ? colorGreen : colorRed);
+            btnMeasure.setBackgroundColor(valid ? colorGreen : colorRed);
+            //timepicker.setBackgroundColor(valid ? colorGreen : colorRed);
             btnMeasure.setEnabled(valid);
         }
 

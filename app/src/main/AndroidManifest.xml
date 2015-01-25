@@ -17,13 +17,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".EditWatchActivity" android:noHistory="true"/>
-        <activity android:name=".CheckWatchActivity" android:noHistory="true" android:theme="@android:style/Theme.Dialog"/>
-        <activity android:name=".AddLogActivity" android:noHistory="true" android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".CheckWatchActivity" android:noHistory="true"/>
+        <activity android:name=".AddLogActivity" android:noHistory="true"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
 
 </manifest>
