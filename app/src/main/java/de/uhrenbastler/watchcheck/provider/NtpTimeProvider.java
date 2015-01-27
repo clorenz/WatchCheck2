@@ -77,6 +77,11 @@ public class NtpTimeProvider implements ITimeProvider{
     }
 
     @Override
+    public boolean isNtp() {
+        return true;
+    }
+
+    @Override
     public long getMillis() {
         return valid ? timestamp.getTime() : -1;
     }
@@ -142,5 +147,19 @@ public class NtpTimeProvider implements ITimeProvider{
                 valid=false;
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "NtpTimeProvider{" +
+                "valid=" + valid +
+                ", timestamp=" + timestamp +
+                ", offset=" + offset +
+                ", cm=" + cm +
+                ", reconnectCounter=" + reconnectCounter +
+                ", validCounter=" + validCounter +
+                ", reconnectAttempt=" + reconnectAttempt +
+                ", validCount=" + validCount +
+                '}';
     }
 }

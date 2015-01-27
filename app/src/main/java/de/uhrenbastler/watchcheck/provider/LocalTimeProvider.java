@@ -24,6 +24,11 @@ public class LocalTimeProvider implements ITimeProvider{
     }
 
     @Override
+    public boolean isNtp() {
+        return false;
+    }
+
+    @Override
     public long getMillis() {
         return System.currentTimeMillis();
     }

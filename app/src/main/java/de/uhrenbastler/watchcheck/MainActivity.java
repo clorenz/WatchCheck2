@@ -1,28 +1,19 @@
 package de.uhrenbastler.watchcheck;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.RelativeSizeSpan;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
-import android.view.View;
 import android.widget.TextView;
 
 import com.gc.materialdesign.widgets.Dialog;
@@ -35,7 +26,7 @@ import de.uhrenbastler.watchcheck.views.*;
 import watchcheck.db.Watch;
 
 
-public class MainActivity extends ActionBarActivity
+public class MainActivity extends WatchCheckActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private static final String PREFERENCE_CURRENT_WATCH = "currentWatch";
@@ -58,15 +49,7 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_main);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
-
+        super.onCreate(savedInstanceState, R.layout.activity_main);
 
         // For whatever reason, WatchManager has got problems and crashes in line 60
         // Maybe it helps to rename everything to watchcheck again
@@ -78,7 +61,7 @@ public class MainActivity extends ActionBarActivity
             Logger.warn("No watch selected. Using first watch as default");
             persistCurrentWatch(selectedWatchId);
         } else {
-            updateTitle(selectedWatch.getName());
+            setWatchName(selectedWatch);
         }
         Logger.debug("Current watch has got ID " + selectedWatchId);
         watches =  WatchManager.retrieveAllWatchesWithCurrentFirstAndAddWatch(getApplicationContext(), selectedWatch);
@@ -145,8 +128,7 @@ public class MainActivity extends ActionBarActivity
 
         // Only persist, if a real watch (and not "add watch") is selected
         if ( watches!=null && watches.get(position)!=null && watches.get(position).getId()!=null ) {
-            String watchName = watches.get(position).getName();
-            updateTitle(watchName);
+            setWatchName(watches.get(position));
             persistCurrentWatch(watches.get(position).getId().intValue());
         }
 
@@ -176,11 +158,6 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
-    private void updateTitle(String watchName) {
-        SpannableString subtitle = new SpannableString(watchName);
-        subtitle.setSpan(new RelativeSizeSpan(0.8f), 0, watchName.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        getSupportActionBar().setSubtitle(subtitle);
-    }
 
     public void restoreActionBar() {
         Logger.debug("Restoring actionBar with title="+mTitle);
@@ -216,7 +193,7 @@ public class MainActivity extends ActionBarActivity
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 
 

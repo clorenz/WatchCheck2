@@ -1,9 +1,14 @@
 package de.uhrenbastler.watchcheck;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
@@ -22,14 +27,12 @@ import java.util.Date;
 
 import de.uhrenbastler.watchcheck.tools.Logger;
 import watchcheck.db.Log;
-import watchcheck.db.LogDao;
 import watchcheck.db.Watch;
-import watchcheck.db.WatchDao;
 
 /**
  * Created by clorenz on 13.01.15.
  */
-public class AddLogActivity extends ActionBarActivity {
+public class AddLogActivity extends WatchCheckActionBarActivity {
     private static final String[] POSITIONARR = { "","DU","DD","12U","3U","6U","9U" };
     private static final int[] TEMPARR = { -273, 4, 20, 36 };
     private Spinner positionSpinner;
@@ -50,20 +53,10 @@ public class AddLogActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        WatchDao watchDao = ((WatchCheckApplication)getApplicationContext()).getDaoSession().getWatchDao();
-
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.add_log);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
-        getSupportActionBar().setTitle(R.string.add_log);
+        super.onCreate(savedInstanceState, R.layout.add_log);
+        setTitle(R.string.add_log);
 
         lastLog = (Log) getIntent().getSerializableExtra(EXTRA_LAST_LOG);
-
         editLog = (Log) getIntent().getSerializableExtra(EXTRA_EDIT_LOG);
 
         final long currentWatchId = (editLog!=null?editLog.getWatchId():((Watch) getIntent().getSerializableExtra(EXTRA_WATCH)).getId());
@@ -76,12 +69,7 @@ public class AddLogActivity extends ActionBarActivity {
         ((TextView) findViewById(R.id.logDeviation)).setText(String.format(deviationFormat, deviation));
 
         Watch currentWatch = watchDao.load(currentWatchId);
-        ((TextView) findViewById(R.id.logWatchName)).setText(currentWatch.getName());
-        if ( !StringUtils.isBlank(currentWatch.getSerial())) {
-            ((TextView) findViewById(R.id.logWatchSerial)).setText(currentWatch.getSerial());
-        } else {
-            ((TextView) findViewById(R.id.logWatchSerial)).setVisibility(View.INVISIBLE);
-        }
+        setWatchName(currentWatch);
 
         saveButton = (ButtonRectangle) findViewById(R.id.buttonSave);
         if ( editLog!=null ) {
@@ -103,6 +91,7 @@ public class AddLogActivity extends ActionBarActivity {
             }
         });
     }
+
 
     private void createNewLogEntry(long currentWatchId, long referenceTime, long watchTime) {
         int period = 0;
@@ -127,7 +116,6 @@ public class AddLogActivity extends ActionBarActivity {
 
     private void createLog(long watchId, int period, long referenceTime, long watchTime,
                            String position, int temperature, String comment) {
-        LogDao logDao = ((WatchCheckApplication)getApplicationContext()).getDaoSession().getLogDao();
         Log log = new Log(null, watchId, period, new Date(referenceTime), new Date(watchTime),
                 position, temperature, comment);
         logDao.insert(log);
@@ -136,7 +124,6 @@ public class AddLogActivity extends ActionBarActivity {
 
     private void updateLog(long watchId, long logId, int period, long referenceTime, long watchTime,
                                 String position, int temperature, String comment) {
-        LogDao logDao = ((WatchCheckApplication)getApplicationContext()).getDaoSession().getLogDao();
         Log log = new Log(logId, watchId, period, new Date(referenceTime), new Date(watchTime),
                 position, temperature, comment);
         logDao.update(log);
@@ -146,8 +133,8 @@ public class AddLogActivity extends ActionBarActivity {
 
     private void prefillForm(Log lastLog, boolean hideStartflag) {
         positionSpinner = (Spinner) findViewById(R.id.logSpinnerPosition);
-        ArrayAdapter<?> positionAdapter = ArrayAdapter.createFromResource( getApplicationContext(),
-                        R.array.positions,android.R.layout.simple_spinner_item);
+        ArrayAdapter<?> positionAdapter = ArrayAdapter.createFromResource( this,
+                        R.array.positions,android.R.layout.simple_dropdown_item_1line );
         positionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         positionSpinner.setAdapter(positionAdapter);
 
@@ -157,8 +144,8 @@ public class AddLogActivity extends ActionBarActivity {
                 positionSpinner.setSelection(0);
 
         temperatureSpinner = (Spinner) findViewById(R.id.logSpinnerTemperature);
-        ArrayAdapter<?> temperatureAdapter = ArrayAdapter.createFromResource( getApplicationContext(),
-                R.array.temperatures,android.R.layout.simple_spinner_item);
+        ArrayAdapter<?> temperatureAdapter = ArrayAdapter.createFromResource( this,
+                R.array.temperatures,android.R.layout.simple_dropdown_item_1line);
         temperatureAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         temperatureSpinner.setAdapter(temperatureAdapter);
 
@@ -177,8 +164,5 @@ public class AddLogActivity extends ActionBarActivity {
             startFlagLabel.setVisibility(View.INVISIBLE);
             startFlag.setVisibility(View.INVISIBLE);
         }
-
-        Logger.debug("startflag: "+startFlag.getVisibility());
-
     }
 }

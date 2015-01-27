@@ -1,6 +1,5 @@
 package de.uhrenbastler.watchcheck;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
@@ -8,17 +7,14 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.gc.materialdesign.views.ButtonRectangle;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import de.uhrenbastler.watchcheck.provider.GpsTimeProvider;
@@ -28,10 +24,12 @@ import de.uhrenbastler.watchcheck.tools.Logger;
 import watchcheck.db.Log;
 import watchcheck.db.Watch;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 /**
  * Created by clorenz on 09.01.15.
  */
-public class CheckWatchActivity extends Activity {
+public class CheckWatchActivity extends WatchCheckActionBarActivity {
 
     public static final String EXTRA_WATCH = "watch";
     public static final String EXTRA_LAST_LOG = "last_log";
@@ -44,13 +42,14 @@ public class CheckWatchActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState, R.layout.check_watch);
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.check_watch);
-        setTheme(R.style.AppTheme);
+        setTitle(R.string.measure_watch);
 
         currentWatch = (Watch) getIntent().getSerializableExtra(EXTRA_WATCH);
+
+        setWatchName(currentWatch);
+
         lastLog = (Log) getIntent().getSerializableExtra(EXTRA_LAST_LOG);
 
         timePicker = (TimePicker) findViewById(R.id.timePicker);
@@ -68,6 +67,7 @@ public class CheckWatchActivity extends Activity {
                 long referenceTime = getReferenceTimeMillis();
                 long objectTime = getMillisFromTimePicker(timePicker);
                 referenceTimeUpdater.cancel(true);
+                ((ReferenceTimeUpdater)referenceTimeUpdater).terminate();
                 Intent addLogIntent = new Intent(CheckWatchActivity.this,AddLogActivity.class);
                 addLogIntent.putExtra(AddLogActivity.EXTRA_WATCH, currentWatch);
                 addLogIntent.putExtra(AddLogActivity.EXTRA_REFERENCE_TIME, referenceTime);
@@ -86,8 +86,8 @@ public class CheckWatchActivity extends Activity {
         long referenceMillis=-1;
 
         for ( ITimeProvider timeProvider : timeProviders) {
-            // We prefer GPS. Only if no GPS, use other time providers, if they provide valid data
-            if ( timeProvider.isValid() && ( timeProvider.isGps() || (referenceMillis==-1))) {
+            // We prefer NTP. Only if no NTP, use other time providers, if they provide valid data
+            if ( timeProvider.isValid() && ( timeProvider.isNtp() || (referenceMillis==-1))) {
                 referenceMillis = timeProvider.getMillis();
             }
         }
@@ -130,10 +130,18 @@ public class CheckWatchActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         referenceTimeUpdater.cancel(true);
+        ((ReferenceTimeUpdater)referenceTimeUpdater).terminate();
+        super.onDestroy();
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        referenceTimeUpdater.cancel(true);
+        ((ReferenceTimeUpdater)referenceTimeUpdater).terminate();
+        return super.onOptionsItemSelected(item);
+    }
 
     private long getMillisFromTimePicker(TimePicker timePicker) {
         GregorianCalendar pickerTime = new GregorianCalendar();
@@ -192,13 +200,19 @@ public class CheckWatchActivity extends Activity {
         @Override
         protected void onPostExecute(Integer result) {
             runnable=false;
-            Logger.info("Killed reference time display of "+timeProviders);
+            Logger.info("Killed reference time display of "+ArrayUtils.toString(timeProviders));
         }
 
         @Override
         protected void onCancelled() {
             runnable=false;
-            Logger.info("Killed reference time display of "+timeProviders);
+            Logger.info("Killed reference time display of "+ArrayUtils.toString(timeProviders));
+        }
+
+
+        public void terminate() {
+            runnable=false;
+            Logger.info("Killed reference time display of "+ArrayUtils.toString(timeProviders));
         }
 
         @Override
@@ -247,6 +261,8 @@ public class CheckWatchActivity extends Activity {
                     Thread.sleep(100);
                 } catch (InterruptedException ignore) {};
             }
+
+            Logger.info("Terminated background task");
 
             return null;
         }

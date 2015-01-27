@@ -4,83 +4,94 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="center_horizontal"
-    android:id="@+id/checkWatchView"
-    android:layout_margin="10dp"
     android:background="@color/background_floating_material_light"
-    android:padding="16px"
+    android:id="@+id/checkWatchView"
     >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/check_your_watch"
-        android:id="@+id/check_watch"
-        android:textColor="@color/abc_primary_text_material_light"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"/>
+        android:background="@color/colorPrimary"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/gps_time"
-        android:id="@+id/gpstime"
-        android:textColor="@color/abc_primary_text_material_light"
-        android:layout_gravity="left" />
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/ntp_time"
-        android:id="@+id/ntptime"
-        android:textColor="@color/abc_primary_text_material_light"
-        android:layout_gravity="left"/>
+        <LinearLayout
+            android:padding="16dp"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/last_deviation"
-        android:id="@+id/lastdeviation"
-        android:layout_marginTop="20dp"
-        android:paddingRight="40dp"
-        android:textColor="@color/abc_primary_text_material_light"
-        android:layout_gravity="left"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/gps_time"
+                android:id="@+id/gpstime"
+                android:textColor="@color/textColorPrimary"
+                android:layout_gravity="left" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/current_deviation"
-        android:id="@+id/currentdeviation"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/abc_primary_text_material_light"
-        android:layout_gravity="left"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/ntp_time"
+                android:id="@+id/ntptime"
+                android:textColor="@color/textColorPrimary"
+                android:layout_gravity="left"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:padding="16dp"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/last_deviation"
+                android:id="@+id/lastdeviation"
+                android:textColor="@color/textColorPrimary"
+                android:layout_gravity="left"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/current_deviation"
+                android:id="@+id/currentdeviation"
+                android:textColor="@color/textColorPrimary"
+                android:layout_gravity="left"/>
 
 
-    <TimePicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/timePicker"
-        android:layout_gravity="center_horizontal"
-        android:padding="10dp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/abc_primary_text_material_light"
-        android:layout_marginBottom="20dp" />
+            <TimePicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/timePicker"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/textColorPrimary"/>
 
-    <LinearLayout android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="bottom"
-        android:orientation="horizontal">
-        <FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/frameLayout1" android:background="#AA999999"  android:padding="10dp" android:layout_gravity="bottom">
-            <com.gc.materialdesign.views.ButtonRectangle
-                android:background="#1E88E5"
-                materialdesign:animate="false"
-                android:layout_height="wrap_content" android:id="@+id/buttonMeasure" android:layout_width="fill_parent" android:text="@string/measure"></com.gc.materialdesign.views.ButtonRectangle>
-        </FrameLayout>
-    </LinearLayout>
+            <LinearLayout android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal">
+                <FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/frameLayout1" android:background="#AA999999"  android:padding="10dp" android:layout_gravity="bottom">
+                    <com.gc.materialdesign.views.ButtonRectangle
+                        android:background="#1E88E5"
+                        materialdesign:animate="false"
+                        android:layout_height="wrap_content" android:id="@+id/buttonMeasure" android:layout_width="fill_parent" android:text="@string/measure"></com.gc.materialdesign.views.ButtonRectangle>
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

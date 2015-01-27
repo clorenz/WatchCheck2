@@ -21,23 +21,6 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
-            <!-- Header: Name of the watch -->
-            <TextView android:textColor="@color/textColorPrimary"
-                android:id="@+id/logWatchName"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:gravity="left"
-                android:layout_gravity="left"
-                style="@style/Base.TextAppearance.AppCompat.Title"></TextView>
-            <!-- Header: Serial number, if possible -->
-            <TextView android:textColor="@color/textColorPrimary"
-                android:id="@+id/logWatchSerial"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:gravity="left"
-                android:layout_gravity="left"
-                style="@style/Base.TextAppearance.AppCompat.Subhead"></TextView>
-
 
             <TextView
                 android:textColor="@color/textColorPrimary"
@@ -65,7 +48,14 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent">
 
-        <TableLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableLayoutLog1" android:stretchColumns="1" android:padding="16px">
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tableLayoutLog1"
+            android:stretchColumns="1"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            >
         <!--
         <TableRow android:id="@+id/tableRowLog1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="5dp">
         	<TextView android:textColor="@color/abc_primary_text_material_light" android:layout_height="wrap_content" android:id="@+id/textViewDeviation" android:layout_width="fill_parent" android:gravity="left" android:text="@string/deviation" android:layout_gravity="center_vertical"></TextView>
@@ -79,6 +69,7 @@
                 android:id="@+id/logCheckBoxNewPeriod"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/checkboxItemStyle"
                 android:button="@drawable/abc_btn_check_material"
                 android:buttonTint="@color/textColorPrimary">
             </CheckBox>
@@ -89,13 +80,16 @@
         </TableRow>
         <TableRow android:id="@+id/tableRowLog4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="5dp">
         	<TextView android:textColor="@color/textColorPrimary" android:layout_height="wrap_content" android:id="@+id/textViewTemperature" android:layout_width="fill_parent" android:gravity="left" android:text="@string/temperature" android:layout_gravity="center_vertical"></TextView>
-        	<Spinner android:textColor="@color/textColorPrimary" android:id="@+id/logSpinnerTemperature" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:spinnerMode="dropdown"
-                android:visibility="visible"></Spinner>
+        	<Spinner android:textColor="@color/textColorPrimary" android:id="@+id/logSpinnerTemperature" android:layout_width="wrap_content" android:layout_height="wrap_content"></Spinner>
         </TableRow>
         <TableRow android:id="@+id/tableRowLog5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="5dp">
         	<TextView android:textColor="@color/textColorPrimary" android:layout_height="wrap_content" android:id="@+id/textViewComment" android:layout_width="fill_parent" android:gravity="left" android:text="@string/comment" android:layout_gravity="center_vertical"></TextView>
-        	<EditText android:textColor="@color/textColorPrimary" android:id="@+id/logComment" android:layout_height="wrap_content" android:layout_width="fill_parent">
+        	<EditText
+                android:textCursorDrawable="@null"
+                android:textColor="@color/textColorPrimary"
+                android:id="@+id/logComment"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent">
         		<requestFocus></requestFocus>
         	</EditText>	
         </TableRow>

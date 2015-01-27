@@ -3,9 +3,9 @@
 - It should automatically select the last tab (last period)
 - First log on a screen display data twice or too high. Looks, like the fragment and pager are broken
 - Default temperature is -273. Is this really useful??
-- Log dialog with radio buttons instead of spinner
-
-- Vibrate on logging
+- On the result table: Display an info icon, if comment was filled.
+- On the SelectWatch menu: Display an info icon, if comment was filled.
+- SelectWatch Drawer could use as background image my watch Schublade
 - (+)-Button sometimes disappears and should be above the average
 - "about" screen, point to localized URLs
 - importer crashes and does not update results below

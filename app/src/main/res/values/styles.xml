@@ -15,5 +15,14 @@
     <style name="MediumListItem" parent="Base.TextAppearance.AppCompat.Small">
     </style>
 
+    <style name="spinnerItemStyle" parent="Base.Widget.AppCompat.Spinner">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="checkboxItemStyle" parent="">
+        <item name="colorAccent">@color/textColorPrimary</item>
+        <item name="colorPrimary">@color/textColorPrimary</item>
+    </style>
+
 
 </resources>

@@ -46,6 +46,11 @@ public class GpsTimeProvider implements ITimeProvider {
     }
 
     @Override
+    public boolean isNtp() {
+        return false;
+    }
+
+    @Override
     public long getMillis() {
         return valid ? System.currentTimeMillis()-offset : -1;
     }
@@ -81,5 +86,14 @@ public class GpsTimeProvider implements ITimeProvider {
                 valid = false;
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "GpsTimeProvider{" +
+                "valid=" + valid +
+                ", timestamp=" + timestamp +
+                ", offset=" + offset +
+                '}';
     }
 }

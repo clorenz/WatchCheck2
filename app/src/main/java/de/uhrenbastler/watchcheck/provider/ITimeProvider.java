@@ -11,5 +11,6 @@ public interface ITimeProvider {
     String getTime();
     boolean isValid();
     boolean isGps();
+    boolean isNtp();
     long getMillis();
 }
