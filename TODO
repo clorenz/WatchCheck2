@@ -1,6 +1,7 @@
 - Adding new watch totally confuses the app and the navigation drawer
   It should automatically select that new watch as current watch!!
-- It should automatically select the last tab (last period)
+- Deviation on last log and on measure screen differ!!! Maybe just a rounding issue!
+- After a log, the deviation from the last but one item is taken! This is weird!!!
 - First log on a screen display data twice or too high. Looks, like the fragment and pager are broken
 - Default temperature is -273. Is this really useful??
 - On the result table: Display an info icon, if comment was filled.
@@ -12,7 +13,7 @@
 - "Help" goes to the localized webpages
 - import/export data from and to Google Drive
 - Material design: https://github.com/navasmdc/MaterialDesignLibrary
-- white background for dialogs
+- white background for three dot dialog (overflow menu)
 - more polishing
 - create two new webpages (international and german)
 - after deleting a watch, display different logs and update menu!

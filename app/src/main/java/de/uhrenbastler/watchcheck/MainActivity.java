@@ -83,6 +83,7 @@ public class MainActivity extends WatchCheckActionBarActivity
         ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
         adapterViewPager = new DisplayResultPagerAdapter(getApplicationContext(), getSupportFragmentManager(), selectedWatchId);
         vpPager.setAdapter(adapterViewPager);
+        vpPager.setCurrentItem(adapterViewPager.getCount());
 
         init();
     }
