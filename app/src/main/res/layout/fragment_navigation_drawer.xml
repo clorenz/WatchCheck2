@@ -1,36 +1,46 @@
 <LinearLayout
     android:id="@+id/drawer_linear_layout"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingTop="@dimen/abc_action_bar_default_height_material"
     android:orientation="vertical"
     android:layout_width="240dp"
     android:layout_gravity="start"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".NavigationDrawerFragment" >
-    <TextView
-        android:layout_width="240dp"
-        android:layout_height="32dp"
-        android:text="@string/selected_watch"
-        android:textAppearance="@style/Base.TextAppearance.Widget.AppCompat.ExpandedMenu.Item"
-        android:background="@color/colorPrimary"
-        android:lineSpacingExtra="5sp"
-        android:layout_gravity="top"
-        android:dividerHeight="1px"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_alignParentTop="true"
-        android:background="@color/colorPrimaryDark" />
+
+    <include android:id="@+id/navigation_drawer_header"
+        layout="@layout/navigation_drawer_header"></include>
 
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:choiceMode="singleChoice"
-        android:divider="@color/colorPrimaryDark"
-        android:dividerHeight="1px"
         android:background="@color/colorPrimary"
+        android:paddingLeft="16dp"
         android:id="@+id/drawer_listview"/>
+
+    <View
+        android:id="@+id/drawer_spacer"
+        android:layout_below="@id/drawer_listview"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="16dp"
+        android:background="@color/textColorPrimary"/>
+
+    <TextView
+        android:id="@+id/drawer_add_watch"
+        android:layout_below="@id/drawer_spacer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColorPrimary"
+        android:text="@string/add_watch"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="16dp"
+        android:background="@color/colorPrimary"
+        >
+
+    </TextView>
 
 </LinearLayout>

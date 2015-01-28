@@ -24,7 +24,10 @@
         <item name="colorPrimary">@color/textColorPrimary</item>
     </style>
 
-
+    <style name="DrawerSerial" parent="@style/Base.TextAppearance.AppCompat.Small">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
 
 
 </resources>

@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,17 +6,17 @@
     xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
+    <include
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"/>
+        layout="@layout/tool_bar"></include>
 
     <!-- A DrawerLayout is intended to be used as the top-level content view using match_parent for both width and height to consume the full space available. -->
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:elevation="7sp"
+        android:layout_below="@+id/toolbar"
         tools:context=".MainActivity">
 
         <!-- As the main content view, the view below consumes the entire
@@ -24,7 +24,8 @@
         <FrameLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar">
 
             <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/pager"
@@ -51,7 +52,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="right|bottom"
                 android:layout_marginRight="24dp"
-                android:background="#1E88E5"
+                android:background="@color/colorPrimaryDark"
                 materialdesign:iconDrawable="@drawable/ic_action_new"
                 materialdesign:animate="true"
                  />
@@ -73,4 +74,4 @@
             tools:layout="@layout/fragment_navigation_drawer" />
 
     </android.support.v4.widget.DrawerLayout>
-</LinearLayout>
+</RelativeLayout>

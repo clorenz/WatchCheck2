@@ -64,7 +64,7 @@ public class MainActivity extends WatchCheckActionBarActivity
             setWatchName(selectedWatch);
         }
         Logger.debug("Current watch has got ID " + selectedWatchId);
-        watches =  WatchManager.retrieveAllWatchesWithCurrentFirstAndAddWatch(getApplicationContext(), selectedWatch);
+        watches = watchDao.loadAll();
 
         Logger.debug("Watches="+watches);
 

@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 
 import de.uhrenbastler.watchcheck.R;
@@ -50,24 +52,10 @@ public class SelectWatchArrayAdapter extends ArrayAdapter<Watch> {
         if ( i != null ) {
             TextView watchName = (TextView) v.findViewById(R.id.watchName);
             TextView watchSerial = (TextView) v.findViewById(R.id.watchSerial);
-            Long watchId = i.getId();
 
-            if ( watchName!=null ) {
-                SpannableString addWatch = new SpannableString(i.getName());
-                if ( watchId==null) {
-                    addWatch.setSpan(new StyleSpan(Typeface.ITALIC),0,addWatch.length(),0);
-                    watchName.setPadding(40, 10, 0, 10);
-                }  else if ( currentWatchId == i.getId()  ) {
-                    addWatch.setSpan(new StyleSpan(Typeface.BOLD),0,addWatch.length(),0);
-                }
-                watchName.setText(addWatch);
-            }
-            if ( watchSerial!=null) {
-                if ( position == list.size()-1) {
-                    watchSerial.setVisibility(View.GONE);
-                } else {
-                    watchSerial.setText(i.getSerial());
-                }
+            watchName.setText(i.getName());
+            if (StringUtils.isNotBlank(i.getSerial())) {
+               watchSerial.setText("(Serial No.: "+i.getSerial()+")");
             }
         }
 

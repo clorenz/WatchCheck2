@@ -154,6 +154,15 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerListView.setAdapter(adapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 
+        TextView addWatch = (TextView) drawerLayout.findViewById(R.id.drawer_add_watch);
+        addWatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO
+                Logger.info("Adding watch");
+            }
+        });
+
         return drawerLayout;
     }
 

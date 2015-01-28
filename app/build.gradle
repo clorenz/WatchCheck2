@@ -35,4 +35,5 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.0'
     compile 'com.github.navasmdc:MaterialDesign:1.+@aar'
     compile 'com.nineoldandroids:library:2.4.+'
+    compile 'de.hdodenhof:circleimageview:1.2.1'
 }

@@ -12,12 +12,11 @@
         <TextView
             android:id="@+id/watchName"
             android:layout_weight="18"
-            android:textSize="14sp"
             android:layout_width="fill_parent"
             android:layout_height="0sp"
             android:layout_gravity="center"
-            android:paddingLeft="10dp"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/textColorPrimary"
+            style="@style/Base.TextAppearance.AppCompat.Small"
             android:gravity="top" />
         <TextView
             android:id="@+id/watchSerial"
@@ -25,10 +24,10 @@
             android:layout_marginTop="0dp"
             android:layout_height="0sp"
             android:layout_weight="16"
-            android:paddingLeft="10dp"
+            android:paddingLeft="20dp"
             android:paddingBottom="1sp"
-            android:textSize="11sp"
-            android:textColor="@color/colorPrimaryDark"
+            style="@style/DrawerSerial"
+            android:textColor="@color/textColorPrimary"
             android:gravity="top"/>
     </LinearLayout>
 </LinearLayout>
