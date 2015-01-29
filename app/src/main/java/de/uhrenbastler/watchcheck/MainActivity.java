@@ -14,8 +14,10 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
+import android.view.View;
 import android.widget.TextView;
 
+import com.gc.materialdesign.views.ButtonFloat;
 import com.gc.materialdesign.widgets.Dialog;
 
 import java.util.List;
@@ -47,26 +49,35 @@ public class MainActivity extends WatchCheckActionBarActivity
      */
     private CharSequence mTitle;
 
+    private Watch selectedWatch;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_main);
+        init();
+    }
 
-        // For whatever reason, WatchManager has got problems and crashes in line 60
-        // Maybe it helps to rename everything to watchcheck again
 
-        Watch selectedWatch = WatchManager.retrieveCurrentWatch(this);
-        int selectedWatchId = (int)(selectedWatch!=null?selectedWatch.getId():-1);
-        if ( selectedWatchId==-1) {
-            selectedWatchId=1;
-            Logger.warn("No watch selected. Using first watch as default");
-            persistCurrentWatch(selectedWatchId);
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        watches = watchDao.loadAll();
+        selectedWatch = WatchManager.retrieveCurrentWatch(this);
+        if ( selectedWatch == null ) {
+            if ( watches!=null && !watches.isEmpty()) {
+                long selectedWatchId = watches.get(0).getId();
+                Logger.warn("No watch selected. Using first watch with id="+selectedWatchId+" as default");
+                persistCurrentWatch(selectedWatchId);
+                selectedWatch = watchDao.load(selectedWatchId);
+            } else {
+                Logger.warn("No watch yet!");
+                persistCurrentWatch(-1);
+            }
         } else {
             setWatchName(selectedWatch);
         }
-        Logger.debug("Current watch has got ID " + selectedWatchId);
-        watches = watchDao.loadAll();
-
-        Logger.debug("Watches="+watches);
+        Logger.debug("Current watch = "+selectedWatch);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -81,11 +92,21 @@ public class MainActivity extends WatchCheckActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
-        adapterViewPager = new DisplayResultPagerAdapter(getApplicationContext(), getSupportFragmentManager(), selectedWatchId);
-        vpPager.setAdapter(adapterViewPager);
-        vpPager.setCurrentItem(adapterViewPager.getCount());
+        ButtonFloat fab = (ButtonFloat) findViewById(R.id.buttonAddLog);
+        if ( selectedWatch != null ) {
+            vpPager.setVisibility(View.VISIBLE);
+            adapterViewPager = new DisplayResultPagerAdapter(getApplicationContext(), getSupportFragmentManager(), selectedWatch.getId());
+            vpPager.setAdapter(adapterViewPager);
+            vpPager.setCurrentItem(adapterViewPager.getCount());
 
-        init();
+            fab.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        } else {
+            // Hide viewPager
+            vpPager.setVisibility(View.INVISIBLE);
+            // Hide Add button
+            fab.setVisibility(View.INVISIBLE);
+            // And maybe display a nice background instead
+        }
     }
 
     private void init() {
@@ -198,10 +219,14 @@ public class MainActivity extends WatchCheckActionBarActivity
     }
 
 
-    private void persistCurrentWatch(int currentWatchId) {
+    private void persistCurrentWatch(long currentWatchId) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(PREFERENCE_CURRENT_WATCH, currentWatchId);
+        if ( currentWatchId>=0) {
+            editor.putInt(PREFERENCE_CURRENT_WATCH, (int) currentWatchId);
+        } else {
+            editor.remove(PREFERENCE_CURRENT_WATCH);
+        }
         editor.commit();
     }
 

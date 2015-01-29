@@ -16,8 +16,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:choiceMode="singleChoice"
-        android:background="@color/colorPrimary"
+        android:background="@color/background_material_light"
         android:paddingLeft="16dp"
+        android:textColor="@color/textColorPrimary"
         android:id="@+id/drawer_listview"/>
 
     <View
@@ -26,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="16dp"
+        android:textColor="@color/textColorPrimary"
         android:background="@color/textColorPrimary"/>
 
     <TextView
@@ -38,7 +40,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:paddingLeft="16dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/background_material_light"
         >
 
     </TextView>

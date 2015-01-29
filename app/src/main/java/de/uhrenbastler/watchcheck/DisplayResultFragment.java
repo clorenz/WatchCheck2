@@ -119,6 +119,8 @@ public class DisplayResultFragment extends Fragment {
         registerForContextMenu(listView);
 
         ButtonFloat fab = (ButtonFloat) getActivity().findViewById(R.id.buttonAddLog);
+        fab.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        Logger.debug("Setting button color");
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,6 +156,7 @@ public class DisplayResultFragment extends Fragment {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        v.setBackgroundColor(getResources().getColor(R.color.background_material_light));
         if ( v.getId() == R.id.resultListView) {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
             Log logToHandle = (Log)listView.getAdapter().getItem(info.position);

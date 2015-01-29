@@ -2,7 +2,8 @@
     - Adding new watch totally confuses the app and the navigation drawer
     - It should automatically select that new watch as current watch!!
 
-- Background of "add log" button must be yellow
+- Back link from "add log" shall go to "measure watch" not to result list
+- Context menu on result has got no material design yet!
 - Deviation on last log and on measure screen differ!!! Maybe just a rounding issue!
 - After a log, the deviation from the last but one item is taken! This is weird!!!
 - First log on a screen display data twice or too high. Looks, like the fragment and pager are broken
@@ -10,16 +11,15 @@
 - On the result table: Display an info icon, if comment was filled.
 - Material design for add watch / edit watch
 - SelectWatch Drawer could use as background image my watch Schublade
-- (+)-Button sometimes disappears and should be above the average
 - "about" screen, point to localized URLs
 - importer crashes and does not update results below
 - "Help" goes to the localized webpages
 - import/export data from and to Google Drive
 - Material design: https://github.com/navasmdc/MaterialDesignLibrary
-- white background for three dot dialog (overflow menu)
 - more polishing
 - create two new webpages (international and german)
 - after deleting a watch, display different logs and update menu!
+- If last watch was deleted, check, whether a "clean" first screen can be seen!
 - For whatever reason, GPS time is 1sec ahead NTP time
 - App terminates after a few minutes
 - landscape?
