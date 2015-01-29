@@ -158,8 +158,9 @@ public class NavigationDrawerFragment extends Fragment {
         addWatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO
-                Logger.info("Adding watch");
+                Intent addWatchIntent = new Intent(getActivity().getApplicationContext(), EditWatchActivity.class);
+                startActivity(addWatchIntent);
+                mDrawerLayout.closeDrawer(mFragmentContainerView);
             }
         });
 
@@ -270,26 +271,10 @@ public class NavigationDrawerFragment extends Fragment {
             Logger.debug("Selected watch for edit: "+selectedWatch+". Starting new activity");
             mDrawerListView.invalidate();
 
-            mFragmentContainerView.setVisibility(View.GONE);
-
-            Fragment editWatchFragment = new EditWatchFragment();
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("watch", selectedWatch);
-            bundle.putSerializable("currentWatch", watches.get(0));
-            editWatchFragment.setArguments(bundle);
-
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.container, editWatchFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-
-
-            /*
             Intent editWatchIntent = new Intent(getActivity().getApplicationContext(), EditWatchActivity.class);
             editWatchIntent.putExtra("watch", selectedWatch);
             editWatchIntent.putExtra("id",selectedWatch.getId());
             startActivity(editWatchIntent);
-            */
             return true;
         }
         return false;

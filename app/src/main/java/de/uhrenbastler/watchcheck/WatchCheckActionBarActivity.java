@@ -57,6 +57,11 @@ public class WatchCheckActionBarActivity extends ActionBarActivity {
     }
 
 
+    public void unsetWatchName() {
+        getSupportActionBar().setSubtitle(null);
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();

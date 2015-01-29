@@ -77,4 +77,6 @@
     <string name="measure_watch">Measure your watch</string>
     <string name="select_watch">Select your watch</string>
     <string name="add_watch">add watch</string>
+    <string name="new_watch">New watch</string>
+    <string name="edit_watch">Edit watch</string>
 </resources>

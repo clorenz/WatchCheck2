@@ -1,6 +1,6 @@
-- implement addWatch in navigation drawer
-    - Adding new watch totally confuses the app and the navigation drawer
-    - It should automatically select that new watch as current watch!!
+- Measure on Lollipop/KitKat shall display old time picker, since new one is too large!
+
+- delete watch dialog has got wrong background and text colors
 
 - Back link from "add log" shall go to "measure watch" not to result list
 - Context menu on result has got no material design yet!
@@ -12,6 +12,7 @@
 - Material design for add watch / edit watch
 - SelectWatch Drawer could use as background image my watch Schublade
 - "about" screen, point to localized URLs
+- splash screen == background if no logs are to be displayed
 - importer crashes and does not update results below
 - "Help" goes to the localized webpages
 - import/export data from and to Google Drive

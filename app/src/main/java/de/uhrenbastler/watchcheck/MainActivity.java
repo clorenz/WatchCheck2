@@ -1,6 +1,7 @@
 package de.uhrenbastler.watchcheck;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.preference.PreferenceManager;
@@ -64,14 +65,17 @@ public class MainActivity extends WatchCheckActionBarActivity
 
         watches = watchDao.loadAll();
         selectedWatch = WatchManager.retrieveCurrentWatch(this);
+        Logger.debug("Selected watch onResume="+selectedWatch);
         if ( selectedWatch == null ) {
             if ( watches!=null && !watches.isEmpty()) {
                 long selectedWatchId = watches.get(0).getId();
                 Logger.warn("No watch selected. Using first watch with id="+selectedWatchId+" as default");
                 persistCurrentWatch(selectedWatchId);
-                selectedWatch = watchDao.load(selectedWatchId);
+                selectedWatch = watches.get(0);
+                setWatchName(selectedWatch);
             } else {
                 Logger.warn("No watch yet!");
+                unsetWatchName();
                 persistCurrentWatch(-1);
             }
         } else {
@@ -94,12 +98,27 @@ public class MainActivity extends WatchCheckActionBarActivity
         ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
         ButtonFloat fab = (ButtonFloat) findViewById(R.id.buttonAddLog);
         if ( selectedWatch != null ) {
-            vpPager.setVisibility(View.VISIBLE);
-            adapterViewPager = new DisplayResultPagerAdapter(getApplicationContext(), getSupportFragmentManager(), selectedWatch.getId());
-            vpPager.setAdapter(adapterViewPager);
-            vpPager.setCurrentItem(adapterViewPager.getCount());
+            if ( !logDao._queryWatch_Logs(selectedWatch.getId()).isEmpty()) {
+                vpPager.setVisibility(View.VISIBLE);
+                adapterViewPager = new DisplayResultPagerAdapter(getApplicationContext(), getSupportFragmentManager(), selectedWatch.getId());
+                vpPager.setAdapter(adapterViewPager);
+                vpPager.setCurrentItem(adapterViewPager.getCount());
+            } else {
+                vpPager.setVisibility(View.INVISIBLE);
+            }
 
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent checkWatchIntent = new Intent(getApplication(),CheckWatchActivity.class);
+                    checkWatchIntent.putExtra(CheckWatchActivity.EXTRA_WATCH, selectedWatch);
+                    Logger.debug("FROM MAIN");
+                    startActivity(checkWatchIntent);
+                }
+            });
             fab.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            fab.setVisibility(View.VISIBLE);
+
         } else {
             // Hide viewPager
             vpPager.setVisibility(View.INVISIBLE);
@@ -224,7 +243,9 @@ public class MainActivity extends WatchCheckActionBarActivity
         SharedPreferences.Editor editor = preferences.edit();
         if ( currentWatchId>=0) {
             editor.putInt(PREFERENCE_CURRENT_WATCH, (int) currentWatchId);
+            Logger.debug("Setting preference for current watch to "+currentWatchId);
         } else {
+            Logger.debug("Removing preference for current watch");
             editor.remove(PREFERENCE_CURRENT_WATCH);
         }
         editor.commit();
