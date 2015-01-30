@@ -76,6 +76,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/timePicker"
                 android:layout_gravity="center_horizontal"
+                android:timePickerMode="spinner"
                 android:textColor="@color/textColorPrimary"/>
 
             <LinearLayout android:layout_width="fill_parent"

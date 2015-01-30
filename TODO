@@ -1,4 +1,4 @@
-- Measure on Lollipop/KitKat shall display old time picker, since new one is too large!
+- Cards disappear on Lollipop
 
 - delete watch dialog has got wrong background and text colors
 
@@ -9,7 +9,6 @@
 - First log on a screen display data twice or too high. Looks, like the fragment and pager are broken
 - Default temperature is -273. Is this really useful??
 - On the result table: Display an info icon, if comment was filled.
-- Material design for add watch / edit watch
 - SelectWatch Drawer could use as background image my watch Schublade
 - "about" screen, point to localized URLs
 - splash screen == background if no logs are to be displayed
@@ -26,6 +25,8 @@
 - landscape?
 
 - localization
+
+- transitions
 
 - check if imported data now fixes the average!
 

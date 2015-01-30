@@ -14,8 +14,8 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_gravity="bottom"
-        android:layout_marginTop="10dp"
         android:layout_below="@+id/toolbar"
+        android:background="@color/background_material_light"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
@@ -35,7 +35,11 @@
                     android:layout_width="fill_parent"
                     android:gravity="center_horizontal"
                     android:text="@string/label_model"></TextView>
-                <EditText android:id="@+id/editTextModel" android:layout_height="wrap_content" android:layout_width="fill_parent">
+                <EditText
+                    android:id="@+id/editTextModel"
+                    android:textCursorDrawable="@null"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent">
                     <requestFocus></requestFocus>
                 </EditText>
             </TableRow>
@@ -47,7 +51,11 @@
                     android:layout_width="fill_parent"
                     android:gravity="center_horizontal"
                     android:text="@string/label_serial"></TextView>
-                <EditText android:id="@+id/editTextSerial" android:layout_height="wrap_content" android:layout_width="fill_parent"></EditText>
+                <EditText
+                    android:id="@+id/editTextSerial"
+                    android:textCursorDrawable="@null"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"></EditText>
             </TableRow>
             <TableRow android:id="@+id/tableRow3" android:layout_width="wrap_content" android:layout_height="100dp">
                 <TextView
@@ -57,7 +65,12 @@
                     android:layout_width="fill_parent"
                     android:gravity="center_horizontal"
                     android:text="@string/label_remarks"></TextView>
-                <EditText android:id="@+id/editTextRemarks" android:layout_height="100dp" android:inputType="textMultiLine" android:layout_width="wrap_content"></EditText>
+                <EditText
+                    android:id="@+id/editTextRemarks"
+                    android:textCursorDrawable="@null"
+                    android:layout_height="100dp"
+                    android:inputType="textMultiLine"
+                    android:layout_width="wrap_content"></EditText>
             </TableRow>
         </TableLayout>
 
