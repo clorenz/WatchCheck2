@@ -11,7 +11,6 @@
 - First log on a screen display data twice or too high. Looks, like the fragment and pager are broken
 - Default temperature is -273. Is this really useful??
 - On the result table: Display an info icon, if comment was filled.
-- SelectWatch Drawer could use as background image my watch Schublade
 - "about" screen, point to localized URLs
 - splash screen == background if no logs are to be displayed
 - importer crashes and does not update results below

@@ -5,6 +5,7 @@
     android:layout_width="240dp"
     android:layout_gravity="start"
     android:layout_height="match_parent"
+    android:background="@color/background_material_light"
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".NavigationDrawerFragment" >
 
@@ -27,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:textColor="@color/textColorPrimary"
         android:background="@color/textColorPrimary"/>
 
