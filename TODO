@@ -1,5 +1,6 @@
 - Cards disappear on Lollipop
 
+
 - delete watch dialog has got wrong background and text colors
 
 - Back link from "add log" shall go to "measure watch" not to result list
@@ -21,6 +22,7 @@
 - after deleting a watch, display different logs and update menu!
 - If last watch was deleted, check, whether a "clean" first screen can be seen!
 - For whatever reason, GPS time is 1sec ahead NTP time
+- ntp time flaps on Lollipop
 - App terminates after a few minutes
 - landscape?
 
