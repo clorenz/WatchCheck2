@@ -79,4 +79,5 @@
     <string name="add_watch">add watch</string>
     <string name="new_watch">New watch</string>
     <string name="edit_watch">Edit watch</string>
+    <string name="delete_this_log">Delete log</string>
 </resources>

@@ -1,13 +1,17 @@
 package de.uhrenbastler.watchcheck;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.internal.widget.AdapterViewCompat;
 import android.view.ContextMenu;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,6 +23,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gc.materialdesign.views.ButtonFloat;
+import com.gc.materialdesign.widgets.Dialog;
+
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -137,17 +145,6 @@ public class DisplayResultFragment extends Fragment {
             }
         });
 
-        /*
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Log log = (Log) parent.getItemAtPosition(position);
-                Logger.debug("Position="+position+", id="+id+", item="+log.getId());
-                return false;
-            }
-        });
-        */
-
         Logger.debug("Before avg. deviation");
         calculateAverageDeviation();
 
@@ -156,7 +153,7 @@ public class DisplayResultFragment extends Fragment {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        v.setBackgroundColor(getResources().getColor(R.color.background_material_light));
+        super.onCreateContextMenu(menu, v, menuInfo);
         if ( v.getId() == R.id.resultListView) {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
             Log logToHandle = (Log)listView.getAdapter().getItem(info.position);
@@ -205,34 +202,29 @@ public class DisplayResultFragment extends Fragment {
 
 
     private void displayDeleteDialog(final long logId, final String dateString) {
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+        final Dialog deleteLogAlertDialog = new Dialog(DisplayResultFragment.this.getActivity(),
+                getString(R.string.delete_this_log),
+                String.format(getString(R.string.deleteLogQuestion), dateString));
+        deleteLogAlertDialog.setCancelable(true);
+        deleteLogAlertDialog.addCancelButton(getString(R.string.no));
+        deleteLogAlertDialog.setOnAcceptButtonClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        Logger.debug("Delete log "+logId);
-                        LogDao logDao = ((WatchCheckApplication)getActivity().getApplicationContext()).getDaoSession().getLogDao();
-                        logDao.deleteByKey(logId);
-                        Toast.makeText(getActivity().getApplicationContext(), String.format(getString(R.string.deletedLogEntry),
-                                dateString), Toast.LENGTH_SHORT).show();
-                        log = ResultManager.getLogsForWatchAndPeriod(getActivity().getApplicationContext(),watchId, period);
-                        if ( listView!=null ) {
-                            resultListAdapter.clear();
-                            resultListAdapter.addAll(log);
-                            resultListAdapter.notifyDataSetChanged();
-                            listView.invalidateViews();
-                        }
-                        break;
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        break;
+            public void onClick(View view) {
+                Logger.debug("Delete log " + logId);
+                LogDao logDao = ((WatchCheckApplication) getActivity().getApplicationContext()).getDaoSession().getLogDao();
+                logDao.deleteByKey(logId);
+                Toast.makeText(getActivity().getApplicationContext(), String.format(getString(R.string.deletedLogEntry),
+                        dateString), Toast.LENGTH_SHORT).show();
+                log = ResultManager.getLogsForWatchAndPeriod(getActivity().getApplicationContext(), watchId, period);
+                if (listView != null) {
+                    resultListAdapter.clear();
+                    resultListAdapter.addAll(log);
+                    resultListAdapter.notifyDataSetChanged();
+                    listView.invalidateViews();
                 }
             }
-        };
-
-        AlertDialog.Builder deleteWatchAlertDialog = new AlertDialog.Builder(DisplayResultFragment.this.getActivity());
-        deleteWatchAlertDialog.setMessage(String.format(getString(R.string.deleteLogQuestion), dateString))
-                .setPositiveButton(getString(R.string.yes), dialogClickListener)
-                .setNegativeButton(getString(R.string.no), dialogClickListener)
-                .show();
+        });
+        deleteLogAlertDialog.show();
+        deleteLogAlertDialog.getButtonAccept().setText(getString(R.string.yes));
     };
 }

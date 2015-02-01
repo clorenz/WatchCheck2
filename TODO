@@ -3,7 +3,10 @@
 - Min/Max im Manifest setzen!
 
 - Back link from "add log" shall go to "measure watch" not to result list
-- Context menu on result has got no material design yet!
+- Context menu on result has got no material design yet! Very difficult!!
+
+
+
 - Deviation on last log and on measure screen differ!!! Maybe just a rounding issue!
 - After a log, the deviation from the last but one item is taken! This is weird!!!
 - First log on a screen display data twice or too high. Looks, like the fragment and pager are broken
