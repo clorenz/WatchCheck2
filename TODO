@@ -1,42 +1,28 @@
-- Cards disappear on Lollipop
-
-- Min/Max im Manifest setzen!
-
+Functional
 - Back link from "add log" shall go to "measure watch" not to result list
-- Context menu on result has got no material design yet! Very difficult!!
-
-
-
 - Deviation on last log and on measure screen differ!!! Maybe just a rounding issue!
 - After a log, the deviation from the last but one item is taken! This is weird!!!
 - First log on a screen display data twice or too high. Looks, like the fragment and pager are broken
 - Default temperature is -273. Is this really useful??
-- On the result table: Display an info icon, if comment was filled.
 - "about" screen, point to localized URLs
-- splash screen == background if no logs are to be displayed
 - importer crashes and does not update results below
 - "Help" goes to the localized webpages
-- import/export data from and to Google Drive
-- Material design: https://github.com/navasmdc/MaterialDesignLibrary
-- more polishing
 - create two new webpages (international and german)
 - after deleting a watch, display different logs and update menu!
 - If last watch was deleted, check, whether a "clean" first screen can be seen!
 - For whatever reason, GPS time is 1sec ahead NTP time
 - ntp time flaps on Lollipop
-- App terminates after a few minutes
-- landscape?
 - Hamburger-Menu starts below ActionBar. Why??
-
-- localization
-
-- transitions
-
+- localization to german
 - check if imported data now fixes the average!
 
-------------------------------------------------
-Colors: http://www.google.com/design/spec/style/color.html#
-Typography: http://www.google.com/design/spec/style/typography.html#typography-roboto-noto
+Design
+- Cards disappear on Lollipop
+- Context menu on result has got no material design yet! Very difficult!!
+- transitions
 
-Spinners are buggy and don't display code!
-https://code.google.com/p/android/issues/detail?id=78118
+Enhancements
+- On the result table: Display an info icon, if comment was filled.
+- splash screen == background if no logs are to be displayed
+- import/export data from and to Google Drive
+- landscape?
