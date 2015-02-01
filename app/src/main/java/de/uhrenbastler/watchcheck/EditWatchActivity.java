@@ -14,12 +14,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gc.materialdesign.views.ButtonFlat;
+import com.gc.materialdesign.widgets.Dialog;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Timestamp;
 import java.util.List;
 
 import de.uhrenbastler.watchcheck.managers.WatchManager;
 import de.uhrenbastler.watchcheck.tools.Logger;
+import watchcheck.db.Log;
 import watchcheck.db.Watch;
 import watchcheck.db.WatchDao;
 
@@ -111,12 +115,26 @@ public class EditWatchActivity extends WatchCheckActionBarActivity {
 
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder deleteWatchAlertDialog = new AlertDialog.Builder(v.getContext());
-                deleteWatchAlertDialog.setMessage(String.format(getString(R.string.deleteWatchQuestion),
-                        watch.getName()+(watch.getSerial()!=null?"/"+watch.getSerial():"")))
-                        .setPositiveButton(getString(R.string.yes), dialogClickListener)
-                        .setNegativeButton(getString(R.string.no), dialogClickListener)
-                        .show();
+                final Dialog deleteWatchAlertDialog = new Dialog(EditWatchActivity.this,
+                        getString(R.string.delete_this_watch),String.format(getString(R.string.deleteWatchQuestion),
+                            watch.getName()+(!StringUtils.isBlank(watch.getSerial())?"/"+watch.getSerial():"")));
+                deleteWatchAlertDialog.setCancelable(true);
+                deleteWatchAlertDialog.addCancelButton(getString(R.string.no));
+                deleteWatchAlertDialog.setOnAcceptButtonClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        List<Log> logs = logDao._queryWatch_Logs(watch.getId());
+                        for ( Log log : logs ) {
+                            logDao.delete(log);
+                        }
+                        watchDao.delete(watch);
+                        Toast.makeText(getApplicationContext(), String.format(getString(R.string.deletedWatch),
+                                watch.getName()), Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
+                deleteWatchAlertDialog.show();
+                deleteWatchAlertDialog.getButtonAccept().setText(getString(R.string.yes));
             }
         });
     }
