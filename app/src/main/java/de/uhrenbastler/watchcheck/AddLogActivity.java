@@ -135,7 +135,7 @@ public class AddLogActivity extends WatchCheckActionBarActivity {
         positionSpinner = (Spinner) findViewById(R.id.logSpinnerPosition);
         ArrayAdapter<?> positionAdapter = ArrayAdapter.createFromResource( this,
                         R.array.positions,android.R.layout.simple_dropdown_item_1line );
-        positionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        positionAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         positionSpinner.setAdapter(positionAdapter);
 
         if ( lastLog!=null && lastLog.getPosition()!=null)
@@ -146,7 +146,7 @@ public class AddLogActivity extends WatchCheckActionBarActivity {
         temperatureSpinner = (Spinner) findViewById(R.id.logSpinnerTemperature);
         ArrayAdapter<?> temperatureAdapter = ArrayAdapter.createFromResource( this,
                 R.array.temperatures,android.R.layout.simple_dropdown_item_1line);
-        temperatureAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        temperatureAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         temperatureSpinner.setAdapter(temperatureAdapter);
 
         if ( lastLog!=null  )

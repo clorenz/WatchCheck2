@@ -1,8 +1,8 @@
 - Cards disappear on Lollipop
 
-- Ugly border on "Measure button"
-
 - delete watch dialog has got wrong background and text colors
+
+- Min/Max im Manifest setzen!
 
 - Back link from "add log" shall go to "measure watch" not to result list
 - Context menu on result has got no material design yet!
@@ -25,6 +25,7 @@
 - ntp time flaps on Lollipop
 - App terminates after a few minutes
 - landscape?
+- Hamburger-Menu starts below ActionBar. Why??
 
 - localization
 
