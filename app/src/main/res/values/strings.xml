@@ -21,6 +21,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="deletedWatch">Deleted watch %s</string>
+    <string name="deletedLog">Deleted log from %s</string>
     <string name="add_log">Add log</string>
     <string name="measure">Measure</string>
     <string name="gps_time">GPS Time: %s</string>
@@ -80,4 +81,6 @@
     <string name="new_watch">New watch</string>
     <string name="edit_watch">Edit watch</string>
     <string name="delete_this_log">Delete log</string>
+    <string name="edit_log">Edit log</string>
+    <string name="delete">delete</string>
 </resources>

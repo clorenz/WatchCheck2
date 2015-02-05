@@ -1,5 +1,6 @@
 package de.uhrenbastler.watchcheck;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -8,22 +9,29 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gc.materialdesign.views.ButtonRectangle;
+import com.gc.materialdesign.widgets.Dialog;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import de.uhrenbastler.watchcheck.tools.Logger;
 import watchcheck.db.Log;
@@ -33,12 +41,14 @@ import watchcheck.db.Watch;
  * Created by clorenz on 13.01.15.
  */
 public class AddLogActivity extends WatchCheckActionBarActivity {
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
     private static final String[] POSITIONARR = { "","DU","DD","12U","3U","6U","9U" };
     private static final int[] TEMPARR = { -273, 4, 20, 36 };
     private Spinner positionSpinner;
     private Spinner temperatureSpinner;
     private CheckBox startFlag;
     private ButtonRectangle saveButton;
+    private ButtonRectangle deleteButton;
     private EditText comment;
 
     private Log lastLog;
@@ -71,9 +81,55 @@ public class AddLogActivity extends WatchCheckActionBarActivity {
         Watch currentWatch = watchDao.load(currentWatchId);
         setWatchName(currentWatch);
 
+        deleteButton = (ButtonRectangle) findViewById(R.id.buttonDelete);
+
         saveButton = (ButtonRectangle) findViewById(R.id.buttonSave);
         if ( editLog!=null ) {
             saveButton.setText(getString(R.string.button_update));
+            setTitle(R.string.edit_log);
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    logDao.delete(editLog);
+                                    Toast.makeText(getApplicationContext(), String.format(getString(R.string.deletedLogEntry),
+                                            sdf.format(editLog.getReferenceTime())), Toast.LENGTH_SHORT).show();
+                                    finish();
+                                    break;
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    break;
+                            }
+                        }
+                    };
+
+                    @Override
+                    public void onClick(View v) {
+                        final Dialog deleteLogAlertDialog = new Dialog(AddLogActivity.this,
+                                getString(R.string.delete_this_log),String.format(getString(R.string.deleteLogQuestion),
+                                sdf.format(editLog.getReferenceTime())));
+                                deleteLogAlertDialog.setCancelable(true);
+                                deleteLogAlertDialog.addCancelButton(getString(R.string.no));
+                                deleteLogAlertDialog.setOnAcceptButtonClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                    logDao.delete(editLog);
+                                    finish();
+                                    Toast.makeText(getApplicationContext(), String.format(getString(R.string.deletedLog),
+                                    sdf.format(editLog.getReferenceTime())), Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+                        deleteLogAlertDialog.show();
+                        deleteLogAlertDialog.getButtonAccept().setText(getString(R.string.yes));
+                    }
+            });
+        } else {
+            // New log -> minimize and hide "delete" button; give save button max. space
+            deleteButton.setLayoutParams(new LinearLayout.LayoutParams(0,0,0));
+            deleteButton.setVisibility(View.INVISIBLE);
+            saveButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         }
         comment = (EditText) findViewById(R.id.logComment);
 

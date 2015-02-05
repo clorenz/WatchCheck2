@@ -18,9 +18,6 @@ Functional
 
 Design
 - Cards disappear on Lollipop
-- Context menu on result has got no material design yet! Very difficult!!
-  Use no context menu, but jump to "Add log" dialog, just like on
-  long click on watch menu
 - transitions
 
 Enhancements

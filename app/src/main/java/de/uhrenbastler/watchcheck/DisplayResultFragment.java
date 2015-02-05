@@ -45,7 +45,7 @@ public class DisplayResultFragment extends Fragment {
 
     // Store instance variables
     private Watch currentWatch;
-    private List<Log> log=null;
+    private List<Log> log = null;
     private Log lastLog;
     private long watchId;
     private int period;
@@ -53,6 +53,8 @@ public class DisplayResultFragment extends Fragment {
     private ListView listView;
     private TextView averageDeviation;
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+    private LogDao logDao;
+    private WatchDao watchDao;
 
 
     // newInstance constructor for creating fragment with arguments
@@ -69,11 +71,12 @@ public class DisplayResultFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        watchId=getArguments().getLong("watchId");
-        period=getArguments().getInt("period");
-        log = ResultManager.getLogsForWatchAndPeriod(getActivity().getApplicationContext(),watchId, period);
-        lastLog = ResultManager.getLastLogForWatch(getActivity().getApplicationContext(),watchId);
-        WatchDao watchDao = ((WatchCheckApplication)getActivity().getApplicationContext()).getDaoSession().getWatchDao();
+        watchId = getArguments().getLong("watchId");
+        period = getArguments().getInt("period");
+        log = ResultManager.getLogsForWatchAndPeriod(getActivity().getApplicationContext(), watchId, period);
+        lastLog = ResultManager.getLastLogForWatch(getActivity().getApplicationContext(), watchId);
+        watchDao = ((WatchCheckApplication) getActivity().getApplicationContext()).getDaoSession().getWatchDao();
+        logDao = ((WatchCheckApplication) getActivity().getApplicationContext()).getDaoSession().getLogDao();
         currentWatch = watchDao.load(watchId);
     }
 
@@ -81,9 +84,9 @@ public class DisplayResultFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        log = ResultManager.getLogsForWatchAndPeriod(getActivity().getApplicationContext(),watchId, period);
-        lastLog = ResultManager.getLastLogForWatch(getActivity().getApplicationContext(),watchId);
-        if ( listView!=null ) {
+        log = ResultManager.getLogsForWatchAndPeriod(getActivity().getApplicationContext(), watchId, period);
+        lastLog = ResultManager.getLastLogForWatch(getActivity().getApplicationContext(), watchId);
+        if (listView != null) {
             resultListAdapter.clear();
             resultListAdapter.addAll(log);
             resultListAdapter.notifyDataSetChanged();
@@ -97,7 +100,7 @@ public class DisplayResultFragment extends Fragment {
     private void calculateAverageDeviation() {
         Logger.debug("Avg.deviation");
         // avg. deviation
-        if ( averageDeviation!=null) {
+        if (averageDeviation != null) {
             String avgDeviationFormat = getString(R.string.list_average_deviation);
             if (log.size() > 1) {
                 // We can calculate the avg. deviation only if we have at least one daily rate!
@@ -124,7 +127,6 @@ public class DisplayResultFragment extends Fragment {
         averageDeviation = (TextView) view.findViewById(R.id.result_footer);
         resultListAdapter = new ResultListAdapter(this.getActivity().getApplicationContext(), log);
         listView.setAdapter(resultListAdapter);
-        registerForContextMenu(listView);
 
         ButtonFloat fab = (ButtonFloat) getActivity().findViewById(R.id.buttonAddLog);
         fab.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -132,7 +134,7 @@ public class DisplayResultFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent checkWatchIntent = new Intent(getActivity(),CheckWatchActivity.class);
+                Intent checkWatchIntent = new Intent(getActivity(), CheckWatchActivity.class);
                 checkWatchIntent.putExtra(CheckWatchActivity.EXTRA_WATCH, currentWatch);
                 checkWatchIntent.putExtra(CheckWatchActivity.EXTRA_LAST_LOG, lastLog);
                 startActivity(checkWatchIntent);
@@ -145,86 +147,27 @@ public class DisplayResultFragment extends Fragment {
             }
         });
 
-        Logger.debug("Before avg. deviation");
-        calculateAverageDeviation();
-
-        return view;
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        if ( v.getId() == R.id.resultListView) {
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-            Log logToHandle = (Log)listView.getAdapter().getItem(info.position);
-            info.id=logToHandle.getId();            // Yuck!
-            menu.setHeaderTitle("Log from "+sdf.format(logToHandle.getReferenceTime()));
-            String[] menuItems = getResources().getStringArray(R.array.resultlist_contextmenu);
-            for (int i = 0; i<menuItems.length; i++) {
-                menu.add(Menu.NONE, i, i, menuItems[i]);
-            }
-        }
-    }
-
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-
-        int menuItemIndex = item.getItemId();
-
-        LogDao logDao = ((WatchCheckApplication)getActivity().getApplicationContext()).getDaoSession().getLogDao();
-        Log logToHandle = logDao.load(info.id);
-
-
-        switch ( menuItemIndex ) {
-            case 0: Logger.debug("Edit item "+logToHandle.getReferenceTime());
-                Intent addLogIntent = new Intent(this.getActivity(),AddLogActivity.class);
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Log logToHandle = ((Log) listView.getAdapter().getItem(position));
+                Intent addLogIntent = new Intent(getActivity(), AddLogActivity.class);
                 addLogIntent.putExtra(AddLogActivity.EXTRA_WATCH, currentWatch);
                 addLogIntent.putExtra(AddLogActivity.EXTRA_EDIT_LOG, logToHandle);
                 startActivity(addLogIntent);
-                if ( listView!=null ) {
-                    resultListAdapter.clear();
-                    resultListAdapter.addAll(log);
-                    resultListAdapter.notifyDataSetChanged();
-                    listView.invalidateViews();
-                }
-                break;
-            case 1: Logger.debug("Delete item "+logToHandle.getReferenceTime());
-                displayDeleteDialog(info.id,sdf.format(logToHandle.getReferenceTime()) );
-                break;
-        }
-
-
-
-        return true;
-    }
-
-
-    private void displayDeleteDialog(final long logId, final String dateString) {
-        final Dialog deleteLogAlertDialog = new Dialog(DisplayResultFragment.this.getActivity(),
-                getString(R.string.delete_this_log),
-                String.format(getString(R.string.deleteLogQuestion), dateString));
-        deleteLogAlertDialog.setCancelable(true);
-        deleteLogAlertDialog.addCancelButton(getString(R.string.no));
-        deleteLogAlertDialog.setOnAcceptButtonClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Logger.debug("Delete log " + logId);
-                LogDao logDao = ((WatchCheckApplication) getActivity().getApplicationContext()).getDaoSession().getLogDao();
-                logDao.deleteByKey(logId);
-                Toast.makeText(getActivity().getApplicationContext(), String.format(getString(R.string.deletedLogEntry),
-                        dateString), Toast.LENGTH_SHORT).show();
-                log = ResultManager.getLogsForWatchAndPeriod(getActivity().getApplicationContext(), watchId, period);
                 if (listView != null) {
                     resultListAdapter.clear();
                     resultListAdapter.addAll(log);
                     resultListAdapter.notifyDataSetChanged();
                     listView.invalidateViews();
                 }
+                return true;
             }
         });
-        deleteLogAlertDialog.show();
-        deleteLogAlertDialog.getButtonAccept().setText(getString(R.string.yes));
-    };
+
+        Logger.debug("Before avg. deviation");
+        calculateAverageDeviation();
+
+        return view;
+    }
 }
