@@ -85,6 +85,7 @@ public class DisplayResultFragment extends Fragment {
     public void onResume() {
         super.onResume();
         log = ResultManager.getLogsForWatchAndPeriod(getActivity().getApplicationContext(), watchId, period);
+
         lastLog = ResultManager.getLastLogForWatch(getActivity().getApplicationContext(), watchId);
         if (listView != null) {
             resultListAdapter.clear();

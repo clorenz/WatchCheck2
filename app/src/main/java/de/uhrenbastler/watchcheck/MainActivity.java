@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -32,7 +33,6 @@ import watchcheck.db.Watch;
 public class MainActivity extends WatchCheckActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    private static final String PREFERENCE_CURRENT_WATCH = "currentWatch";
     private List<Watch> watches;
     private static final String PRIVATE_PREF = "myapp";
     private static final String VERSION_KEY = "version_number";
@@ -98,15 +98,7 @@ public class MainActivity extends WatchCheckActionBarActivity
         ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
         ButtonFloat fab = (ButtonFloat) findViewById(R.id.buttonAddLog);
         if ( selectedWatch != null ) {
-            if ( !logDao._queryWatch_Logs(selectedWatch.getId()).isEmpty()) {
-                vpPager.setVisibility(View.VISIBLE);
-                adapterViewPager = new DisplayResultPagerAdapter(getApplicationContext(), getSupportFragmentManager(), selectedWatch.getId());
-                vpPager.setAdapter(adapterViewPager);
-                vpPager.setCurrentItem(adapterViewPager.getCount());
-            } else {
-                vpPager.setVisibility(View.INVISIBLE);
-            }
-
+            prepareResultPager(vpPager);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -125,6 +117,17 @@ public class MainActivity extends WatchCheckActionBarActivity
             // Hide Add button
             fab.setVisibility(View.INVISIBLE);
             // And maybe display a nice background instead
+        }
+    }
+
+    private void prepareResultPager(ViewPager vpPager) {
+        if ( !logDao._queryWatch_Logs(selectedWatch.getId()).isEmpty()) {
+            vpPager.setVisibility(View.VISIBLE);
+            adapterViewPager = new DisplayResultPagerAdapter(getApplicationContext(), getSupportFragmentManager(), selectedWatch.getId());
+            vpPager.setAdapter(adapterViewPager);
+            vpPager.setCurrentItem(adapterViewPager.getCount());
+        } else {
+            vpPager.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -187,15 +190,20 @@ public class MainActivity extends WatchCheckActionBarActivity
             transaction.addToBackStack(null);
             transaction.commit();
         } else {
-            // Otherwise: update the main content by replacing fragments
-            ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
-            adapterViewPager = new DisplayResultPagerAdapter(getApplicationContext(), getSupportFragmentManager(), watches.get(position).getId());
-            vpPager.setAdapter(adapterViewPager);
 
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, DisplayResultFragment.newInstance(watches.get(position).getId(), 0))
-                    .commit();
+            // TODO check whether watch is there or not
+            if ( logDao._queryWatch_Logs(watches.get(position).getId()).isEmpty()) {
+                Logger.info("Selecting watch w/o results from drawer");
+                ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
+                vpPager.setVisibility(View.INVISIBLE);
+            } else {
+                Logger.info("Selecing watch from drawer");
+                // Otherwise: update the main content by replacing fragments
+                ButtonFloat fab = (ButtonFloat) findViewById(R.id.buttonAddLog);
+                ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
+                prepareResultPager(vpPager);
+                fab.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -236,20 +244,4 @@ public class MainActivity extends WatchCheckActionBarActivity
 
         return false;
     }
-
-
-    private void persistCurrentWatch(long currentWatchId) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = preferences.edit();
-        if ( currentWatchId>=0) {
-            editor.putInt(PREFERENCE_CURRENT_WATCH, (int) currentWatchId);
-            Logger.debug("Setting preference for current watch to "+currentWatchId);
-        } else {
-            Logger.debug("Removing preference for current watch");
-            editor.remove(PREFERENCE_CURRENT_WATCH);
-        }
-        editor.commit();
-    }
-
-
 }

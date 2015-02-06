@@ -83,9 +83,14 @@ public class EditWatchActivity extends WatchCheckActionBarActivity {
                 watch.setName(((TextView)findViewById(R.id.editTextModel)).getEditableText().toString());
                 watch.setSerial(((TextView)findViewById(R.id.editTextSerial)).getEditableText().toString());
                 watch.setComment(((TextView)findViewById(R.id.editTextRemarks)).getEditableText().toString());
-                watchDao.insertOrReplace(watch);
+                long newWatchId = watchDao.insertOrReplace(watch);
 
                 Logger.debug("Updated watch "+watch);
+
+                if ( isNewWatch ) {
+                    // Set this very watch as default
+                    persistCurrentWatch(newWatchId);
+                }
 
                 finish();
                 Toast.makeText(getApplicationContext(), String.format(getString(R.string.createdWatch),
