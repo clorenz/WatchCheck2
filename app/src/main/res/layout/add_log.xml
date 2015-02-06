@@ -109,23 +109,23 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
-        <com.gc.materialdesign.views.ButtonRectangle
+        <com.gc.materialdesign.views.ButtonFlat
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|left"
             android:layout_weight="1"
-            android:id="@+id/buttonCancel" android:layout_width="fill_parent" android:text="@string/cancelLowercase"></com.gc.materialdesign.views.ButtonRectangle>
+            android:id="@+id/buttonCancel" android:layout_width="fill_parent" android:text="@string/cancelLowercase"/>
 
-        <com.gc.materialdesign.views.ButtonRectangle
+        <com.gc.materialdesign.views.ButtonFlat
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|left"
             android:layout_weight="1"
-            android:id="@+id/buttonDelete" android:layout_width="fill_parent" android:text="@string/delete"></com.gc.materialdesign.views.ButtonRectangle>
+            android:id="@+id/buttonDelete" android:layout_width="fill_parent" android:text="@string/delete"/>
 
-        <com.gc.materialdesign.views.ButtonRectangle
+        <com.gc.materialdesign.views.ButtonFlat
           android:layout_height="wrap_content"
           android:layout_gravity="bottom|right"
           android:layout_weight="1"
-          android:id="@+id/buttonSave" android:layout_width="fill_parent" android:text="@string/save"></com.gc.materialdesign.views.ButtonRectangle>
+          android:id="@+id/buttonSave" android:layout_width="fill_parent" android:text="@string/save"/>
 
 
     </LinearLayout>

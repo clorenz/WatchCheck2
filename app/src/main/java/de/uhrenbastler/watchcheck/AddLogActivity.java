@@ -1,21 +1,9 @@
 package de.uhrenbastler.watchcheck;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.RelativeSizeSpan;
-import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -23,15 +11,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gc.materialdesign.views.ButtonRectangle;
+import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.widgets.Dialog;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import de.uhrenbastler.watchcheck.tools.Logger;
 import watchcheck.db.Log;
@@ -47,9 +33,9 @@ public class AddLogActivity extends WatchCheckActionBarActivity {
     private Spinner positionSpinner;
     private Spinner temperatureSpinner;
     private CheckBox startFlag;
-    private ButtonRectangle saveButton;
-    private ButtonRectangle deleteButton;
-    private ButtonRectangle cancelButton;
+    private ButtonFlat saveButton;
+    private ButtonFlat deleteButton;
+    private ButtonFlat cancelButton;
     private EditText comment;
 
     private Log lastLog;
@@ -82,22 +68,18 @@ public class AddLogActivity extends WatchCheckActionBarActivity {
         Watch currentWatch = watchDao.load(currentWatchId);
         setWatchName(currentWatch);
 
-        deleteButton = (ButtonRectangle) findViewById(R.id.buttonDelete);
-        cancelButton = (ButtonRectangle) findViewById(R.id.buttonCancel);
+        deleteButton = (ButtonFlat) findViewById(R.id.buttonDelete);
+        cancelButton = (ButtonFlat) findViewById(R.id.buttonCancel);
+        saveButton = (ButtonFlat) findViewById(R.id.buttonSave);
 
-        saveButton = (ButtonRectangle) findViewById(R.id.buttonSave);
         if ( editLog!=null ) {
             saveButton.setText(getString(R.string.button_update));
             setTitle(R.string.edit_log);
             deleteButton.setOnClickListener(deleteButtonOnClickListener());
         } else {
-            // New log -> minimize and hide "delete" and "cancel" button; give save button max. space
+            // New log -> minimize and hide "delete" button;
             deleteButton.setLayoutParams(new LinearLayout.LayoutParams(0,0,0));
             deleteButton.setVisibility(View.INVISIBLE);
-            cancelButton.setLayoutParams(new LinearLayout.LayoutParams(0, 0, 0));
-            cancelButton.setVisibility(View.INVISIBLE);
-
-            saveButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         }
         comment = (EditText) findViewById(R.id.logComment);
 
