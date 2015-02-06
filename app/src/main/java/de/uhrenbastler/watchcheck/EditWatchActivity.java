@@ -102,22 +102,6 @@ public class EditWatchActivity extends WatchCheckActionBarActivity {
 
         ButtonFlat btnDelete = (ButtonFlat) findViewById(R.id.buttonDelete);
         btnDelete.setOnClickListener(new View.OnClickListener() {
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which) {
-                        case DialogInterface.BUTTON_POSITIVE:
-                            watchDao.delete(watch);
-                            Toast.makeText(getApplicationContext(), String.format(getString(R.string.deletedWatch),
-                                    watch.getName()), Toast.LENGTH_SHORT).show();
-                            finish();
-                            break;
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            break;
-                    }
-                }
-            };
-
             @Override
             public void onClick(View v) {
                 final Dialog deleteWatchAlertDialog = new Dialog(EditWatchActivity.this,
@@ -135,6 +119,13 @@ public class EditWatchActivity extends WatchCheckActionBarActivity {
                         watchDao.delete(watch);
                         Toast.makeText(getApplicationContext(), String.format(getString(R.string.deletedWatch),
                                 watch.getName()), Toast.LENGTH_SHORT).show();
+                        List<Watch> remainingWatches = watchDao.loadAll();
+                        if ( remainingWatches==null || remainingWatches.isEmpty()) {
+                            // Unset default watch
+                            persistCurrentWatch(-1);
+                        } else {
+                            persistCurrentWatch(remainingWatches.get(remainingWatches.size()-1).getId());
+                        }
                         finish();
                     }
                 });
