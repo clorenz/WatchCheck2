@@ -6,15 +6,14 @@ Functional
 - importer crashes and does not update results below
 - "Help" goes to the localized webpages
 - create two new webpages (international and german)
-- If last watch was deleted, check, whether a "clean" first screen can be seen!
 - For whatever reason, GPS time is 1sec ahead NTP time
 - ntp time flaps on Lollipop
 - Hamburger-Menu starts below ActionBar. Why??
+  -> http://stackoverflow.com/questions/26440879/how-do-i-use-drawerlayout-to-display-over-the-actionbar-toolbar-and-under-the-st
 - localization to german
 - check if imported data now fixes the average!
 
 Design
-- Cards disappear on Lollipop
 - transitions
 
 Enhancements
