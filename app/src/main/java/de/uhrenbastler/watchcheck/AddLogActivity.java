@@ -49,6 +49,7 @@ public class AddLogActivity extends WatchCheckActionBarActivity {
     private CheckBox startFlag;
     private ButtonRectangle saveButton;
     private ButtonRectangle deleteButton;
+    private ButtonRectangle cancelButton;
     private EditText comment;
 
     private Log lastLog;
@@ -82,60 +83,43 @@ public class AddLogActivity extends WatchCheckActionBarActivity {
         setWatchName(currentWatch);
 
         deleteButton = (ButtonRectangle) findViewById(R.id.buttonDelete);
+        cancelButton = (ButtonRectangle) findViewById(R.id.buttonCancel);
 
         saveButton = (ButtonRectangle) findViewById(R.id.buttonSave);
         if ( editLog!=null ) {
             saveButton.setText(getString(R.string.button_update));
             setTitle(R.string.edit_log);
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which) {
-                                case DialogInterface.BUTTON_POSITIVE:
-                                    logDao.delete(editLog);
-                                    Toast.makeText(getApplicationContext(), String.format(getString(R.string.deletedLogEntry),
-                                            sdf.format(editLog.getReferenceTime())), Toast.LENGTH_SHORT).show();
-                                    finish();
-                                    break;
-                                case DialogInterface.BUTTON_NEGATIVE:
-                                    break;
-                            }
-                        }
-                    };
-
-                    @Override
-                    public void onClick(View v) {
-                        final Dialog deleteLogAlertDialog = new Dialog(AddLogActivity.this,
-                                getString(R.string.delete_this_log),String.format(getString(R.string.deleteLogQuestion),
-                                sdf.format(editLog.getReferenceTime())));
-                                deleteLogAlertDialog.setCancelable(true);
-                                deleteLogAlertDialog.addCancelButton(getString(R.string.no));
-                                deleteLogAlertDialog.setOnAcceptButtonClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                    logDao.delete(editLog);
-                                    finish();
-                                    Toast.makeText(getApplicationContext(), String.format(getString(R.string.deletedLog),
-                                    sdf.format(editLog.getReferenceTime())), Toast.LENGTH_SHORT).show();
-
-                            }
-                        });
-                        deleteLogAlertDialog.show();
-                        deleteLogAlertDialog.getButtonAccept().setText(getString(R.string.yes));
-                    }
-            });
+            deleteButton.setOnClickListener(deleteButtonOnClickListener());
         } else {
-            // New log -> minimize and hide "delete" button; give save button max. space
+            // New log -> minimize and hide "delete" and "cancel" button; give save button max. space
             deleteButton.setLayoutParams(new LinearLayout.LayoutParams(0,0,0));
             deleteButton.setVisibility(View.INVISIBLE);
+            cancelButton.setLayoutParams(new LinearLayout.LayoutParams(0, 0, 0));
+            cancelButton.setVisibility(View.INVISIBLE);
+
             saveButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         }
         comment = (EditText) findViewById(R.id.logComment);
 
         prefillForm(editLog != null ? editLog : lastLog, editLog != null);
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(saveButtonOnClickListener(currentWatchId, referenceTime, watchTime));
+
+        cancelButton.setOnClickListener(cancelButtonOnClickListener());
+    }
+
+
+    private View.OnClickListener cancelButtonOnClickListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        };
+    }
+
+    private View.OnClickListener saveButtonOnClickListener(final long currentWatchId, final long referenceTime, final long watchTime) {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if ( editLog!=null) {
@@ -145,7 +129,48 @@ public class AddLogActivity extends WatchCheckActionBarActivity {
                 }
                 finish();
             }
-        });
+        };
+    }
+
+    private View.OnClickListener deleteButtonOnClickListener() {
+        return new View.OnClickListener() {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                logDao.delete(editLog);
+                                Toast.makeText(getApplicationContext(), String.format(getString(R.string.deletedLogEntry),
+                                        sdf.format(editLog.getReferenceTime())), Toast.LENGTH_SHORT).show();
+                                finish();
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                break;
+                        }
+                    }
+                };
+
+                @Override
+                public void onClick(View v) {
+                    final Dialog deleteLogAlertDialog = new Dialog(AddLogActivity.this,
+                            getString(R.string.delete_this_log),String.format(getString(R.string.deleteLogQuestion),
+                            sdf.format(editLog.getReferenceTime())));
+                            deleteLogAlertDialog.setCancelable(true);
+                            deleteLogAlertDialog.addCancelButton(getString(R.string.no));
+                            deleteLogAlertDialog.setOnAcceptButtonClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                                logDao.delete(editLog);
+                                finish();
+                                Toast.makeText(getApplicationContext(), String.format(getString(R.string.deletedLog),
+                                sdf.format(editLog.getReferenceTime())), Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+                    deleteLogAlertDialog.show();
+                    deleteLogAlertDialog.getButtonAccept().setText(getString(R.string.yes));
+                }
+        };
     }
 
 

@@ -83,4 +83,5 @@
     <string name="delete_this_log">Delete log</string>
     <string name="edit_log">Edit log</string>
     <string name="delete">delete</string>
+    <string name="cancelLowercase">cancel</string>
 </resources>
