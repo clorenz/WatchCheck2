@@ -116,22 +116,6 @@ public class AddLogActivity extends WatchCheckActionBarActivity {
 
     private View.OnClickListener deleteButtonOnClickListener() {
         return new View.OnClickListener() {
-                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case DialogInterface.BUTTON_POSITIVE:
-                                logDao.delete(editLog);
-                                Toast.makeText(getApplicationContext(), String.format(getString(R.string.deletedLogEntry),
-                                        sdf.format(editLog.getReferenceTime())), Toast.LENGTH_SHORT).show();
-                                finish();
-                                break;
-                            case DialogInterface.BUTTON_NEGATIVE:
-                                break;
-                        }
-                    }
-                };
-
                 @Override
                 public void onClick(View v) {
                     final Dialog deleteLogAlertDialog = new Dialog(AddLogActivity.this,

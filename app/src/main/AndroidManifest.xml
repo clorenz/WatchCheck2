@@ -16,9 +16,21 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".EditWatchActivity" android:noHistory="true"/>
-        <activity android:name=".CheckWatchActivity"/>
-        <activity android:name=".AddLogActivity"/>
+        <activity android:name=".EditWatchActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".CheckWatchActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".AddLogActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".AddLogActivity" />
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>

@@ -1,14 +1,11 @@
 Functional
-- Back link from "add log" shall go to "measure watch" not to result list
 - Deviation on last log and on measure screen differ!!! Maybe just a rounding issue!
 - After a log, the deviation from the last but one item is taken! This is weird!!!
-- First log on a screen display data twice or too high. Looks, like the fragment and pager are broken
 - Default temperature is -273. Is this really useful??
 - "about" screen, point to localized URLs
 - importer crashes and does not update results below
 - "Help" goes to the localized webpages
 - create two new webpages (international and german)
-- after deleting a watch, display different logs and update menu!
 - If last watch was deleted, check, whether a "clean" first screen can be seen!
 - For whatever reason, GPS time is 1sec ahead NTP time
 - ntp time flaps on Lollipop
@@ -21,6 +18,7 @@ Design
 - transitions
 
 Enhancements
+- Back link from "add log" shall go to "measure watch" not to result list (non-trivial)
 - On the result table: Display an info icon, if comment was filled.
 - splash screen == background if no logs are to be displayed
 - import/export data from and to Google Drive

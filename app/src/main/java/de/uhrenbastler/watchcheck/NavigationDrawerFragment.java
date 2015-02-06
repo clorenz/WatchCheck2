@@ -38,7 +38,6 @@ import java.util.List;
 import de.uhrenbastler.watchcheck.tools.DataExporter;
 import de.uhrenbastler.watchcheck.tools.DataImporter;
 import de.uhrenbastler.watchcheck.tools.Logger;
-import de.uhrenbastler.watchcheck.views.EditWatchFragment;
 import de.uhrenbastler.watchcheck.views.SelectWatchArrayAdapter;
 import watchcheck.db.Watch;
 

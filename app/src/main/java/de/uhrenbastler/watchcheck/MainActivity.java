@@ -98,7 +98,7 @@ public class MainActivity extends WatchCheckActionBarActivity
         ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
         ButtonFloat fab = (ButtonFloat) findViewById(R.id.buttonAddLog);
         if ( selectedWatch != null ) {
-            prepareResultPager(vpPager);
+            prepareResultPager(vpPager, selectedWatch.getId());
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -120,10 +120,10 @@ public class MainActivity extends WatchCheckActionBarActivity
         }
     }
 
-    private void prepareResultPager(ViewPager vpPager) {
-        if ( !logDao._queryWatch_Logs(selectedWatch.getId()).isEmpty()) {
+    private void prepareResultPager(ViewPager vpPager, long selectedWatchId) {
+        if ( !logDao._queryWatch_Logs(selectedWatchId).isEmpty()) {
             vpPager.setVisibility(View.VISIBLE);
-            adapterViewPager = new DisplayResultPagerAdapter(getApplicationContext(), getSupportFragmentManager(), selectedWatch.getId());
+            adapterViewPager = new DisplayResultPagerAdapter(getApplicationContext(), getSupportFragmentManager(), selectedWatchId);
             vpPager.setAdapter(adapterViewPager);
             vpPager.setCurrentItem(adapterViewPager.getCount());
         } else {
@@ -174,34 +174,18 @@ public class MainActivity extends WatchCheckActionBarActivity
         if ( watches!=null && watches.get(position)!=null && watches.get(position).getId()!=null ) {
             setWatchName(watches.get(position));
             persistCurrentWatch(watches.get(position).getId().intValue());
-        }
 
-        // If "add watch" was selected, start the new activity
-        if ( watches!=null && watches.get(position)!=null && watches.get(position).getId()==null) {
-            Logger.debug("New watch selected. Starting new activity");
-            Fragment editWatchFragment = new EditWatchFragment();
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("watch", null);
-            bundle.putSerializable("currentWatch", watches.get(0));
-            editWatchFragment.setArguments(bundle);
-
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.container, editWatchFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        } else {
-
-            // TODO check whether watch is there or not
-            if ( logDao._queryWatch_Logs(watches.get(position).getId()).isEmpty()) {
-                Logger.info("Selecting watch w/o results from drawer");
+            if (logDao._queryWatch_Logs(watches.get(position).getId()).isEmpty()) {
+                Logger.debug("Selecting watch w/o results from drawer");
                 ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
                 vpPager.setVisibility(View.INVISIBLE);
             } else {
-                Logger.info("Selecing watch from drawer");
+                selectedWatch = watches.get(position);
+                Logger.debug("Selecting watch " + selectedWatch.getId() + " from drawer");
                 // Otherwise: update the main content by replacing fragments
                 ButtonFloat fab = (ButtonFloat) findViewById(R.id.buttonAddLog);
                 ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
-                prepareResultPager(vpPager);
+                prepareResultPager(vpPager, selectedWatch.getId());
                 fab.setVisibility(View.VISIBLE);
             }
         }
