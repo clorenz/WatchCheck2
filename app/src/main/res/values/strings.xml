@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">WatchCheck</string>
+    <string name="app_name" translatable="false">WatchCheck</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
@@ -13,7 +13,7 @@
     <string name="label_serial">Serial:</string>
     <string name="label_remarks">Remarks:</string>
     <string name="cancel">Cancel</string>
-    <string name="OK">OK</string>
+    <string name="OK" translatable="false">OK</string>
     <string name="delete_this_watch">Delete this watch</string>
     <string name="addWatchHeadline">Add watch</string>
     <string name="createdWatch">Created watch: %s</string>
@@ -48,7 +48,7 @@
     <string name="list_header_position">Pos.</string>
     <string name="list_header_temperature">Temp.</string>
     <string name="menu_about">About</string>
-    <string name="app_about">(C) 2011-2015 by Christoph Lorenz, www.uhrenbastler.de.\n\nAll rights reserved, no warranty at all!\nUse at your own risk!</string>
+    <string name="app_about">(C) 2011-2015 by Christoph Lorenz, 17jewels.info.\n\nAll rights reserved, no warranty at all!\nUse at your own risk!</string>
     <string name="menu_export">Export data</string>
     <string name="dataExported">Data exported</string>
     <string name="list_average_deviation">Average deviation: %+.1f s/d</string>
@@ -84,4 +84,5 @@
     <string name="edit_log">Edit log</string>
     <string name="delete">delete</string>
     <string name="cancelLowercase">cancel</string>
+    <string name="no_results_yet">No results yet</string>
 </resources>

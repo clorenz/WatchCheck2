@@ -1,4 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="navigation_drawer_open">Navigationsleiste öffnen</string>
+    <string name="navigation_drawer_close">Navigationsleiste schließen</string>
+    <string name="action_example">Beispielaktion</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="selected_watch">Gewählte Uhr</string>
+
+    <string name="label_model">Modell:</string>
+    <string name="label_serial">Seriennr.:</string>
+    <string name="label_remarks">Bemerkungen:</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="OK">OK</string>
+    <string name="delete_this_watch">Diese Uhr löschen</string>
+    <string name="addWatchHeadline">Uhr hinzufügen</string>
+    <string name="createdWatch">Hinzugefügte Uhr: %s</string>
+    <string name="deleteWatchQuestion">Möchten Sie wirklich die Uhr %s und alle ihre Logs löschen?</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="deletedWatch">Uhr %s gelöscht</string>
+    <string name="deletedLog">Log von %s gelöscht</string>
+    <string name="add_log">Log hinzufügen</string>
+    <string name="measure">Messen</string>
+    <string name="gps_time">GPS-Zeit: %s</string>
+    <string name="ntp_time">NTP-Zeit: %s</string>
+    <string name="last_deviation">Letzte Abweichung: %s</string>
+    <string name="current_deviation">Aktuelle Abweichung: %+.1f sec.</string>
+    <string name="no_current_deviation">Momentane Abweichung: -</string>
+    <string name="deviation">Abweichung:</string>
+    <string name="deviation_format">%+.1f sek.</string>
+    <string name="newPeriod">Neue Meßperiode:</string>
+    <string name="position">Position:</string>
+    <string name="temperature">Temperatur:</string>
+    <string name="comment">Kommentar:</string>
+    <string name="save">Speichern</string>
+    <string name="deleteLogQuestion">Möchten Sie wirklich den Logeintrag von %s löschen?</string>
+    <string name="deletedLogEntry">Logeintrag von %s erfolgreich gelöscht</string>
+    <string name="reference">Referenz</string>
+    <string name="watch">Uhr</string>
+    <string name="rate">Rate</string>
+    <string name="list_header_reference">Referenz</string>
+    <string name="list_header_deviation">Abweichung</string>
+    <string name="list_header_rate">Gang</string>
+    <string name="list_header_position">Pos.</string>
+    <string name="list_header_temperature">Temp.</string>
+    <string name="menu_about">Über</string>
+    <string name="app_about">(C) 2011-2015 by Christoph Lorenz, www.uhrenbastler.de.\n\nAll rights reserved, no warranty at all!\nUse at your own risk!</string>
+    <string name="menu_export">Daten exportieren</string>
+    <string name="dataExported">Daten exportiert</string>
+    <string name="list_average_deviation">MIttlerer Gang: %+.1f s/d</string>
+    <string name="list_no_average_deviation">Noch keine mittlerer Gang vorhanden</string>
+    <string name="menu_import">Daten importieren</string>
+    <string name="dataImported">Daten importiert</string>
+    <string name="menu_whatsnew">Was ist neu?</string>
+    <string name="worn">am Arm</string>
+    <string name="dial_up">Ziff.Bl. oben</string>
+    <string name="dial_down">Ziff.Bl. unten</string>
+    <string name="pos_12o">12 oben</string>
+    <string name="pos_3o">3 oben</string>
+    <string name="pos_6o">6 oben</string>
+    <string name="pos_9o">9 oben</string>
+    <string name="menu_help">Hilfe</string>
     <string name="url_help">http://www.uhrenbastler.de/</string>
+    <string name="whatsnew">Was ist neu</string>
+    <string name="changelog">
+        <![CDATA[
+            <b>Version 2.0.0</b>
+            <p>
+            - Komplette Neuentwicklung<br/>
+        ]]>
+    </string>
+    <string name="ok">OK</string>
+    <string name="check_your_watch">Uhr messen</string>
+    <string name="measure_watch">Uhr messen</string>
+    <string name="select_watch">Uhr wählen</string>
+    <string name="add_watch">Uhr hinzufügen</string>
+    <string name="new_watch">Neue Uhr</string>
+    <string name="edit_watch">Uhr editieren</string>
+    <string name="delete_this_log">Log löschen</string>
+    <string name="edit_log">Log editieren</string>
+    <string name="delete">löschen</string>
+    <string name="cancelLowercase">abbrechen</string>
+    <string name="button_update">aktualisieren</string>
+    <string name="headlineEditWatch">Uhr editieren</string>
+    <string name="no_results_yet">Noch keine Ergebnisse</string>
 </resources>

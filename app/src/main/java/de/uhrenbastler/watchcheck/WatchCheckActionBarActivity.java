@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
@@ -34,6 +35,10 @@ public class WatchCheckActionBarActivity extends ActionBarActivity {
 
         watchDao = ((WatchCheckApplication)getApplicationContext()).getDaoSession().getWatchDao();
         logDao = ((WatchCheckApplication)getApplicationContext()).getDaoSession().getLogDao();
+
+
+        DrawerLayout dl = (DrawerLayout) findViewById(R.id.drawer_layout);
+        dl.setStatusBarBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
     }
 
     private void setToolbar() {

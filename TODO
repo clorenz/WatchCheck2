@@ -8,8 +8,6 @@ Functional
 - create two new webpages (international and german)
 - For whatever reason, GPS time is 1sec ahead NTP time
 - ntp time flaps on Lollipop
-- Hamburger-Menu starts below ActionBar. Why??
-  -> http://stackoverflow.com/questions/26440879/how-do-i-use-drawerlayout-to-display-over-the-actionbar-toolbar-and-under-the-st
 - localization to german
 - check if imported data now fixes the average!
 
@@ -19,6 +17,5 @@ Design
 Enhancements
 - Back link from "add log" shall go to "measure watch" not to result list (non-trivial)
 - On the result table: Display an info icon, if comment was filled.
-- splash screen == background if no logs are to be displayed
 - import/export data from and to Google Drive
 - landscape?
