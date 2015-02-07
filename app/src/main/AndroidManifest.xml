@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="de.uhrenbastler.watchcheck" >
+    package="de.uhrenbastler.watchcheck"
+    android:versionCode="16"
+    android:versionName="2.0.0"
+    >
 
     <application
         android:allowBackup="true"
@@ -31,6 +34,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".AddLogActivity" />
         </activity>
+        <uses-sdk
+            android:targetSdkVersion="21" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
