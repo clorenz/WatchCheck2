@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="positions">
+        <item>am Arm</item>
+        <item>liegend, Zifferblatt oben</item>
+        <item>liegend, Zifferblatt unten</item>
+        <item>hängend, 12 oben</item>
+        <item>hängend, 3 oben</item>
+        <item>hängend, 6 oben</item>
+        <item>hängend, 9 oben</item>
+    </string-array>
+    <string-array name="result_positions">
+        <item>am Arm</item>
+        <item>Glas oben</item>
+        <item>Boden oben</item>
+        <item>12 oben</item>
+        <item>3 oben</item>
+        <item>6 oben</item>
+        <item>9 oben</item>
+    </string-array>
+    <string-array name="temperatures">
+        <item>am Arm</item>
+        <item>+4°</item>
+        <item>+20°</item>
+        <item>+36°</item>
+    </string-array>
+    <string-array name="resultlist_contextmenu">
+        <item>ändern</item>
+        <item>löschen</item>
+    </string-array>
+</resources>

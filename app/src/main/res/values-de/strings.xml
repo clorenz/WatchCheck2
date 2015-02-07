@@ -83,4 +83,5 @@
     <string name="button_update">aktualisieren</string>
     <string name="headlineEditWatch">Uhr editieren</string>
     <string name="no_results_yet">Noch keine Ergebnisse</string>
+    <string name="updatedWatch">Uhr \"%s\" aktualisiert</string>
 </resources>

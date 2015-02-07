@@ -85,4 +85,5 @@
     <string name="delete">delete</string>
     <string name="cancelLowercase">cancel</string>
     <string name="no_results_yet">No results yet</string>
+    <string name="updatedWatch">Updated watch: %s</string>
 </resources>

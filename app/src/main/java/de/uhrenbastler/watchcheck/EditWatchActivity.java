@@ -90,11 +90,15 @@ public class EditWatchActivity extends WatchCheckActionBarActivity {
                 if ( isNewWatch ) {
                     // Set this very watch as default
                     persistCurrentWatch(newWatchId);
+                    Toast.makeText(getApplicationContext(), String.format(getString(R.string.createdWatch),
+                            watch.getName()), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), String.format(getString(R.string.updatedWatch),
+                            watch.getName()), Toast.LENGTH_SHORT).show();
                 }
 
                 finish();
-                Toast.makeText(getApplicationContext(), String.format(getString(R.string.createdWatch),
-                        watch.getName()), Toast.LENGTH_SHORT).show();
+
 
                 return;
             }

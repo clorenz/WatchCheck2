@@ -55,7 +55,7 @@ public class SelectWatchArrayAdapter extends ArrayAdapter<Watch> {
 
             watchName.setText(i.getName());
             if (StringUtils.isNotBlank(i.getSerial())) {
-               watchSerial.setText("(Serial No.: "+i.getSerial()+")");
+               watchSerial.setText("("+getContext().getString(R.string.label_serial)+" "+i.getSerial()+")");
             } else {
                watchSerial.setText("");
             }

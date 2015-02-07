@@ -6,6 +6,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_material_light"
     tools:context=".MainActivity"
     android:fitsSystemWindows="true">
 
@@ -79,8 +80,9 @@
         android:id="@+id/navigation_drawer"
         android:name="de.uhrenbastler.watchcheck.NavigationDrawerFragment"
         android:layout_width="@dimen/navigation_drawer_width"
-        android:layout_height="match_parent"
+        android:layout_height="fill_parent"
         android:layout_gravity="left|start"
+        android:background="@color/background_material_light"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
         tools:layout="@layout/fragment_navigation_drawer" />

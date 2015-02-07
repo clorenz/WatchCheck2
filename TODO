@@ -1,4 +1,6 @@
 Functional
+- Importer does not update results and navigation
+
 - Deviation on last log and on measure screen differ!!! Maybe just a rounding issue!
 - After a log, the deviation from the last but one item is taken! This is weird!!!
 - Default temperature is -273. Is this really useful??
@@ -9,7 +11,6 @@ Functional
 - For whatever reason, GPS time is 1sec ahead NTP time
 - ntp time flaps on Lollipop
 - localization to german
-- check if imported data now fixes the average!
 
 Design
 - transitions
