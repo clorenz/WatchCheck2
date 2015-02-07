@@ -5,7 +5,6 @@
     <string name="action_example">Beispielaktion</string>
     <string name="action_settings">Einstellungen</string>
     <string name="selected_watch">Gewählte Uhr</string>
-
     <string name="label_model">Modell:</string>
     <string name="label_serial">Seriennr.:</string>
     <string name="label_remarks">Bemerkungen:</string>
@@ -33,8 +32,8 @@
     <string name="temperature">Temperatur:</string>
     <string name="comment">Kommentar:</string>
     <string name="save">Speichern</string>
-    <string name="deleteLogQuestion">Möchten Sie wirklich den Logeintrag von %s löschen?</string>
-    <string name="deletedLogEntry">Logeintrag von %s erfolgreich gelöscht</string>
+    <string name="deleteLogQuestion">Möchten Sie wirklich den Logeintrag vom %s löschen?</string>
+    <string name="deletedLogEntry">Logeintrag vom %s erfolgreich gelöscht</string>
     <string name="reference">Referenz</string>
     <string name="watch">Uhr</string>
     <string name="rate">Rate</string>
@@ -44,11 +43,11 @@
     <string name="list_header_position">Pos.</string>
     <string name="list_header_temperature">Temp.</string>
     <string name="menu_about">Über</string>
-    <string name="app_about">(C) 2011-2015 by Christoph Lorenz, www.uhrenbastler.de.\n\nAll rights reserved, no warranty at all!\nUse at your own risk!</string>
+    <string name="app_about">(C) 2011-2015 by Christoph Lorenz,\nwww.uhrenbastler.de.\n\nAlle Rechte vorbehalten, keinerlei Garantie!\nBenutzung auf eigene Verantwortung!</string>
     <string name="menu_export">Daten exportieren</string>
     <string name="dataExported">Daten exportiert</string>
     <string name="list_average_deviation">MIttlerer Gang: %+.1f s/d</string>
-    <string name="list_no_average_deviation">Noch keine mittlerer Gang vorhanden</string>
+    <string name="list_no_average_deviation">Noch kein mittlerer Gang vorhanden</string>
     <string name="menu_import">Daten importieren</string>
     <string name="dataImported">Daten importiert</string>
     <string name="menu_whatsnew">Was ist neu?</string>

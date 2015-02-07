@@ -48,7 +48,7 @@
     <string name="list_header_position">Pos.</string>
     <string name="list_header_temperature">Temp.</string>
     <string name="menu_about">About</string>
-    <string name="app_about">(C) 2011-2015 by Christoph Lorenz, 17jewels.info.\n\nAll rights reserved, no warranty at all!\nUse at your own risk!</string>
+    <string name="app_about">(C) 2011–2015 by Christoph Lorenz,\n<a href="http://17jewels.info/">17jewels.info</a>.\n\nAll rights reserved, no warranty at all!\nUse at your own risk!</string>
     <string name="menu_export">Export data</string>
     <string name="dataExported">Data exported</string>
     <string name="list_average_deviation">Average deviation: %+.1f s/d</string>
