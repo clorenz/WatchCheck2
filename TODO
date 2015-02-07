@@ -1,16 +1,12 @@
 Functional
-- Importer does not update results and navigation
-
 - Deviation on last log and on measure screen differ!!! Maybe just a rounding issue!
 - After a log, the deviation from the last but one item is taken! This is weird!!!
 - Default temperature is -273. Is this really useful??
 - "about" screen, point to localized URLs
-- importer crashes and does not update results below
 - "Help" goes to the localized webpages
 - create two new webpages (international and german)
 - For whatever reason, GPS time is 1sec ahead NTP time
 - ntp time flaps on Lollipop
-- localization to german
 
 Design
 - transitions

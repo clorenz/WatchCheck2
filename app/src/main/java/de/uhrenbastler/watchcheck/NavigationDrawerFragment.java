@@ -1,23 +1,25 @@
 package de.uhrenbastler.watchcheck;
 
+import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
-import android.app.Activity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -39,7 +41,9 @@ import de.uhrenbastler.watchcheck.tools.DataExporter;
 import de.uhrenbastler.watchcheck.tools.DataImporter;
 import de.uhrenbastler.watchcheck.tools.Logger;
 import de.uhrenbastler.watchcheck.views.SelectWatchArrayAdapter;
+import watchcheck.db.LogDao;
 import watchcheck.db.Watch;
+import watchcheck.db.WatchDao;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -58,6 +62,7 @@ public class NavigationDrawerFragment extends Fragment {
      * expands it. This shared preference tracks this.
      */
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
+    private static final String PREFERENCE_CURRENT_WATCH = "currentWatch";
 
     /**
      * A pointer to the current callbacks instance (the Activity).
@@ -80,6 +85,8 @@ public class NavigationDrawerFragment extends Fragment {
     SelectWatchArrayAdapter adapter;
     List<Watch> watches = new ArrayList<Watch>();
     Watch selectedWatch;
+    WatchDao watchDao;
+    LogDao logDao;
 
 
     public NavigationDrawerFragment() {
@@ -111,6 +118,9 @@ public class NavigationDrawerFragment extends Fragment {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
             mFromSavedInstanceState = true;
         }
+
+        watchDao = ((WatchCheckApplication)getActivity().getApplicationContext()).getDaoSession().getWatchDao();
+        logDao = ((WatchCheckApplication)getActivity().getApplicationContext()).getDaoSession().getLogDao();
 
         // Select either the default item (0) or the last selected item.
         //selectItem(mCurrentSelectedPosition);
@@ -360,12 +370,25 @@ public class NavigationDrawerFragment extends Fragment {
                                 String filename = chosenDir;
                                 try {
                                     new DataImporter().doImport(getActivity(), filename);
-                                    updateDrawer();
+                                    // Restart app
                                     new AlertDialog.Builder(getActivity())
                                             .setTitle(R.string.dataImported)
                                             .setMessage(filename)
                                             .setCancelable(true)
-                                            .setPositiveButton(getActivity().getString(android.R.string.ok), null).create().show();
+                                            .setPositiveButton(getActivity().getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                    Context context = getActivity().getApplicationContext();
+                                                    Intent mStartActivity = new Intent(context, MainActivity.class);
+                                                    int mPendingIntentId = 123456;
+                                                    PendingIntent mPendingIntent = PendingIntent.getActivity(context, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+                                                    AlarmManager mgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                                                    mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+                                                    System.exit(0);
+                                                }
+                                            })
+                                            .create().show();
+
                                 } catch (Exception e) {
                                     Logger.error(e.getMessage(),e);
                                 }
@@ -399,7 +422,6 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
 
-
     /**
      * Per the navigation drawer design guidelines, updates the action bar to show the global app
      * 'context', rather than just what's in the current screen.
@@ -415,15 +437,6 @@ public class NavigationDrawerFragment extends Fragment {
         return ((ActionBarActivity) getActivity()).getSupportActionBar();
     }
 
-
-    public void updateDrawer() {
-        adapter.notifyDataSetChanged();
-        mDrawerListView.invalidate();
-        mDrawerListView.refreshDrawableState();
-        Logger.debug("Notified adapter");
-    }
-
-
     /**
      * Callbacks interface that all activities using this fragment must implement.
      */
@@ -433,5 +446,4 @@ public class NavigationDrawerFragment extends Fragment {
          */
         void onNavigationDrawerItemSelected(int position);
     }
-
 }
