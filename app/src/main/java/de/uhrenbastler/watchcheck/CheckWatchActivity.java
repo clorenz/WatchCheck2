@@ -220,6 +220,8 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
 
             btnMeasure = (ButtonRectangle) findViewById(R.id.buttonMeasure);
 
+            runnable=true;
+
             Logger.info("Starting reference time update. Runnable="+runnable);
         }
 
