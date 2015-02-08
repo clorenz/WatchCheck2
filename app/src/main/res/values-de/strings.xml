@@ -22,8 +22,8 @@
     <string name="measure">Messen</string>
     <string name="gps_time">GPS-Zeit: %s</string>
     <string name="ntp_time">NTP-Zeit: %s</string>
-    <string name="last_deviation">Letzte Abweichung: %s</string>
-    <string name="current_deviation">Aktuelle Abweichung: %+.1f sec.</string>
+    <string name="last_deviation">Letzte Abweichung: %+.1f s</string>
+    <string name="current_deviation">Aktuelle Abweichung: %+.1f s</string>
     <string name="no_current_deviation">Momentane Abweichung: -</string>
     <string name="deviation">Abweichung:</string>
     <string name="deviation_format">%+.1f sek.</string>
@@ -83,4 +83,5 @@
     <string name="headlineEditWatch">Uhr editieren</string>
     <string name="no_results_yet">Noch keine Ergebnisse</string>
     <string name="updatedWatch">Uhr \"%s\" aktualisiert</string>
+    <string name="no_last_deviation">Letzte Abweichung: -</string>
 </resources>

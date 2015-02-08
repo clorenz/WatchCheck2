@@ -114,12 +114,12 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
         now.add(Calendar.MINUTE, 1);
         if ( lastLog != null) {
             Logger.debug("LastLog="+lastLog.getWatchTime()+" vs "+lastLog.getReferenceTime());
-            int deviation = (int) (lastLog.getWatchTime().getTime() - lastLog.getReferenceTime().getTime()) / 1000;
-            now.add(Calendar.SECOND, deviation);
+            double deviation = (double) (lastLog.getWatchTime().getTime() - lastLog.getReferenceTime().getTime()) / 1000d;
+            now.add(Calendar.SECOND, (int)deviation);
 
-            tvLastDeviation.setText(String.format(tvLastDeviation.getText().toString(), ((deviation > 0 ? "+" : "") + deviation + " sec.")));
+            tvLastDeviation.setText(String.format(tvLastDeviation.getText().toString(), deviation));
         } else {
-            tvLastDeviation.setText(String.format(tvLastDeviation.getText().toString(),"-"));
+            tvLastDeviation.setText(getString(R.string.no_last_deviation));
         }
         timePicker.setCurrentHour(now.get(Calendar.HOUR_OF_DAY));
         timePicker.setCurrentMinute(now.get(Calendar.MINUTE));

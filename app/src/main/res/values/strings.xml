@@ -26,7 +26,7 @@
     <string name="measure">Measure</string>
     <string name="gps_time">GPS Time: %s</string>
     <string name="ntp_time">NTP Time: %s</string>
-    <string name="last_deviation">Last deviation: %s</string>
+    <string name="last_deviation">Last deviation: %+.1f sec.</string>
     <string name="current_deviation">Current deviation: %+.1f sec.</string>
     <string name="no_current_deviation">Current deviation: -</string>
     <string name="deviation">Deviation:</string>
@@ -86,4 +86,5 @@
     <string name="cancelLowercase">cancel</string>
     <string name="no_results_yet">No results yet</string>
     <string name="updatedWatch">Updated watch: %s</string>
+    <string name="no_last_deviation">Last deviation: -</string>
 </resources>

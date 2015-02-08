@@ -1,7 +1,4 @@
 Functional
-- Deviation on last log and on measure screen differ!!! Maybe just a rounding issue!
-- After a log, the deviation from the last but one item is taken! This is weird!!!
-  Even weirder: "Last deviation: -"
 - Default temperature is -273. Is this really useful??
 - "about" screen, point to localized URLs
 - "Help" goes to the localized webpages

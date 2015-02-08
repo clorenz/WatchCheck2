@@ -92,6 +92,7 @@ public class DisplayResultFragment extends Fragment {
             resultListAdapter.addAll(log);
             resultListAdapter.notifyDataSetChanged();
             listView.invalidateViews();
+            preparePlusButton();
         }
         calculateAverageDeviation();
 
@@ -129,18 +130,7 @@ public class DisplayResultFragment extends Fragment {
         resultListAdapter = new ResultListAdapter(this.getActivity().getApplicationContext(), log);
         listView.setAdapter(resultListAdapter);
 
-        ButtonFloat fab = (ButtonFloat) getActivity().findViewById(R.id.buttonAddLog);
-        fab.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        Logger.debug("Setting button color");
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent checkWatchIntent = new Intent(getActivity(), CheckWatchActivity.class);
-                checkWatchIntent.putExtra(CheckWatchActivity.EXTRA_WATCH, currentWatch);
-                checkWatchIntent.putExtra(CheckWatchActivity.EXTRA_LAST_LOG, lastLog);
-                startActivity(checkWatchIntent);
-            }
-        });
+        preparePlusButton();
         listView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -170,5 +160,20 @@ public class DisplayResultFragment extends Fragment {
         calculateAverageDeviation();
 
         return view;
+    }
+
+    private void preparePlusButton() {
+        ButtonFloat fab = (ButtonFloat) getActivity().findViewById(R.id.buttonAddLog);
+        fab.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        Logger.debug("Setting button color");
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent checkWatchIntent = new Intent(getActivity(), CheckWatchActivity.class);
+                checkWatchIntent.putExtra(CheckWatchActivity.EXTRA_WATCH, currentWatch);
+                checkWatchIntent.putExtra(CheckWatchActivity.EXTRA_LAST_LOG, lastLog);
+                startActivity(checkWatchIntent);
+            }
+        });
     }
 }
