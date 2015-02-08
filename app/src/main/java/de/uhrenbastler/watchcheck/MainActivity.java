@@ -7,16 +7,19 @@ import android.content.pm.PackageInfo;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.widget.TextView;
 
 import com.gc.materialdesign.views.ButtonFloat;
@@ -126,6 +129,15 @@ public class MainActivity extends WatchCheckActionBarActivity
             adapterViewPager = new DisplayResultPagerAdapter(getApplicationContext(), getSupportFragmentManager(), selectedWatchId);
             vpPager.setAdapter(adapterViewPager);
             vpPager.setCurrentItem(adapterViewPager.getCount());
+
+            PagerTabStrip mPagerTabStrip = (PagerTabStrip) findViewById(R.id.pager_header);
+            for (int i = 0; i < mPagerTabStrip.getChildCount(); ++i) {
+                View nextChild = mPagerTabStrip.getChildAt(i);
+                if (nextChild instanceof TextView) {
+                    TextView textViewToConvert = (TextView) nextChild;
+                    textViewToConvert.setTextScaleX(2.5f);
+                }
+            }
         } else {
             vpPager.setVisibility(View.INVISIBLE);
         }

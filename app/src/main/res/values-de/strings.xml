@@ -19,7 +19,7 @@
     <string name="deletedWatch">Uhr %s gelöscht</string>
     <string name="deletedLog">Log von %s gelöscht</string>
     <string name="add_log">Log hinzufügen</string>
-    <string name="measure">Messen</string>
+    <string name="measure">Messen (Sekunden auf :00)</string>
     <string name="gps_time">GPS-Zeit: %s</string>
     <string name="ntp_time">NTP-Zeit: %s</string>
     <string name="last_deviation">Letzte Abweichung: %+.1f s</string>
@@ -84,4 +84,5 @@
     <string name="no_results_yet">Noch keine Ergebnisse</string>
     <string name="updatedWatch">Uhr \"%s\" aktualisiert</string>
     <string name="no_last_deviation">Letzte Abweichung: -</string>
+    <string name="check_watch_guide">Zeit der zu messenden Uhr (Sekunden auf :00)</string>
 </resources>

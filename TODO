@@ -1,16 +1,14 @@
 Functional
-- Default temperature is -273. Is this really useful??
 - "about" screen, point to localized URLs
 - "Help" goes to the localized webpages
 - create two new webpages (international and german)
-- For whatever reason, GPS time is 1sec ahead NTP time
-- ntp time flaps on Lollipop
 
 Design
-- "Time of your watch", "Seconds to zero" deutlicher!!
+- PagerTabStrip ist immer noch zu klein
 - transitions
 
 Enhancements
+- Default temperature is -273. Is this really useful??
 - Back link from "add log" shall go to "measure watch" not to result list (non-trivial)
 - On the result table: Display an info icon, if comment was filled.
 - import/export data from and to Google Drive

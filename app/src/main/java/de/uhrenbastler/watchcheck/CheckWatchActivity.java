@@ -2,13 +2,18 @@ package de.uhrenbastler.watchcheck;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -53,6 +58,19 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
         lastLog = (Log) getIntent().getSerializableExtra(EXTRA_LAST_LOG);
 
         timePicker = (TimePicker) findViewById(R.id.timePicker);
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        if ( size.y < 1024) {
+            // TimePicker must be smaller
+            timePicker.setScaleX(0.75f);
+            timePicker.setScaleY(0.75f);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.gravity = Gravity.CENTER;
+            layoutParams.setMargins(0, -20, 0, 0);
+            timePicker.setLayoutParams(layoutParams);
+        }
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         ntpTimeProvider = new NtpTimeProvider(cm,50,6000);            // TODO: The last one shall be 6000 or so  (10 per second => 10 minutes)

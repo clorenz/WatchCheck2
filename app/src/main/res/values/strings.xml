@@ -23,7 +23,7 @@
     <string name="deletedWatch">Deleted watch %s</string>
     <string name="deletedLog">Deleted log from %s</string>
     <string name="add_log">Add log</string>
-    <string name="measure">Measure</string>
+    <string name="measure">Measure (seconds to :00)</string>
     <string name="gps_time">GPS Time: %s</string>
     <string name="ntp_time">NTP Time: %s</string>
     <string name="last_deviation">Last deviation: %+.1f sec.</string>
@@ -87,4 +87,5 @@
     <string name="no_results_yet">No results yet</string>
     <string name="updatedWatch">Updated watch: %s</string>
     <string name="no_last_deviation">Last deviation: -</string>
+    <string name="check_watch_guide">Time of your watch (seconds to :00)</string>
 </resources>

@@ -61,7 +61,7 @@ public class GpsTimeProvider implements ITimeProvider {
         public void onLocationChanged(Location location) {
             if (location != null) {
                 offset = System.currentTimeMillis() - location.getTime();
-                Logger.info("GPS offset=" + offset + ": Location=" + new Date(location.getTime()) + " vs. " + new Date());
+                Logger.debug("GPS offset=" + offset + ": Location=" + new Date(location.getTime()) + " vs. " + new Date());
                 valid = true;
             } else {
                 offset=null;
