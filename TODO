@@ -1,4 +1,5 @@
 Functional
+- App in background and restart during measuring does not work
 - "about" screen, point to localized URLs
 - "Help" goes to the localized webpages
 - create two new webpages (international and german)

@@ -32,4 +32,9 @@ public class LocalTimeProvider implements ITimeProvider{
     public long getMillis() {
         return System.currentTimeMillis();
     }
+
+    @Override
+    public void terminate() {
+
+    }
 }

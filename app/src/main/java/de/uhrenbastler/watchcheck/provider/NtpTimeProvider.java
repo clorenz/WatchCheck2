@@ -43,6 +43,12 @@ public class NtpTimeProvider implements ITimeProvider{
 
 
     @Override
+    public void terminate() {
+
+    }
+
+
+    @Override
     public String getTime() {
         if ( offset==null) {
             if ( reconnectAttempt==0) {

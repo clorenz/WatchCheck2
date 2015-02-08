@@ -44,6 +44,7 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
     AsyncTask<Context, Integer, Integer> referenceTimeUpdater;
     ITimeProvider gpsTimeProvider;
     ITimeProvider ntpTimeProvider;
+    LocationManager lm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +72,6 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
             layoutParams.setMargins(0, -20, 0, 0);
             timePicker.setLayoutParams(layoutParams);
         }
-
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        ntpTimeProvider = new NtpTimeProvider(cm,50,6000);            // TODO: The last one shall be 6000 or so  (10 per second => 10 minutes)
-
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        gpsTimeProvider = new GpsTimeProvider(lm);
 
         ButtonRectangle btnMeasure = (ButtonRectangle) findViewById(R.id.buttonMeasure);
         btnMeasure.setOnClickListener(new View.OnClickListener() {
@@ -117,9 +112,16 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
     public void onResume() {
         super.onResume();
 
+        Logger.debug("On Resume");
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        ntpTimeProvider = new NtpTimeProvider(cm,50,6000);            // TODO: The last one shall be 6000 or so  (10 per second => 10 minutes)
+        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        gpsTimeProvider = new GpsTimeProvider(lm);
+
+
         referenceTimeUpdater = new ReferenceTimeUpdater(new ITimeProvider[]{gpsTimeProvider,ntpTimeProvider},
                 new Integer[]{R.id.gpstime,R.id.ntptime}, timePicker);
-
         referenceTimeUpdater.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         timePicker.setIs24HourView(true);
@@ -145,6 +147,12 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        referenceTimeUpdater.cancel(true);
+        ((ReferenceTimeUpdater)referenceTimeUpdater).terminate();
+        super.onPause();
+    }
 
     @Override
     protected void onDestroy() {
@@ -218,18 +226,27 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
         @Override
         protected void onPostExecute(Integer result) {
             runnable=false;
+            terminateAllProvider();
             Logger.info("Killed reference time display of "+ArrayUtils.toString(timeProviders));
+        }
+
+        private void terminateAllProvider() {
+            for ( ITimeProvider timeProvider :  timeProviders ) {
+                timeProvider.terminate();
+            }
         }
 
         @Override
         protected void onCancelled() {
             runnable=false;
+            terminateAllProvider();
             Logger.info("Killed reference time display of "+ArrayUtils.toString(timeProviders));
         }
 
 
         public void terminate() {
             runnable=false;
+            terminateAllProvider();
             Logger.info("Killed reference time display of "+ArrayUtils.toString(timeProviders));
         }
 

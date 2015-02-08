@@ -21,10 +21,18 @@ public class GpsTimeProvider implements ITimeProvider {
     boolean valid=false;
     Date timestamp=null;
     Long offset;
+    LocationListener ll;
+    LocationManager lm;
 
     public GpsTimeProvider(LocationManager lm) {
-        LocationListener ll = new GpsLocationListener();
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,ll);
+        this.lm = lm;
+        ll = new GpsLocationListener();
+        this.lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,ll);
+    }
+
+    @Override
+    public void terminate() {
+        lm.removeUpdates(ll);
     }
 
     @Override

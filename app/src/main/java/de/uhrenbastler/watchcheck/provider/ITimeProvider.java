@@ -13,4 +13,5 @@ public interface ITimeProvider {
     boolean isGps();
     boolean isNtp();
     long getMillis();
+    void terminate();
 }
