@@ -1,11 +1,11 @@
 Functional
-- App in background and restart during measuring does not work
 - "about" screen, point to localized URLs
 - "Help" goes to the localized webpages
 - create two new webpages (international and german)
 
 Design
 - transitions
+- Horizontal design
 
 Enhancements
 - Default temperature is -273. Is this really useful??

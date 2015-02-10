@@ -30,6 +30,7 @@ import watchcheck.db.Log;
 import watchcheck.db.Watch;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by clorenz on 09.01.15.
@@ -92,6 +93,26 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
                 CheckWatchActivity.this.finish();
             }
         });
+
+        // Set timepicker to next minute PLUS last known deviation
+        timePicker.setIs24HourView(true);
+        timePicker.setKeepScreenOn(true);
+
+        TextView tvLastDeviation= (TextView) findViewById(R.id.lastdeviation);
+        GregorianCalendar now = new GregorianCalendar();
+        now.add(Calendar.MINUTE, 1);
+        if ( lastLog != null) {
+            Logger.debug("LastLog="+lastLog.getWatchTime()+" vs "+lastLog.getReferenceTime());
+            double deviation = (double) (lastLog.getWatchTime().getTime() - lastLog.getReferenceTime().getTime()) / 1000d;
+            now.add(Calendar.SECOND, (int)deviation);
+
+            tvLastDeviation.setText(String.format(tvLastDeviation.getText().toString(), deviation));
+        } else {
+            tvLastDeviation.setText(getString(R.string.no_last_deviation));
+        }
+        timePicker.setCurrentHour(now.get(Calendar.HOUR_OF_DAY));
+        timePicker.setCurrentMinute(now.get(Calendar.MINUTE));
+
     }
 
     private long getReferenceTimeMillis() {
@@ -121,30 +142,9 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
 
 
         referenceTimeUpdater = new ReferenceTimeUpdater(new ITimeProvider[]{gpsTimeProvider,ntpTimeProvider},
-                new Integer[]{R.id.gpstime,R.id.ntptime}, timePicker);
+                new Integer[]{R.id.gpstime,R.id.ntptime},
+                new int[]{R.string.gps_time,R.string.ntp_time},timePicker);
         referenceTimeUpdater.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
-        timePicker.setIs24HourView(true);
-        timePicker.setKeepScreenOn(true);
-
-        TextView tvLastDeviation= (TextView) findViewById(R.id.lastdeviation);
-
-        // Set timepicker to next minute PLUS last known deviation
-        GregorianCalendar now = new GregorianCalendar();
-        now.add(Calendar.MINUTE, 1);
-        if ( lastLog != null) {
-            Logger.debug("LastLog="+lastLog.getWatchTime()+" vs "+lastLog.getReferenceTime());
-            double deviation = (double) (lastLog.getWatchTime().getTime() - lastLog.getReferenceTime().getTime()) / 1000d;
-            now.add(Calendar.SECOND, (int)deviation);
-
-            tvLastDeviation.setText(String.format(tvLastDeviation.getText().toString(), deviation));
-        } else {
-            tvLastDeviation.setText(getString(R.string.no_last_deviation));
-        }
-        timePicker.setCurrentHour(now.get(Calendar.HOUR_OF_DAY));
-        timePicker.setCurrentMinute(now.get(Calendar.MINUTE));
-
-
     }
 
     @Override
@@ -197,7 +197,7 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
         boolean valid=false;
         ButtonRectangle btnMeasure;
 
-        ReferenceTimeUpdater(ITimeProvider[] timeProviders, Integer[] viewIds, TimePicker timepicker) {
+        ReferenceTimeUpdater(ITimeProvider[] timeProviders, Integer[] viewIds, int[] defaultResources, TimePicker timepicker) {
             int number=0;
             timestamp = new String[timeProviders.length];
             tvTime = new TextView[timeProviders.length];
@@ -206,7 +206,7 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
 
             for ( Integer viewId: viewIds) {
                 tvTime[number] = (TextView) findViewById(viewId);
-                format[number] = tvTime[number].getText().toString();
+                format[number] = getString(defaultResources[number]);
                 number++;
             }
 
@@ -216,7 +216,7 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
             colorGreen=getResources().getColor(R.color.measure_green);
 
             tvDeviation = (TextView) findViewById(R.id.currentdeviation);
-            formatTvDeviation = tvDeviation.getText().toString();
+            formatTvDeviation = getString(R.string.current_deviation);
 
             btnMeasure = (ButtonRectangle) findViewById(R.id.buttonMeasure);
 
