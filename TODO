@@ -1,5 +1,4 @@
 Functional
-- Dates shown on the tabs doesn't match the result!!
 - App in background and restart during measuring does not work
 - "about" screen, point to localized URLs
 - "Help" goes to the localized webpages
@@ -7,7 +6,6 @@ Functional
 
 Design
 - "am Arm" shows no temperature and thus could be centered over both columns
-- PagerTabStrip ist immer noch zu klein
 - transitions
 
 Enhancements

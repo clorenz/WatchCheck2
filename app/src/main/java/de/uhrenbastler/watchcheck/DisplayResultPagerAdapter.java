@@ -32,6 +32,11 @@ public class DisplayResultPagerAdapter extends FragmentPagerAdapter {
         this.watchId = watchId;
         periods = ResultManager.getPeriodsForWatch(context, watchId);
 
+        Logger.debug("Found fragments: "+fragmentManager.getFragments().size());
+        while ( fragmentManager.getFragments().size()>0) {
+            fragmentManager.getFragments().remove(0);
+            Logger.debug("Pop");
+        }
     }
 
     // Returns total number of pages
@@ -49,7 +54,6 @@ public class DisplayResultPagerAdapter extends FragmentPagerAdapter {
         // Returns the page title for the top indicator
         @Override
         public CharSequence getPageTitle(int position) {
-            Logger.debug("Getting page title for " + position);
             String start = ResultManager.getPeriodStartDate(context, watchId, periods.get(position));
             String end = ResultManager.getPeriodEndDate(context, watchId, periods.get(position));
 
@@ -73,7 +77,7 @@ public class DisplayResultPagerAdapter extends FragmentPagerAdapter {
                 titleString = start + " - " + end;
             }
             SpannableStringBuilder sb = new SpannableStringBuilder(titleString);
-            TextAppearanceSpan headerSpan = new TextAppearanceSpan(null, 0, 14, null, null);
+            TextAppearanceSpan headerSpan = new TextAppearanceSpan(null, 0, 18, null, null);
             sb.setSpan(headerSpan,0,titleString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             return sb;

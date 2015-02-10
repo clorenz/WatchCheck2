@@ -124,12 +124,24 @@ public class MainActivity extends WatchCheckActionBarActivity
     }
 
     private void prepareResultPager(ViewPager vpPager, long selectedWatchId) {
+        FragmentManager manager = getSupportFragmentManager();
+        if (manager.getBackStackEntryCount() > 0) {
+            FragmentManager.BackStackEntry first = manager.getBackStackEntryAt(0);
+            manager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+        if ( adapterViewPager!=null) {
+            adapterViewPager.notifyDataSetChanged();
+            Logger.debug("Clearing previous "+adapterViewPager.getCount()+" fragments");
+        }
+
+
         if ( !logDao._queryWatch_Logs(selectedWatchId).isEmpty()) {
             vpPager.setVisibility(View.VISIBLE);
             adapterViewPager = new DisplayResultPagerAdapter(getApplicationContext(), getSupportFragmentManager(), selectedWatchId);
             vpPager.setAdapter(adapterViewPager);
             vpPager.setCurrentItem(adapterViewPager.getCount());
 
+            /*
             PagerTabStrip mPagerTabStrip = (PagerTabStrip) findViewById(R.id.pager_header);
             for (int i = 0; i < mPagerTabStrip.getChildCount(); ++i) {
                 View nextChild = mPagerTabStrip.getChildAt(i);
@@ -138,6 +150,7 @@ public class MainActivity extends WatchCheckActionBarActivity
                     textViewToConvert.setTextScaleX(2.5f);
                 }
             }
+            */
         } else {
             vpPager.setVisibility(View.INVISIBLE);
         }

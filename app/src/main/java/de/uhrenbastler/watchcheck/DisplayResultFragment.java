@@ -59,6 +59,7 @@ public class DisplayResultFragment extends Fragment {
 
     // newInstance constructor for creating fragment with arguments
     public static DisplayResultFragment newInstance(Long watchId, int page) {
+        Logger.debug("No resume, but new instance: watchId="+watchId);
         DisplayResultFragment fragmentFirst = new DisplayResultFragment();
         Bundle args = new Bundle();
         args.putLong("watchId", watchId);
@@ -84,6 +85,7 @@ public class DisplayResultFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Logger.debug("on resume: currentWatchId="+currentWatch.getId()+" vs. watchId="+watchId);
         log = ResultManager.getLogsForWatchAndPeriod(getActivity().getApplicationContext(), watchId, period);
 
         lastLog = ResultManager.getLastLogForWatch(getActivity().getApplicationContext(), watchId);
@@ -100,7 +102,6 @@ public class DisplayResultFragment extends Fragment {
     }
 
     private void calculateAverageDeviation() {
-        Logger.debug("Avg.deviation");
         // avg. deviation
         if (averageDeviation != null) {
             String avgDeviationFormat = getString(R.string.list_average_deviation);
@@ -111,8 +112,6 @@ public class DisplayResultFragment extends Fragment {
 
                 double diffReferenceInDays = (double) diffReferenceMillis / (double) 86400000d;
                 double avgDeviation = ((double) diffWatchMillis / diffReferenceInDays) / 1000 - 86400d;
-
-                Logger.debug("Avg deviation=" + avgDeviation);
 
                 averageDeviation.setText(String.format(avgDeviationFormat, avgDeviation));
             } else {
@@ -163,9 +162,9 @@ public class DisplayResultFragment extends Fragment {
     }
 
     private void preparePlusButton() {
+        Logger.debug("Plus button: currentWatch="+currentWatch+" with id="+currentWatch.getId());
         ButtonFloat fab = (ButtonFloat) getActivity().findViewById(R.id.buttonAddLog);
         fab.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        Logger.debug("Setting button color");
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
