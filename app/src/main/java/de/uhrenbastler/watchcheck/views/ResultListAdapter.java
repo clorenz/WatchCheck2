@@ -2,11 +2,13 @@ package de.uhrenbastler.watchcheck.views;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -74,13 +76,16 @@ public class ResultListAdapter extends ArrayAdapter<Log> {
         TextView tvPosition = (TextView) rowView.findViewById(R.id.result_position);
         tvPosition.setText(positions[posIndex]);
 
+        TextView tvTemperature = (TextView) rowView.findViewById(R.id.result_temperature);
         if ( posIndex>0) {
             // Watch was not worn
             int tempIndex = ArrayUtils.indexOf(TEMPARR, log.getTemperature());
             if (tempIndex > -1) {
-                TextView tvTemperature = (TextView) rowView.findViewById(R.id.result_temperature);
                 tvTemperature.setText(temperatures[tempIndex]);
             }
+        } else {
+            tvPosition.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT,0.32f));
+            tvTemperature.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT,0.0f));
         }
 
         return rowView;
