@@ -18,6 +18,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import de.uhrenbastler.watchcheck.tools.Logger;
 import watchcheck.db.Log;
@@ -141,10 +142,17 @@ public class AddLogActivity extends WatchCheckActionBarActivity {
 
 
     private void createNewLogEntry(long currentWatchId, long referenceTime, long watchTime) {
-        int period = 0;
-        if (lastLog != null) {
-            period = startFlag.isChecked() ? lastLog.getPeriod() + 1 : lastLog.getPeriod();
+        int period=0;
+        List<Log> allLogs = logDao._queryWatch_Logs(currentWatchId);
+        if ( allLogs!=null && !allLogs.isEmpty() ) {
+            period = allLogs.get(allLogs.size() - 1).getPeriod();
+            if ( startFlag.isChecked()) {
+                period++;
+            }
         }
+
+        Logger.info("Creating new log entry for watch="+currentWatchId+" and period="+period);
+
         createLog(currentWatchId, period,
                 referenceTime, watchTime,
                 POSITIONARR[(int) positionSpinner.getSelectedItemId()],
