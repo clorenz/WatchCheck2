@@ -3,13 +3,12 @@ Functional
 - "Help" goes to the localized webpages
 - create two new webpages (international and german)
 
-Design
+Design enhancements
 - transitions
 - Horizontal design
 
-Enhancements
+Other Enhancements
 - Default temperature is -273. Is this really useful??
 - Back link from "add log" shall go to "measure watch" not to result list (non-trivial)
 - On the result table: Display an info icon, if comment was filled.
 - import/export data from and to Google Drive
-- landscape?

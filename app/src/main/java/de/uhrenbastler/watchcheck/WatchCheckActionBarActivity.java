@@ -1,6 +1,7 @@
 package de.uhrenbastler.watchcheck;
 
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
@@ -28,6 +29,8 @@ public class WatchCheckActionBarActivity extends ActionBarActivity {
 
     protected void onCreate(Bundle savedInstanceState, int viewResource) {
         super.onCreate(savedInstanceState);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         setContentView(viewResource);
 
