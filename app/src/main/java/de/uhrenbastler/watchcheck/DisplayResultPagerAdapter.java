@@ -28,6 +28,7 @@ public class DisplayResultPagerAdapter extends FragmentPagerAdapter {
 
     public DisplayResultPagerAdapter(Context context, FragmentManager fragmentManager, long watchId) {
         super(fragmentManager);
+
         this.context = context;
         this.watchId = watchId;
         periods = ResultManager.getPeriodsForWatch(context, watchId);
@@ -77,7 +78,7 @@ public class DisplayResultPagerAdapter extends FragmentPagerAdapter {
                 titleString = start + " - " + end;
             }
             SpannableStringBuilder sb = new SpannableStringBuilder(titleString);
-            TextAppearanceSpan headerSpan = new TextAppearanceSpan(null, 0, 18, null, null);
+            TextAppearanceSpan headerSpan = new TextAppearanceSpan(context, R.style.TextAppearance_AppCompat_Small_Inverse);
             sb.setSpan(headerSpan,0,titleString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             return sb;
