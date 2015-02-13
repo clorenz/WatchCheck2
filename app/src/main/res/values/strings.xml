@@ -13,7 +13,7 @@
     <string name="label_serial">Serial:</string>
     <string name="label_remarks">Remarks:</string>
     <string name="cancel">Cancel</string>
-    <string name="OK" translatable="false">OK</string>
+    <string name="OK">OK</string>
     <string name="delete_this_watch">Delete this watch</string>
     <string name="addWatchHeadline">Add watch</string>
     <string name="createdWatch">Created watch: %s</string>

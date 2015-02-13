@@ -9,13 +9,14 @@
         android:label="@string/app_name"
         android:name=".WatchCheckApplication"
         android:theme="@style/AppTheme" >
+
         <activity
-            android:name=".MainActivity"
+            android:name="de.uhrenbastler.watchcheck.MainActivity"
             android:label="@string/app_name"
             android:configChanges="orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".EditWatchActivity"
@@ -36,9 +37,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".AddLogActivity" />
         </activity>
-        <uses-sdk
-            android:targetSdkVersion="21" />
     </application>
+
+    <uses-sdk
+        android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>

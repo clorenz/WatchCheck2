@@ -211,7 +211,12 @@ public class DataImporter {
             Date watchTime = new Date(Long.parseLong(logDataParts[4]));
             String position = logDataParts[5];
             int temperature = Integer.parseInt(logDataParts[6]);
-            String comment = logDataParts[7];
+            String comment;
+            if ( logDataParts.length>7) {
+                comment = logDataParts[7];
+            } else {
+                comment=null;
+            }
             Log log = new Log(logId, watchId, period, referenceTime, watchTime, position, temperature, comment);
             logDao.insert(log);
         }
