@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import de.uhrenbastler.watchcheck.managers.ResultManager;
+import de.uhrenbastler.watchcheck.managers.WatchManager;
 import de.uhrenbastler.watchcheck.tools.Logger;
 import de.uhrenbastler.watchcheck.views.ResultListAdapter;
 import watchcheck.db.Log;
@@ -85,7 +86,13 @@ public class DisplayResultFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Logger.debug("on resume: currentWatchId="+currentWatch.getId()+" vs. watchId="+watchId);
+
+        currentWatch = WatchManager.retrieveCurrentWatch(this.getActivity());
+        if ( currentWatch!=null) {
+            watchId = currentWatch.getId();
+        }
+
+        Logger.debug("on resume: currentWatchId=" + watchId);
         log = ResultManager.getLogsForWatchAndPeriod(getActivity().getApplicationContext(), watchId, period);
 
         lastLog = ResultManager.getLastLogForWatch(getActivity().getApplicationContext(), watchId);

@@ -135,6 +135,12 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
 
         Logger.debug("On Resume");
 
+        currentWatch = (Watch) getIntent().getSerializableExtra(EXTRA_WATCH);
+
+        setWatchName(currentWatch);
+
+        lastLog = (Log) getIntent().getSerializableExtra(EXTRA_LAST_LOG);
+
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         ntpTimeProvider = new NtpTimeProvider(cm,50,6000);            // TODO: The last one shall be 6000 or so  (10 per second => 10 minutes)
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -178,7 +184,12 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
 
         return pickerTime.getTime().getTime();
     }
-    
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
 
     // ------------------------------------------------------------------
     private class ReferenceTimeUpdater extends AsyncTask<Context, Integer, Integer> {
