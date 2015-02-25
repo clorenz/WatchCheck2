@@ -2,6 +2,7 @@ package de.uhrenbastler.watchcheck;
 
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
@@ -12,6 +13,8 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
 import de.uhrenbastler.watchcheck.tools.Logger;
 import watchcheck.db.LogDao;
@@ -39,9 +42,14 @@ public class WatchCheckActionBarActivity extends ActionBarActivity {
         watchDao = ((WatchCheckApplication)getApplicationContext()).getDaoSession().getWatchDao();
         logDao = ((WatchCheckApplication)getApplicationContext()).getDaoSession().getLogDao();
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow();
+            w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
 
         DrawerLayout dl = (DrawerLayout) findViewById(R.id.drawer_layout);
         dl.setStatusBarBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        dl.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
     }
 
     private void setToolbar() {
