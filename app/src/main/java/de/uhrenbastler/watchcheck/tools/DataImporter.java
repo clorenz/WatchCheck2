@@ -197,7 +197,10 @@ public class DataImporter {
             if ( !StringUtils.isBlank(watchDataParts[3])) {
                 createdAt = new Date(Long.parseLong(watchDataParts[3]));
             }
-            String comment = watchDataParts[4];
+            String comment=null;
+            if ( watchDataParts.length>4) {
+                comment = watchDataParts[4];
+            }
             Watch watch = new Watch(watchId, watchName, serial, createdAt, comment);
             watchDao.insert(watch);
         }

@@ -63,13 +63,10 @@
     <string name="whatsnew">Was ist neu</string>
     <string name="changelog">
         <![CDATA[
-            <b>Version 2.0.1</b>
+            <b>Version 2.0.2</b>
             <p>
-            - Statusbar für KitKat-Geräte gefixed<br/>
-            <p>
-            <b>Version 2.0.0</b>
-            <p>
-            - Komplette Neuentwicklung<br/>
+            - Importer für Version 2 gefixed<br/>
+            - farbige Statusbar ab KitKat<br/>
         ]]>
     </string>
     <string name="ok">OK</string>

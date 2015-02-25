@@ -55,6 +55,9 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
 
         currentWatch = (Watch) getIntent().getSerializableExtra(EXTRA_WATCH);
 
+        Logger.debug("CheckWatchAvtivity: on create. CurrentWatch="+(currentWatch!=null?currentWatch.getId():"NULL"));
+
+
         setWatchName(currentWatch);
 
         lastLog = (Log) getIntent().getSerializableExtra(EXTRA_LAST_LOG);
@@ -133,13 +136,7 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
     public void onResume() {
         super.onResume();
 
-        Logger.debug("On Resume");
-
-        currentWatch = (Watch) getIntent().getSerializableExtra(EXTRA_WATCH);
-
-        setWatchName(currentWatch);
-
-        lastLog = (Log) getIntent().getSerializableExtra(EXTRA_LAST_LOG);
+        Logger.debug("CheckWatchAvtivity: onResume. CurrentWatch="+(currentWatch!=null?currentWatch.getId():"NULL"));
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         ntpTimeProvider = new NtpTimeProvider(cm,50,6000);            // TODO: The last one shall be 6000 or so  (10 per second => 10 minutes)
