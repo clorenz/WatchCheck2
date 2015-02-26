@@ -38,13 +38,15 @@
             <TextView
                 android:gravity="center_horizontal" android:layout_weight="0.22" android:textAppearance="@style/ListHeadline" android:layout_width="0dp" android:text="@string/list_header_reference"/>
             <TextView
-                android:gravity="center_horizontal" android:layout_weight="0.2" android:textAppearance="@style/ListHeadline" android:layout_width="0dp" android:text="@string/list_header_deviation"/>
+                android:gravity="center_horizontal" android:layout_weight="0.17" android:textAppearance="@style/ListHeadline" android:layout_width="0dp" android:text="@string/list_header_deviation"/>
             <TextView
-                android:gravity="center_horizontal" android:layout_weight="0.25" android:textAppearance="@style/ListHeadline" android:layout_width="0dp" android:text="@string/list_header_rate"/>
+                android:gravity="center_horizontal" android:layout_weight="0.23" android:textAppearance="@style/ListHeadline" android:layout_width="0dp" android:text="@string/list_header_rate"/>
             <TextView
                 android:gravity="center_horizontal" android:layout_weight="0.18" android:textAppearance="@style/ListHeadline" android:layout_width="0dp" android:text="@string/list_header_position"/>
             <TextView
                 android:gravity="center_horizontal" android:layout_weight="0.15" android:textAppearance="@style/ListHeadline" android:layout_width="0dp" android:text="@string/list_header_temperature"/>
+            <TextView
+                android:gravity="center_horizontal" android:layout_weight="0.05" android:textAppearance="@style/ListHeadline" android:layout_width="0dp" android:text=""/>
 
         </TableRow>
 

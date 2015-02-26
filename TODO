@@ -1,7 +1,9 @@
 Bugs
 
+Features 2.1
+- Additive sync of results (and current watch) on Google Drive
+
 Design enhancements
-- Status bar color on KitKat
 - transitions
 - Horizontal design
 

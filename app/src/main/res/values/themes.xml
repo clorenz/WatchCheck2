@@ -28,6 +28,7 @@
     </style>
 
     <style name="MediumListItem" parent="Base.TextAppearance.AppCompat.Small">
+        <item name="android:textSize">12dp</item>
     </style>
 
     <style name="spinnerItemStyle" parent="Base.Widget.AppCompat.Spinner">

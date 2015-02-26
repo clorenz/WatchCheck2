@@ -7,11 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.gc.materialdesign.widgets.Dialog;
+
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -39,10 +43,10 @@ public class ResultListAdapter extends ArrayAdapter<Log> {
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, final ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.result_row, parent, false);
-        Log log = logs.get(position);
+        final Log log = logs.get(position);
 
         TextView tvTimestampReference = (TextView) rowView.findViewById(R.id.result_timestamp_reference);
         tvTimestampReference.setText(sdf.format(log.getReferenceTime()));
@@ -65,7 +69,7 @@ public class ResultListAdapter extends ArrayAdapter<Log> {
             tvDeviation.setText(String.format("%+.1f s/d", deviation));
         }
 
-        Resources res = rowView.getResources();
+        final Resources res = rowView.getResources();
         String[] positions = res.getStringArray(R.array.result_positions);
         String[] temperatures = res.getStringArray(R.array.temperatures);
 
@@ -86,6 +90,23 @@ public class ResultListAdapter extends ArrayAdapter<Log> {
         } else {
             tvPosition.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT,0.32f));
             tvTemperature.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT,0.0f));
+        }
+
+        ImageView infoIcon = (ImageView) rowView.findViewById(R.id.result_info);
+        if (StringUtils.isEmpty(log.getComment()) || "null".equals(log.getComment())) {
+            infoIcon.setVisibility(View.INVISIBLE);
+        } else {
+            infoIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Dialog commentDialog = new Dialog(parent.getContext(),
+                            res.getString(R.string.comment),
+                            log.getComment());
+                    commentDialog.setButtonCancel(null);
+                    commentDialog.show();
+                    commentDialog.getButtonAccept().setText(res.getString(R.string.ok));
+                }
+            });
         }
 
         return rowView;

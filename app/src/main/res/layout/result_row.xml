@@ -23,7 +23,7 @@
             android:textAppearance="@style/MediumListItem"
             android:id="@+id/result_offset"
             android:layout_width="0dp"
-            android:layout_weight="0.2"
+            android:layout_weight="0.17"
             android:layout_gravity="right|center_vertical"
             android:gravity="right|center_vertical"
             android:layout_height="wrap_content" />
@@ -33,7 +33,7 @@
             android:textAppearance="@style/MediumListItem"
             android:id="@+id/result_deviation_per_day"
             android:layout_width="0dp"
-            android:layout_weight="0.25"
+            android:layout_weight="0.23"
             android:layout_gravity="right|center_vertical"
             android:gravity="right|center_vertical"
             android:layout_height="wrap_content" />
@@ -57,6 +57,13 @@
             android:layout_gravity="center_horizontal|center_vertical"
             android:gravity="center_horizontal|center_vertical"
             android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_weight="0.05"
+            android:layout_width="0dp"
+            android:id="@+id/result_info"
+            android:src="@drawable/ic_info_black_18dp"
+            />
 
     </TableRow>
 
