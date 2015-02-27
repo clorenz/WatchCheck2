@@ -88,4 +88,5 @@
     <string name="updatedWatch">Updated watch: %s</string>
     <string name="no_last_deviation">Last deviation: -</string>
     <string name="check_watch_guide">Time of your watch (seconds to :00)</string>
+    <string name="menu_export_googledrive">Export to Google Drive</string>
 </resources>

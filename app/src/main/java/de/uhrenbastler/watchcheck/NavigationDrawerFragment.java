@@ -33,6 +33,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gc.materialdesign.widgets.Dialog;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.drive.Drive;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +53,7 @@ import watchcheck.db.WatchDao;
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment {
+public class NavigationDrawerFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     /**
      * Remember the position of the selected item.
@@ -87,6 +90,7 @@ public class NavigationDrawerFragment extends Fragment {
     Watch selectedWatch;
     WatchDao watchDao;
     LogDao logDao;
+    private GoogleApiClient mGoogleApiClient;
 
 
     public NavigationDrawerFragment() {
@@ -124,6 +128,14 @@ public class NavigationDrawerFragment extends Fragment {
 
         // Select either the default item (0) or the last selected item.
         //selectItem(mCurrentSelectedPosition);
+
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addApi(Drive.API)
+                .addScope(Drive.SCOPE_FILE)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+
     }
 
     @Override
@@ -362,6 +374,11 @@ public class NavigationDrawerFragment extends Fragment {
                 }
                 return true;
             }
+
+            case R.id.menu_export_googledrive: {
+
+            }
+
             case R.id.menu_import: {
                 SimpleFileDialog FileOpenDialog =  new SimpleFileDialog(getActivity(), "Import",
 						new SimpleFileDialog.SimpleFileDialogListener(){
@@ -435,6 +452,21 @@ public class NavigationDrawerFragment extends Fragment {
 
     private ActionBar getActionBar() {
         return ((ActionBarActivity) getActivity()).getSupportActionBar();
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
     }
 
     /**
