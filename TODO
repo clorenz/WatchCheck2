@@ -1,7 +1,13 @@
 Bugs
 
 Features 2.1
-- Additive sync of results (and current watch) on Google Drive
+- Manual sync Google Drive
+
+Features 2.2
+- Reminders to check watch next time
+
+Feature 3.0
+- Graphical output
 
 Design enhancements
 - transitions
@@ -10,5 +16,3 @@ Design enhancements
 Other Enhancements
 - Default temperature is -273. Is this really useful??
 - Back link from "add log" shall go to "measure watch" not to result list (non-trivial)
-- On the result table: Display an info icon, if comment was filled.
-- import/export data from and to Google Drive
