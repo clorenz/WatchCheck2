@@ -68,9 +68,9 @@
     <string name="whatsnew">What\'s New</string>
     <string name="changelog">
         <![CDATA[
-            <b>Version 2.0.3</b>
+            <b>Version 2.0.4</b>
             <p>
-            - Display log comments<br/>
+            - Minor design fix on result table<br/>
         ]]>
     </string>
     <string name="ok">OK</string>

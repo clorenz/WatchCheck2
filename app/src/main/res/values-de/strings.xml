@@ -63,9 +63,9 @@
     <string name="whatsnew">Was ist neu</string>
     <string name="changelog">
         <![CDATA[
-            <b>Version 2.0.3</b>
+            <b>Version 2.0.4</b>
             <p>
-            - Kommentaranzeige<br/>
+            - Zeilenumbruch in der Ergebnisanzeige behoben<br/>
         ]]>
     </string>
     <string name="ok">OK</string>
