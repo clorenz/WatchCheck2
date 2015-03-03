@@ -36,11 +36,11 @@
             android:layout_marginBottom="10dp">
 
             <TextView
-                android:gravity="center_horizontal" android:layout_weight="0.22" android:textAppearance="@style/ListHeadline" android:layout_width="0dp" android:text="@string/list_header_reference"/>
+                android:gravity="center_horizontal" android:layout_weight="0.20" android:textAppearance="@style/ListHeadline" android:layout_width="0dp" android:text="@string/list_header_reference"/>
             <TextView
-                android:gravity="center_horizontal" android:layout_weight="0.20" android:textAppearance="@style/ListHeadline" android:layout_width="0dp" android:text="@string/list_header_deviation"/>
+                android:gravity="center_horizontal" android:layout_weight="0.24" android:textAppearance="@style/ListHeadline" android:layout_width="0dp" android:text="@string/list_header_deviation"/>
             <TextView
-                android:gravity="center_horizontal" android:layout_weight="0.20" android:textAppearance="@style/ListHeadline" android:layout_width="0dp" android:text="@string/list_header_rate"/>
+                android:gravity="center_horizontal" android:layout_weight="0.18" android:textAppearance="@style/ListHeadline" android:layout_width="0dp" android:text="@string/list_header_rate"/>
             <TextView
                 android:gravity="center_horizontal" android:layout_weight="0.18" android:textAppearance="@style/ListHeadline" android:layout_width="0dp" android:text="@string/list_header_position"/>
             <TextView
