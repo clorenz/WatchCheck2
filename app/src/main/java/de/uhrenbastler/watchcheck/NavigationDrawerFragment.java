@@ -336,6 +336,10 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         switch (item.getItemId()) {
+            case R.id.action_summary: {
+                return true;
+            }
+
             case R.id.menu_about: {
                 PackageInfo pInfo=null;
                 try {

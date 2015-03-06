@@ -85,4 +85,6 @@
     <string name="updatedWatch">Uhr \"%s\" aktualisiert</string>
     <string name="no_last_deviation">Letzte Abweichung: -</string>
     <string name="check_watch_guide">Zeit der zu messenden Uhr (Sekunden auf :00)</string>
+    <string name="summary">Zusammenfassung</string>
+    <string name="results">Ergebnisse</string>
 </resources>
