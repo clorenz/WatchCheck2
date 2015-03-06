@@ -4,6 +4,8 @@ Features 2.1
 - Manual sync Google Drive
 - RSS Feed von Uhrenbaster / 17Jewels
   ( http://www.uhrenbastler.de/index.php?option=com_content&view=featured&format=feed&type=rss )
+- Statistikseite, die die mittleren Werte je Lage berechnet
+  (evtl. Icon "Receipt"; normal: Icon "view list")
 
 Features 2.2
 - Reminders to check watch next time
