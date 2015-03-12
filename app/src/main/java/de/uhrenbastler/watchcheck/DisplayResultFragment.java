@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.gc.materialdesign.views.ButtonFloat;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 
 import de.uhrenbastler.watchcheck.managers.AppStateManager;
@@ -84,20 +85,25 @@ public class DisplayResultFragment extends Fragment {
         log = ResultManager.getLogsForWatchAndPeriod(getActivity().getApplicationContext(), watchId, period);
 
         lastLog = ResultManager.getLastLogForWatch(getActivity().getApplicationContext(), watchId);
-        if (listView != null) {
-            resultAdapter.clear();
-            resultAdapter.addAll(log);
-            resultAdapter.notifyDataSetChanged();
-            listView.invalidateViews();
-            preparePlusButton();
+
+        if ( displaySummary ) {
+            // ---
+        } else {
+            if (listView != null) {
+                resultAdapter.clear();
+                resultAdapter.addAll(log);
+                resultAdapter.notifyDataSetChanged();
+                listView.invalidateViews();
+                preparePlusButton();
+            }
+            calculateAverageDeviation(R.string.list_average_deviation,R.string.list_no_average_deviation);
         }
-        calculateAverageDeviation();
     }
 
-    private void calculateAverageDeviation() {
+    private void calculateAverageDeviation(int stringId, int stringNoDeviationId) {
         // avg. deviation
         if (averageDeviation != null) {
-            String avgDeviationFormat = getString(R.string.list_average_deviation);
+            String avgDeviationFormat = getString(stringId);
             if (log.size() > 1) {
                 // We can calculate the avg. deviation only if we have at least one daily rate!
                 long diffReferenceMillis = log.get(log.size() - 1).getReferenceTime().getTime() - log.get(0).getReferenceTime().getTime();
@@ -108,7 +114,7 @@ public class DisplayResultFragment extends Fragment {
 
                 averageDeviation.setText(String.format(avgDeviationFormat, avgDeviation));
             } else {
-                averageDeviation.setText(getString(R.string.list_no_average_deviation));
+                averageDeviation.setText(getString(stringNoDeviationId));
             }
         }
     }
@@ -158,7 +164,7 @@ public class DisplayResultFragment extends Fragment {
         });
 
         Logger.debug("Before avg. deviation");
-        calculateAverageDeviation();
+        calculateAverageDeviation(R.string.list_average_deviation,R.string.list_no_average_deviation);
 
         return view;
     }
@@ -167,11 +173,33 @@ public class DisplayResultFragment extends Fragment {
     private View onCreateSummaryView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_display_summary, container, false);
         averageDeviation = (TextView) view.findViewById(R.id.summary_overall);
+        HashMap<String,Double> deviations = new DeviationCalculator(log).getDeviations();
+        Logger.debug("Deviations="+deviations);
+
+        // TODO: worn!
+
+        displayDeviation(deviations.get(DeviationCalculator.ZO), (TextView) view.findViewById(R.id.summaryDialUp));
+        displayDeviation(deviations.get(DeviationCalculator.ZU), (TextView) view.findViewById(R.id.summaryDialDown));
+        displayDeviation(deviations.get(DeviationCalculator.O3), (TextView) view.findViewById(R.id.summary3o));
+        displayDeviation(deviations.get(DeviationCalculator.O6), (TextView) view.findViewById(R.id.summary6o));
+        displayDeviation(deviations.get(DeviationCalculator.O9), (TextView) view.findViewById(R.id.summary9o));
+        displayDeviation(deviations.get(DeviationCalculator.O12), (TextView) view.findViewById(R.id.summary12o));
 
         preparePlusButton();
-        calculateAverageDeviation();
+        calculateAverageDeviation(R.string.deviation_format,R.string.empty_value);
 
         return view;
+    }
+
+
+    private void displayDeviation(Double deviation, TextView tvDeviation) {
+        String avgDeviationFormat = getString(R.string.deviation_format);
+
+        if ( deviation!=null ) {
+            tvDeviation.setText(String.format(avgDeviationFormat, deviation));
+        } else {
+            tvDeviation.setText(getString(R.string.empty_value));
+        }
     }
 
     private void preparePlusButton() {

@@ -95,4 +95,5 @@
     <string name="results">Ergebnisse</string>
     <string name="labelSummaryDialUp">Zifferblatt oben</string>
     <string name="summary_overall">mittlerer Gang</string>
+    <string name="empty_value">-</string>
 </resources>
