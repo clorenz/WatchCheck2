@@ -57,12 +57,18 @@
     <string name="dataImported">Data imported</string>
     <string name="menu_whatsnew">What\'s new?</string>
     <string name="worn">worn</string>
+    <string name="horizontal_dial_up">horizontal, dial up</string>
     <string name="dial_up">dial up</string>
+    <string name="horizontal_dial_down">horizontal, dial down</string>
     <string name="dial_down">dial down</string>
     <string name="pos_12o">12 up</string>
+    <string name="vertical_12o">vertical, 12 up</string>
     <string name="pos_3o">3 up</string>
+    <string name="vertical_3o">vertical, 3 up</string>
     <string name="pos_6o">6 up</string>
+    <string name="vertical_6o">vertical, 6 up</string>
     <string name="pos_9o">9 up</string>
+    <string name="vertical_9o">vertical, 9 up</string>
     <string name="menu_help">Help</string>
     <string name="url_help">http://17jewels.info/44-workbench/software/268-watchcheck2-en.html</string>
     <string name="whatsnew">What\'s New</string>
@@ -90,4 +96,6 @@
     <string name="check_watch_guide">Time of your watch (seconds to :00)</string>
     <string name="summary">Summary</string>
     <string name="results">results</string>
+    <string name="labelSummaryDialUp">dial up</string>
+    <string name="summary_overall">mean overall deviation</string>
 </resources>

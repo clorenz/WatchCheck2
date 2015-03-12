@@ -27,6 +27,7 @@ import com.gc.materialdesign.widgets.Dialog;
 
 import java.util.List;
 
+import de.uhrenbastler.watchcheck.managers.AppStateManager;
 import de.uhrenbastler.watchcheck.managers.WatchManager;
 import de.uhrenbastler.watchcheck.tools.Logger;
 import de.uhrenbastler.watchcheck.views.*;
@@ -39,7 +40,7 @@ public class MainActivity extends WatchCheckActionBarActivity
     private List<Watch> watches;
     private static final String PRIVATE_PREF = "myapp";
     private static final String VERSION_KEY = "version_number";
-
+    private boolean showSummary=false;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -101,7 +102,7 @@ public class MainActivity extends WatchCheckActionBarActivity
         ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
         ButtonFloat fab = (ButtonFloat) findViewById(R.id.buttonAddLog);
         if ( selectedWatch != null ) {
-            prepareResultPager(vpPager, selectedWatch.getId());
+            prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -123,7 +124,8 @@ public class MainActivity extends WatchCheckActionBarActivity
         }
     }
 
-    private void prepareResultPager(ViewPager vpPager, long selectedWatchId) {
+
+    private void prepareResultPager(ViewPager vpPager, long selectedWatchId, boolean showSummary) {
         FragmentManager manager = getSupportFragmentManager();
         if (manager.getBackStackEntryCount() > 0) {
             FragmentManager.BackStackEntry first = manager.getBackStackEntryAt(0);
@@ -137,9 +139,21 @@ public class MainActivity extends WatchCheckActionBarActivity
 
         if ( !logDao._queryWatch_Logs(selectedWatchId).isEmpty()) {
             vpPager.setVisibility(View.VISIBLE);
-            adapterViewPager = new DisplayResultPagerAdapter(getApplicationContext(), getSupportFragmentManager(), selectedWatchId);
+
+            adapterViewPager = new DisplayResultPagerAdapter(getApplicationContext(), getSupportFragmentManager(), selectedWatchId, showSummary);
+
             vpPager.setAdapter(adapterViewPager);
-            vpPager.setCurrentItem(adapterViewPager.getCount());
+            ResultOnPageChangeListener resultOnPageChangeListener = new ResultOnPageChangeListener(adapterViewPager);
+            vpPager.setOnPageChangeListener(resultOnPageChangeListener);
+
+            if ( AppStateManager.getInstance().getPage()>=0 ) {
+                vpPager.setCurrentItem(AppStateManager.getInstance().getPage());
+            } else {
+                vpPager.setCurrentItem(adapterViewPager.getCount());
+                AppStateManager.getInstance().setPage(adapterViewPager.getCount());
+            }
+
+            resultOnPageChangeListener.setEnabled(true);
 
             /*
             PagerTabStrip mPagerTabStrip = (PagerTabStrip) findViewById(R.id.pager_header);
@@ -210,7 +224,7 @@ public class MainActivity extends WatchCheckActionBarActivity
                 // Otherwise: update the main content by replacing fragments
                 ButtonFloat fab = (ButtonFloat) findViewById(R.id.buttonAddLog);
                 ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
-                prepareResultPager(vpPager, selectedWatch.getId());
+                prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
                 fab.setVisibility(View.VISIBLE);
             }
         }
@@ -245,6 +259,20 @@ public class MainActivity extends WatchCheckActionBarActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        if ( id == R.id.action_summary) {
+            showSummary=true;
+            ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
+            prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
+            return true;
+        }
+
+        if ( id == R.id.action_results ) {
+            showSummary=false;
+            ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
+            prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
+            return true;
+        }
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {

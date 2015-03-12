@@ -17,6 +17,7 @@ import com.gc.materialdesign.views.ButtonFloat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import de.uhrenbastler.watchcheck.managers.AppStateManager;
 import de.uhrenbastler.watchcheck.managers.ResultManager;
 import de.uhrenbastler.watchcheck.managers.WatchManager;
 import de.uhrenbastler.watchcheck.tools.Logger;
@@ -37,22 +38,23 @@ public class DisplayResultFragment extends Fragment {
     private Log lastLog;
     private long watchId;
     private int period;
-    private ArrayAdapter resultListAdapter;
+    private ArrayAdapter resultAdapter;
     private ListView listView;
     private TextView averageDeviation;
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
     private LogDao logDao;
     private WatchDao watchDao;
+    private boolean displaySummary;
 
 
     // newInstance constructor for creating fragment with arguments
-    public static DisplayResultFragment newInstance(Long watchId, int page) {
-        Logger.debug("No resume, but new instance: watchId="+watchId);
+    public static DisplayResultFragment newInstance(Long watchId, int page, boolean displaySummary) {
         DisplayResultFragment fragmentFirst = new DisplayResultFragment();
         Bundle args = new Bundle();
         args.putLong("watchId", watchId);
         args.putInt("period", page);
         fragmentFirst.setArguments(args);
+        fragmentFirst.displaySummary = displaySummary;
         return fragmentFirst;
     }
 
@@ -79,20 +81,17 @@ public class DisplayResultFragment extends Fragment {
             watchId = currentWatch.getId();
         }
 
-        Logger.debug("on resume: currentWatchId=" + watchId);
         log = ResultManager.getLogsForWatchAndPeriod(getActivity().getApplicationContext(), watchId, period);
 
         lastLog = ResultManager.getLastLogForWatch(getActivity().getApplicationContext(), watchId);
         if (listView != null) {
-            resultListAdapter.clear();
-            resultListAdapter.addAll(log);
-            resultListAdapter.notifyDataSetChanged();
+            resultAdapter.clear();
+            resultAdapter.addAll(log);
+            resultAdapter.notifyDataSetChanged();
             listView.invalidateViews();
             preparePlusButton();
         }
         calculateAverageDeviation();
-
-
     }
 
     private void calculateAverageDeviation() {
@@ -117,11 +116,20 @@ public class DisplayResultFragment extends Fragment {
     // Inflate the view for the fragment based on layout XML
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (displaySummary) {
+            return onCreateSummaryView(inflater, container, savedInstanceState);
+        } else {
+            return onCreateResultView(inflater, container, savedInstanceState);
+        }
+    }
+
+
+    private View onCreateResultView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_display_result, container, false);
         listView = (ListView) view.findViewById(R.id.resultListView);
         averageDeviation = (TextView) view.findViewById(R.id.result_footer);
-        resultListAdapter = new ResultListAdapter(this.getActivity().getApplicationContext(), log);
-        listView.setAdapter(resultListAdapter);
+        resultAdapter = new ResultListAdapter(this.getActivity().getApplicationContext(), log);
+        listView.setAdapter(resultAdapter);
 
         preparePlusButton();
         listView.setOnTouchListener(new View.OnTouchListener() {
@@ -140,9 +148,9 @@ public class DisplayResultFragment extends Fragment {
                 addLogIntent.putExtra(AddLogActivity.EXTRA_EDIT_LOG, logToHandle);
                 startActivity(addLogIntent);
                 if (listView != null) {
-                    resultListAdapter.clear();
-                    resultListAdapter.addAll(log);
-                    resultListAdapter.notifyDataSetChanged();
+                    resultAdapter.clear();
+                    resultAdapter.addAll(log);
+                    resultAdapter.notifyDataSetChanged();
                     listView.invalidateViews();
                 }
                 return true;
@@ -150,6 +158,17 @@ public class DisplayResultFragment extends Fragment {
         });
 
         Logger.debug("Before avg. deviation");
+        calculateAverageDeviation();
+
+        return view;
+    }
+
+
+    private View onCreateSummaryView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_display_summary, container, false);
+        averageDeviation = (TextView) view.findViewById(R.id.summary_overall);
+
+        preparePlusButton();
         calculateAverageDeviation();
 
         return view;
