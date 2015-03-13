@@ -2,6 +2,8 @@ package de.uhrenbastler.watchcheck;
 
 import android.widget.TextView;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +22,7 @@ public class DeviationCalculator {
     public static final String O6 = "6O";
     public static final String O9 = "9O";
     public static final String O12 = "12O";
+    public static final String WORN = "WORN";
 
     HashMap<String,Double> deviations = new HashMap<String,Double>();
     HashMap<String,Long> summaryReferenceInPosition = new HashMap<String,Long>();
@@ -38,6 +41,9 @@ public class DeviationCalculator {
         for ( int i=1; i<logs.size(); i++ ) {
             Log log = logs.get(i);
             String position = log.getPosition();
+            if (StringUtils.isBlank(position))
+                position=WORN;
+
             long diffReference = logs.get(i).getReferenceTime().getTime() - logs.get(i - 1).getReferenceTime().getTime();
             long diffWatch = logs.get(i).getWatchTime().getTime() - logs.get(i - 1).getWatchTime().getTime();
 
