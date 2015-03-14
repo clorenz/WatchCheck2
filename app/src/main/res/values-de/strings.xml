@@ -27,7 +27,7 @@
     <string name="no_current_deviation">Momentane Abweichung: -</string>
     <string name="deviation">Abweichung:</string>
     <string name="deviation_format">%+.1f sek.</string>
-    <string name="deviation_per_day_format">%+.1f sek./Tag</string>
+    <string name="deviation_per_day_format">%+.1f Sek./Tag</string>
     <string name="newPeriod">Neue Meßperiode:</string>
     <string name="position">Position:</string>
     <string name="temperature">Temperatur:</string>
@@ -47,7 +47,7 @@
     <string name="app_about">(C) 2011-2015 by Christoph Lorenz,\nwww.uhrenbastler.de.\n\nAlle Rechte vorbehalten, keinerlei Garantie!\nBenutzung auf eigene Verantwortung!</string>
     <string name="menu_export">Daten exportieren</string>
     <string name="dataExported">Daten exportiert</string>
-    <string name="list_average_deviation">MIttlerer Gang: %+.1f s/d</string>
+    <string name="list_average_deviation">Mittlerer Gang: %+.1f s/d</string>
     <string name="list_no_average_deviation">Noch kein mittlerer Gang vorhanden</string>
     <string name="menu_import">Daten importieren</string>
     <string name="dataImported">Daten importiert</string>
@@ -55,7 +55,7 @@
     <string name="worn">am Arm</string>
     <string name="horizontal_dial_up">liegend, Zifferblatt oben</string>
     <string name="dial_up">Ziff.Bl. oben</string>
-    <string name="horizontal_dial_down">liegend, Zifferblatt unten</string>
+    <string name="horizontal_dial_down">liegend, Boden oben</string>
     <string name="dial_down">Ziff.Bl. unten</string>
     <string name="vertical_12o">hängend, 12 oben</string>
     <string name="pos_12o">12 oben</string>
