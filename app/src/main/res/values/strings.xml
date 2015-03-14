@@ -31,6 +31,7 @@
     <string name="no_current_deviation">Current deviation: -</string>
     <string name="deviation">Deviation:</string>
     <string name="deviation_format">%+.1f sec.</string>
+    <string name="deviation_per_day_format">%+.1f s/d</string>
     <string name="newPeriod">New period:</string>
     <string name="position">Position:</string>
     <string name="temperature">Temperature:</string>
@@ -97,6 +98,7 @@
     <string name="summary">Summary</string>
     <string name="results">results</string>
     <string name="labelSummaryDialUp">dial up</string>
-    <string name="summary_overall">mean overall deviation</string>
+    <string name="summary_overall">average deviation</string>
     <string name="empty_value">-</string>
+    <string name="summary_worn">worn</string>
 </resources>

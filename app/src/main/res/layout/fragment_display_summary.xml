@@ -9,16 +9,25 @@
     android:background="@color/background_material_light"
     android:orientation="vertical">
 
+    <TextView
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+        android:textColor="@color/textColorPrimary"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:gravity="center_horizontal"
+        android:text="@string/summary"/>
+
     <TableLayout
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:id="@+id/tableLayoutDisplaySummary"
         android:stretchColumns="1"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
         <TableRow android:id="@+id/tableRow1" android:layout_width="wrap_content" android:layout_height="wrap_content">
             <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/textColorPrimary"
                 android:layout_height="wrap_content"
                 android:id="@+id/labelSummaryDialUp"
@@ -27,16 +36,18 @@
                 android:gravity="left"
                 android:text="@string/horizontal_dial_up"/>
             <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/textColorPrimary"
                 android:layout_height="wrap_content"
                 android:id="@+id/summaryDialUp"
                 android:layout_weight="0.40"
                 android:layout_width="0dp"
-                android:gravity="center_horizontal"
-                android:text="@string/deviation_format"/>
+                android:gravity="right"
+                android:text="@string/deviation_per_day_format"/>
         </TableRow>
         <TableRow android:id="@+id/tableRow2" android:layout_width="wrap_content" android:layout_height="wrap_content">
             <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/textColorPrimary"
                 android:layout_height="wrap_content"
                 android:id="@+id/labelSummaryDialDown"
@@ -45,16 +56,18 @@
                 android:gravity="left"
                 android:text="@string/horizontal_dial_down"/>
             <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/textColorPrimary"
                 android:layout_height="wrap_content"
                 android:id="@+id/summaryDialDown"
                 android:layout_weight="0.40"
                 android:layout_width="0dp"
-                android:gravity="center_horizontal"
-                android:text="@string/deviation_format"/>
+                android:gravity="right"
+                android:text="@string/deviation_per_day_format"/>
         </TableRow>
         <TableRow android:id="@+id/tableRow3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp">
             <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/textColorPrimary"
                 android:layout_height="wrap_content"
                 android:id="@+id/labelSummary12o"
@@ -63,16 +76,18 @@
                 android:gravity="left"
                 android:text="@string/vertical_12o"/>
             <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/textColorPrimary"
                 android:layout_height="wrap_content"
                 android:id="@+id/summary12o"
                 android:layout_weight="0.40"
                 android:layout_width="0dp"
-                android:gravity="center_horizontal"
-                android:text="@string/deviation_format"/>
+                android:gravity="right"
+                android:text="@string/deviation_per_day_format"/>
         </TableRow>
         <TableRow android:id="@+id/tableRow4" android:layout_width="wrap_content" android:layout_height="wrap_content">
             <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/textColorPrimary"
                 android:layout_height="wrap_content"
                 android:id="@+id/labelSummary3o"
@@ -81,16 +96,18 @@
                 android:gravity="left"
                 android:text="@string/vertical_3o"/>
             <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/textColorPrimary"
                 android:layout_height="wrap_content"
                 android:id="@+id/summary3o"
                 android:layout_weight="0.40"
                 android:layout_width="0dp"
-                android:gravity="center_horizontal"
-                android:text="@string/deviation_format"/>
+                android:gravity="right"
+                android:text="@string/deviation_per_day_format"/>
         </TableRow>
         <TableRow android:id="@+id/tableRow5" android:layout_width="wrap_content" android:layout_height="wrap_content">
             <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/textColorPrimary"
                 android:layout_height="wrap_content"
                 android:id="@+id/labelSummary6o"
@@ -99,16 +116,18 @@
                 android:gravity="left"
                 android:text="@string/vertical_6o"/>
             <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/textColorPrimary"
                 android:layout_height="wrap_content"
                 android:id="@+id/summary6o"
                 android:layout_weight="0.40"
                 android:layout_width="0dp"
-                android:gravity="center_horizontal"
-                android:text="@string/deviation_format"/>
+                android:gravity="right"
+                android:text="@string/deviation_per_day_format"/>
         </TableRow>
         <TableRow android:id="@+id/tableRow6" android:layout_width="wrap_content" android:layout_height="wrap_content">
             <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/textColorPrimary"
                 android:layout_height="wrap_content"
                 android:id="@+id/labelSummary9o"
@@ -117,16 +136,38 @@
                 android:gravity="left"
                 android:text="@string/vertical_9o"/>
             <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/textColorPrimary"
                 android:layout_height="wrap_content"
                 android:id="@+id/summary9o"
                 android:layout_weight="0.40"
                 android:layout_width="0dp"
-                android:gravity="center_horizontal"
-                android:text="@string/deviation_format"/>
+                android:gravity="right"
+                android:text="@string/deviation_per_day_format"/>
         </TableRow>
         <TableRow android:id="@+id/tableRow7" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp">
             <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/textColorPrimary"
+                android:layout_height="wrap_content"
+                android:id="@+id/labelSummaryWorn"
+                android:layout_weight="0.60"
+                android:layout_width="0dp"
+                android:gravity="left"
+                android:text="@string/summary_worn"/>
+            <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/textColorPrimary"
+                android:layout_height="wrap_content"
+                android:id="@+id/summary_worn"
+                android:layout_weight="0.40"
+                android:layout_width="0dp"
+                android:gravity="right"
+                android:text="@string/deviation_per_day_format"/>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow8" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp">
+            <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/textColorPrimary"
                 android:layout_height="wrap_content"
                 android:id="@+id/labelSummaryOverall"
@@ -135,13 +176,14 @@
                 android:gravity="left"
                 android:text="@string/summary_overall"/>
             <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/textColorPrimary"
                 android:layout_height="wrap_content"
                 android:id="@+id/summary_overall"
                 android:layout_weight="0.40"
                 android:layout_width="0dp"
-                android:gravity="center_horizontal"
-                android:text="@string/deviation_format"/>
+                android:gravity="right"
+                android:text="@string/deviation_per_day_format"/>
         </TableRow>
     </TableLayout>
 </RelativeLayout>

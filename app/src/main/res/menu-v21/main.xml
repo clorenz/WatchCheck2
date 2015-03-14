@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item android:id="@+id/action_results"
         android:title="@string/results"
-        android:icon="@drawable/ic_view_list_white_36dp"
+        android:icon="@drawable/ic_receipt_white_36dp"
         app:showAsAction="always" />
     <item android:id="@+id/action_summary"
         android:title="@string/summary"
-        android:icon="@drawable/ic_receipt_white_36dp"
+        android:icon="@drawable/ic_view_list_white_36dp"
         app:showAsAction="always" />
     <item android:id="@+id/menu_about" android:title="@string/menu_about"
         app:showAsAction="withText|ifRoom" />

@@ -16,14 +16,6 @@ import watchcheck.db.Log;
  */
 public class DeviationCalculator {
 
-    public static final String ZO = "ZO";
-    public static final String ZU = "ZU";
-    public static final String O3 = "3O";
-    public static final String O6 = "6O";
-    public static final String O9 = "9O";
-    public static final String O12 = "12O";
-    public static final String WORN = "WORN";
-
     HashMap<String,Double> deviations = new HashMap<String,Double>();
     HashMap<String,Long> summaryReferenceInPosition = new HashMap<String,Long>();
     HashMap<String,Long> summaryWatchInPosition = new HashMap<String,Long>();
@@ -42,26 +34,16 @@ public class DeviationCalculator {
             Log log = logs.get(i);
             String position = log.getPosition();
             if (StringUtils.isBlank(position))
-                position=WORN;
+                position=Deviations.WORN.name();
 
             long diffReference = logs.get(i).getReferenceTime().getTime() - logs.get(i - 1).getReferenceTime().getTime();
             long diffWatch = logs.get(i).getWatchTime().getTime() - logs.get(i - 1).getWatchTime().getTime();
 
-            Long summaryReference = summaryReferenceInPosition.get(position);
-            if (summaryReference == null) {
-                summaryReference = diffReference;
-            } else {
-                summaryReference += diffReference;
-            }
-            summaryReferenceInPosition.put(position,summaryReference);
+            addDiffReferenceToSummary(position, diffReference);
+            addDiffWatchToSummary(position, diffWatch);
 
-            Long summaryWatch = summaryWatchInPosition.get(position);
-            if (summaryWatch == null) {
-                summaryWatch = diffWatch;
-            } else {
-                summaryWatch += diffWatch;
-            }
-            summaryWatchInPosition.put(position,summaryWatch);
+            addDiffReferenceToSummary(Deviations.ALL.name(), diffReference);
+            addDiffWatchToSummary(Deviations.ALL.name(), diffWatch);
         }
 
         for ( String position: summaryReferenceInPosition.keySet() ) {
@@ -74,6 +56,26 @@ public class DeviationCalculator {
 
             deviations.put(position, deviation);
         }
+    }
+
+    private void addDiffWatchToSummary(String position, long diffWatch) {
+        Long summaryWatch = summaryWatchInPosition.get(position);
+        if (summaryWatch == null) {
+            summaryWatch = diffWatch;
+        } else {
+            summaryWatch += diffWatch;
+        }
+        summaryWatchInPosition.put(position,summaryWatch);
+    }
+
+    private void addDiffReferenceToSummary(String position, long diffReference) {
+        Long summaryReference = summaryReferenceInPosition.get(position);
+        if (summaryReference == null) {
+            summaryReference = diffReference;
+        } else {
+            summaryReference += diffReference;
+        }
+        summaryReferenceInPosition.put(position,summaryReference);
     }
 
     public HashMap<String,Double> getDeviations() {

@@ -27,6 +27,7 @@
     <string name="no_current_deviation">Momentane Abweichung: -</string>
     <string name="deviation">Abweichung:</string>
     <string name="deviation_format">%+.1f sek.</string>
+    <string name="deviation_per_day_format">%+.1f sek./Tag</string>
     <string name="newPeriod">Neue Meßperiode:</string>
     <string name="position">Position:</string>
     <string name="temperature">Temperatur:</string>
@@ -96,4 +97,5 @@
     <string name="labelSummaryDialUp">Zifferblatt oben</string>
     <string name="summary_overall">mittlerer Gang</string>
     <string name="empty_value">-</string>
+    <string name="summary_worn">am Arm</string>
 </resources>
