@@ -61,6 +61,12 @@ public class SelectWatchArrayAdapter extends ArrayAdapter<Watch> {
             }
         }
 
+        if ( i.getId()==-1) {
+            v.setPadding(10,10,0,0);
+        } else {
+            v.setPadding(0,0,0,0);
+        }
+
         return v;
     }
 

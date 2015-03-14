@@ -75,6 +75,11 @@
     <string name="whatsnew">What\'s New</string>
     <string name="changelog">
         <![CDATA[
+            <b>Version 2.1.0</b>
+            <p>
+            - New Summary page for results<br/>
+            - More than then watches can now be added and selected in the drawer menu
+            <p>
             <b>Version 2.0.4</b>
             <p>
             - Minor design fix on result table<br/>

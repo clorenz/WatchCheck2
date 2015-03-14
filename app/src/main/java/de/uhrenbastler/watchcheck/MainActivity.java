@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
+import android.graphics.PorterDuff;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
@@ -13,13 +14,18 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v7.internal.view.menu.ActionMenuItemView;
 import android.text.Html;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.WebSettings;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gc.materialdesign.views.ButtonFloat;
@@ -90,7 +96,7 @@ public class MainActivity extends WatchCheckActionBarActivity
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
-        mNavigationDrawerFragment.setWatches(watches);
+        mNavigationDrawerFragment.setWatches(addAddWatch(watches));
         mNavigationDrawerFragment.setSelectedWatch(selectedWatch);
         mTitle = getTitle();
 
@@ -122,6 +128,13 @@ public class MainActivity extends WatchCheckActionBarActivity
             fab.setVisibility(View.INVISIBLE);
             // And maybe display a nice background instead
         }
+    }
+
+    private List<Watch> addAddWatch(List<Watch> watches) {
+        Watch addWatch = new Watch(-1L);
+        addWatch.setName(getString(R.string.add_watch));
+        watches.add(addWatch);
+        return watches;
     }
 
 
@@ -166,6 +179,7 @@ public class MainActivity extends WatchCheckActionBarActivity
             }
             */
         } else {
+            Logger.debug("Invisible pager");
             vpPager.setVisibility(View.INVISIBLE);
         }
     }
@@ -211,21 +225,32 @@ public class MainActivity extends WatchCheckActionBarActivity
 
         // Only persist, if a real watch (and not "add watch") is selected
         if ( watches!=null && watches.get(position)!=null && watches.get(position).getId()!=null ) {
-            setWatchName(watches.get(position));
-            persistCurrentWatch(watches.get(position).getId().intValue());
+            showSummary=false;
+            ActionMenuItemView otherItem = (ActionMenuItemView)findViewById(R.id.action_results);
+            otherItem.getItemData().getIcon().setAlpha(50);
+            ActionMenuItemView thisItem = (ActionMenuItemView)findViewById(R.id.action_summary);
+            thisItem.getItemData().getIcon().setAlpha(255);
+            if ( watches.get(position).getId()>-1 ) {
+                setWatchName(watches.get(position));
+                persistCurrentWatch(watches.get(position).getId().intValue());
 
-            if (logDao._queryWatch_Logs(watches.get(position).getId()).isEmpty()) {
-                Logger.debug("Selecting watch w/o results from drawer");
-                ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
-                vpPager.setVisibility(View.INVISIBLE);
+                if (logDao._queryWatch_Logs(watches.get(position).getId()).isEmpty()) {
+                    Logger.debug("Selecting watch w/o results from drawer");
+                    ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
+                    vpPager.setVisibility(View.INVISIBLE);
+                } else {
+                    selectedWatch = watches.get(position);
+                    Logger.debug("Selecting watch " + selectedWatch.getId() + " from drawer");
+                    // Otherwise: update the main content by replacing fragments
+                    ButtonFloat fab = (ButtonFloat) findViewById(R.id.buttonAddLog);
+                    ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
+                    prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
+                    fab.setVisibility(View.VISIBLE);
+                }
             } else {
-                selectedWatch = watches.get(position);
-                Logger.debug("Selecting watch " + selectedWatch.getId() + " from drawer");
-                // Otherwise: update the main content by replacing fragments
-                ButtonFloat fab = (ButtonFloat) findViewById(R.id.buttonAddLog);
-                ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
-                prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
-                fab.setVisibility(View.VISIBLE);
+                // "Add watch"
+                Intent addWatchIntent = new Intent(getApplicationContext(), EditWatchActivity.class);
+                startActivity(addWatchIntent);
             }
         }
     }
@@ -248,8 +273,12 @@ public class MainActivity extends WatchCheckActionBarActivity
             // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.main, menu);
             restoreActionBar();
+            menu.findItem(R.id.action_results).getIcon().setAlpha(50);
+            menu.findItem(R.id.action_summary).getIcon().setAlpha(255);
             return true;
         }
+
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -262,6 +291,10 @@ public class MainActivity extends WatchCheckActionBarActivity
 
         if ( id == R.id.action_summary) {
             showSummary=true;
+            item.getIcon().setAlpha(50);
+            ActionMenuItemView otherItem = (ActionMenuItemView)findViewById(R.id.action_results);
+            otherItem.getItemData().getIcon().setAlpha(255);
+
             ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
             prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
             return true;
@@ -269,6 +302,10 @@ public class MainActivity extends WatchCheckActionBarActivity
 
         if ( id == R.id.action_results ) {
             showSummary=false;
+            item.getIcon().setAlpha(50);
+            ActionMenuItemView otherItem = (ActionMenuItemView)findViewById(R.id.action_summary);
+            otherItem.getItemData().getIcon().setAlpha(255);
+
             ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
             prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
             return true;

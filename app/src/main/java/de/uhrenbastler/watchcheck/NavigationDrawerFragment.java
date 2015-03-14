@@ -28,6 +28,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -138,7 +139,7 @@ public class NavigationDrawerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        LinearLayout drawerLayout = (LinearLayout)inflater.inflate(
+        final LinearLayout drawerLayout = (LinearLayout)inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
 
         mDrawerListView = (ListView) drawerLayout.findViewById(R.id.drawer_listview);
@@ -155,6 +156,25 @@ public class NavigationDrawerFragment extends Fragment {
                 return selectItemForEdit(position);
             }
         });
+        mDrawerListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                // TODO Auto-generated method stub
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    mDrawerListView.bringToFront();
+                    drawerLayout.requestLayout();
+                }
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
+                // TODO Auto-generated method stub
+
+            }
+        });
 
         int selectedWatchId = selectedWatch!=null?selectedWatch.getId().intValue():0;
 
@@ -164,6 +184,7 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerListView.setAdapter(adapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 
+        /*
         TextView addWatch = (TextView) drawerLayout.findViewById(R.id.drawer_add_watch);
         addWatch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,6 +194,7 @@ public class NavigationDrawerFragment extends Fragment {
                 mDrawerLayout.closeDrawer(mFragmentContainerView);
             }
         });
+        */
 
         return drawerLayout;
     }
@@ -270,24 +292,27 @@ public class NavigationDrawerFragment extends Fragment {
 
 
     private boolean selectItemForEdit(int position) {
+        Watch selectedWatch = watches.get(position);
+        boolean validWatch = (selectedWatch.getId()!=null && selectedWatch.getId()>-1);
+        if ( !validWatch ) {
+            return false;
+        }
+
         if (mDrawerListView != null) {
             mDrawerListView.setItemChecked(position, true);
         }
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
-        Watch selectedWatch = watches.get(position);
-        if ( selectedWatch.getId() != null) {
-            Logger.debug("Selected watch for edit: "+selectedWatch+". Starting new activity");
-            mDrawerListView.invalidate();
 
-            Intent editWatchIntent = new Intent(getActivity().getApplicationContext(), EditWatchActivity.class);
-            editWatchIntent.putExtra("watch", selectedWatch);
-            editWatchIntent.putExtra("id",selectedWatch.getId());
-            startActivity(editWatchIntent);
-            return true;
-        }
-        return false;
+        Logger.debug("Selected watch for edit: "+selectedWatch+". Starting new activity");
+        mDrawerListView.invalidate();
+
+        Intent editWatchIntent = new Intent(getActivity().getApplicationContext(), EditWatchActivity.class);
+        editWatchIntent.putExtra("watch", selectedWatch);
+        editWatchIntent.putExtra("id",selectedWatch.getId());
+        startActivity(editWatchIntent);
+        return true;
     }
 
     @Override

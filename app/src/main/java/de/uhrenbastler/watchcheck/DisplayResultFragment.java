@@ -3,6 +3,7 @@ package de.uhrenbastler.watchcheck;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.internal.view.menu.ActionMenuItemView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -177,7 +178,7 @@ public class DisplayResultFragment extends Fragment {
         });
 
         Logger.debug("Before avg. deviation");
-        displayDeviation(deviations.get(Deviations.ALL.name()), averageDeviation,R.string.list_average_deviation,R.string.list_no_average_deviation);
+        displayDeviation(deviations.get(Deviations.ALL.name()), averageDeviation, R.string.list_average_deviation, R.string.list_no_average_deviation);
 
         return resultView;
     }
