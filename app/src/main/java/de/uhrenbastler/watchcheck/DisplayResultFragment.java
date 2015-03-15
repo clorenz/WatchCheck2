@@ -92,14 +92,14 @@ public class DisplayResultFragment extends Fragment {
 
         if ( displaySummary ) {
             if ( resultView!=null ) {
-                displayDeviation(deviations.get(Deviations.DU.name()), (TextView) resultView.findViewById(R.id.summaryDialUp), R.string.deviation_per_day_format, R.string.empty_value);
-                displayDeviation(deviations.get(Deviations.DD.name()), (TextView) resultView.findViewById(R.id.summaryDialDown), R.string.deviation_per_day_format, R.string.empty_value);
-                displayDeviation(deviations.get(Deviations.O3.name()), (TextView) resultView.findViewById(R.id.summary3o), R.string.deviation_per_day_format, R.string.empty_value);
-                displayDeviation(deviations.get(Deviations.O6.name()), (TextView) resultView.findViewById(R.id.summary6o), R.string.deviation_per_day_format, R.string.empty_value);
-                displayDeviation(deviations.get(Deviations.O9.name()), (TextView) resultView.findViewById(R.id.summary9o), R.string.deviation_per_day_format, R.string.empty_value);
-                displayDeviation(deviations.get(Deviations.O12.name()), (TextView) resultView.findViewById(R.id.summary12o), R.string.deviation_per_day_format, R.string.empty_value);
-                displayDeviation(deviations.get(Deviations.WORN.name()), (TextView) resultView.findViewById(R.id.summary_worn), R.string.deviation_per_day_format, R.string.empty_value);
-                displayDeviation(deviations.get(Deviations.ALL.name()), averageDeviation, R.string.deviation_per_day_format, R.string.empty_value);
+                displayDeviation(deviations.get(Deviations.DU.nameForLog), (TextView) resultView.findViewById(R.id.summaryDialUp), R.string.deviation_per_day_format, R.string.empty_value);
+                displayDeviation(deviations.get(Deviations.DD.nameForLog), (TextView) resultView.findViewById(R.id.summaryDialDown), R.string.deviation_per_day_format, R.string.empty_value);
+                displayDeviation(deviations.get(Deviations.O3.nameForLog), (TextView) resultView.findViewById(R.id.summary3o), R.string.deviation_per_day_format, R.string.empty_value);
+                displayDeviation(deviations.get(Deviations.O6.nameForLog), (TextView) resultView.findViewById(R.id.summary6o), R.string.deviation_per_day_format, R.string.empty_value);
+                displayDeviation(deviations.get(Deviations.O9.nameForLog), (TextView) resultView.findViewById(R.id.summary9o), R.string.deviation_per_day_format, R.string.empty_value);
+                displayDeviation(deviations.get(Deviations.O12.nameForLog), (TextView) resultView.findViewById(R.id.summary12o), R.string.deviation_per_day_format, R.string.empty_value);
+                displayDeviation(deviations.get(Deviations.WORN.nameForLog), (TextView) resultView.findViewById(R.id.summary_worn), R.string.deviation_per_day_format, R.string.empty_value);
+                displayDeviation(deviations.get(Deviations.ALL.nameForLog), averageDeviation, R.string.deviation_per_day_format, R.string.empty_value);
             }
         } else {
             if (listView != null) {
@@ -109,7 +109,7 @@ public class DisplayResultFragment extends Fragment {
                 listView.invalidateViews();
                 preparePlusButton();
             }
-            displayDeviation(deviations.get(Deviations.ALL.name()), averageDeviation, R.string.list_average_deviation, R.string.list_no_average_deviation);
+            displayDeviation(deviations.get(Deviations.ALL.nameForLog), averageDeviation, R.string.list_average_deviation, R.string.list_no_average_deviation);
         }
     }
 
@@ -178,7 +178,7 @@ public class DisplayResultFragment extends Fragment {
         });
 
         Logger.debug("Before avg. deviation");
-        displayDeviation(deviations.get(Deviations.ALL.name()), averageDeviation, R.string.list_average_deviation, R.string.list_no_average_deviation);
+        displayDeviation(deviations.get(Deviations.ALL.nameForLog), averageDeviation, R.string.list_average_deviation, R.string.list_no_average_deviation);
 
         return resultView;
     }
@@ -190,14 +190,14 @@ public class DisplayResultFragment extends Fragment {
         HashMap<String,Double> deviations = new DeviationCalculator(log).getDeviations();
         Logger.debug("Deviations="+deviations);
 
-        displayDeviation(deviations.get(Deviations.DU.name()), (TextView) view.findViewById(R.id.summaryDialUp), R.string.deviation_per_day_format, R.string.empty_value);
-        displayDeviation(deviations.get(Deviations.DD.name()), (TextView) view.findViewById(R.id.summaryDialDown), R.string.deviation_per_day_format, R.string.empty_value);
-        displayDeviation(deviations.get(Deviations.O3.name()), (TextView) view.findViewById(R.id.summary3o), R.string.deviation_per_day_format, R.string.empty_value);
-        displayDeviation(deviations.get(Deviations.O6.name()), (TextView) view.findViewById(R.id.summary6o), R.string.deviation_per_day_format, R.string.empty_value);
-        displayDeviation(deviations.get(Deviations.O9.name()), (TextView) view.findViewById(R.id.summary9o), R.string.deviation_per_day_format, R.string.empty_value);
-        displayDeviation(deviations.get(Deviations.O12.name()), (TextView) view.findViewById(R.id.summary12o), R.string.deviation_per_day_format, R.string.empty_value);
-        displayDeviation(deviations.get(Deviations.WORN.name()), (TextView) view.findViewById(R.id.summary_worn), R.string.deviation_per_day_format, R.string.empty_value);
-        displayDeviation(deviations.get(Deviations.ALL.name()), averageDeviation, R.string.deviation_per_day_format, R.string.empty_value);
+        displayDeviation(deviations.get(Deviations.DU.nameForLog), (TextView) view.findViewById(R.id.summaryDialUp), R.string.deviation_per_day_format, R.string.empty_value);
+        displayDeviation(deviations.get(Deviations.DD.nameForLog), (TextView) view.findViewById(R.id.summaryDialDown), R.string.deviation_per_day_format, R.string.empty_value);
+        displayDeviation(deviations.get(Deviations.O3.nameForLog), (TextView) view.findViewById(R.id.summary3o), R.string.deviation_per_day_format, R.string.empty_value);
+        displayDeviation(deviations.get(Deviations.O6.nameForLog), (TextView) view.findViewById(R.id.summary6o), R.string.deviation_per_day_format, R.string.empty_value);
+        displayDeviation(deviations.get(Deviations.O9.nameForLog), (TextView) view.findViewById(R.id.summary9o), R.string.deviation_per_day_format, R.string.empty_value);
+        displayDeviation(deviations.get(Deviations.O12.nameForLog), (TextView) view.findViewById(R.id.summary12o), R.string.deviation_per_day_format, R.string.empty_value);
+        displayDeviation(deviations.get(Deviations.WORN.nameForLog), (TextView) view.findViewById(R.id.summary_worn), R.string.deviation_per_day_format, R.string.empty_value);
+        displayDeviation(deviations.get(Deviations.ALL.nameForLog), averageDeviation, R.string.deviation_per_day_format, R.string.empty_value);
 
         preparePlusButton();
 

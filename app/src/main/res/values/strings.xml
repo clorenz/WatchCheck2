@@ -75,6 +75,11 @@
     <string name="whatsnew">What\'s New</string>
     <string name="changelog">
         <![CDATA[
+            <b>Version 2.1.1</b>
+            <p>
+            - Bugfix for displaying summary of vertical positions<br/>
+            - Minor design fix for summary page
+            <p>
             <b>Version 2.1.0</b>
             <p>
             - New Summary page for results<br/>
