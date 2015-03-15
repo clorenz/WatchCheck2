@@ -54,15 +54,22 @@ public class SelectWatchArrayAdapter extends ArrayAdapter<Watch> {
             TextView watchSerial = (TextView) v.findViewById(R.id.watchSerial);
 
             watchName.setText(i.getName());
+            if ( i.getId()==-1) {
+                watchName.setTextAppearance(getContext(), R.style.Base_TextAppearance_AppCompat_Small_Inverse);
+            } else {
+                watchName.setTextAppearance(getContext(), R.style.Base_TextAppearance_AppCompat_Small);
+                watchName.setTextColor(getContext().getResources().getColor(R.color.textColorPrimary));
+            }
+
             if (StringUtils.isNotBlank(i.getSerial())) {
-               watchSerial.setText("("+getContext().getString(R.string.label_serial)+" "+i.getSerial()+")");
+               watchSerial.setText("(" + getContext().getString(R.string.label_serial) + " " + i.getSerial() + ")");
             } else {
                watchSerial.setText("");
             }
         }
 
         if ( i.getId()==-1) {
-            v.setPadding(10,10,0,0);
+            v.setPadding(30,10,0,0);
         } else {
             v.setPadding(0,0,0,0);
         }
