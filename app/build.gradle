@@ -36,6 +36,7 @@ dependencies {
     compile 'com.github.navasmdc:MaterialDesign:1.+@aar'
     compile 'com.nineoldandroids:library:2.4.+'
     compile 'de.hdodenhof:circleimageview:1.2.1'
+    compile 'com.pkmmte.pkrss:pkrss:1.1.2'
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-core:1.9.5"
 }

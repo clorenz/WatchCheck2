@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="rss_url">http://www.uhrenbastler.de/index.php?option=com_content&amp;view=featured&amp;format=feed&amp;type=rss</string>
     <string name="navigation_drawer_open">Navigationsleiste öffnen</string>
     <string name="navigation_drawer_close">Navigationsleiste schließen</string>
     <string name="action_example">Beispielaktion</string>
@@ -108,4 +109,9 @@
     <string name="summary_overall">mittlerer Gang</string>
     <string name="empty_value">-</string>
     <string name="summary_worn">am Arm</string>
+    <string name="new_rss">Neu auf uhrenbastler.de</string>
+    <string name="pref_check_rss">Neue Artikel anzeigen</string>
+    <string name="pref_check_rss_summ">Maximal 1x pro Tag, nur über WLAN, nach neuen Artikeln auf uhrenbastler.de suchen und anzeigen</string>
+    <string name="settings">Einstellungen</string>
+    <string name="news">Neuigkeiten</string>
 </resources>

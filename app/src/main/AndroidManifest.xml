@@ -37,6 +37,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".AddLogActivity" />
         </activity>
+        <activity android:name=".SettingsActivity"
+            android:configChanges="orientation">
+        </activity>
     </application>
 
     <uses-sdk

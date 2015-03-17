@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/news"
+        android:key="pref_key_storage_news">
+        <CheckBoxPreference
+            android:key="pref_rss"
+            android:title="@string/pref_check_rss"
+            android:summary="@string/pref_check_rss_summ"
+            android:defaultValue="true" />
+    </PreferenceCategory>
+</PreferenceScreen>
