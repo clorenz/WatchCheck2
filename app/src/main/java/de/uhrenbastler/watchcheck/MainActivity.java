@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.graphics.PorterDuff;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
@@ -30,18 +31,22 @@ import android.widget.TextView;
 
 import com.gc.materialdesign.views.ButtonFloat;
 import com.gc.materialdesign.widgets.Dialog;
+import com.pkmmte.pkrss.Article;
 
 import java.util.List;
 
 import de.uhrenbastler.watchcheck.managers.AppStateManager;
 import de.uhrenbastler.watchcheck.managers.WatchManager;
+import de.uhrenbastler.watchcheck.rss.AsyncRssLoader;
+import de.uhrenbastler.watchcheck.rss.AsyncRssResponse;
+import de.uhrenbastler.watchcheck.rss.UhrenbastlerRssFeedDisplayDialog;
 import de.uhrenbastler.watchcheck.tools.Logger;
 import de.uhrenbastler.watchcheck.views.*;
 import watchcheck.db.Watch;
 
 
 public class MainActivity extends WatchCheckActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, AsyncRssResponse {
 
     private List<Watch> watches;
     private static final String PRIVATE_PREF = "myapp";
@@ -61,6 +66,7 @@ public class MainActivity extends WatchCheckActionBarActivity
     private CharSequence mTitle;
 
     private Watch selectedWatch;
+    private AsyncRssLoader asyncRssLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +134,9 @@ public class MainActivity extends WatchCheckActionBarActivity
             fab.setVisibility(View.INVISIBLE);
             // And maybe display a nice background instead
         }
+        
+        asyncRssLoader = new AsyncRssLoader(getApplicationContext(), this);
+        asyncRssLoader.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private List<Watch> addAddWatch(List<Watch> watches) {
@@ -317,5 +326,14 @@ public class MainActivity extends WatchCheckActionBarActivity
         }
 
         return false;
+    }
+
+
+    @Override
+    public void processFinish(List<Article> articles) {
+        Logger.debug("RSS articles to display=" + articles);
+        if ( articles!=null && !articles.isEmpty()) {
+            Dialog dialog = new UhrenbastlerRssFeedDisplayDialog(this, articles).getDialog();
+        }
     }
 }
