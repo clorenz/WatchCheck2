@@ -37,6 +37,8 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.+'
     compile 'de.hdodenhof:circleimageview:1.2.1'
     compile 'com.pkmmte.pkrss:pkrss:1.1.2'
+    compile 'com.afollestad:material-dialogs:0.6.4.5'
+    compile 'com.koushikdutta.ion:ion:2.+'
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-core:1.9.5"
 }

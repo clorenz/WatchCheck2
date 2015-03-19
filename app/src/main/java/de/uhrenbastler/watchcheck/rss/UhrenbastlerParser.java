@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.lang3.StringUtils;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -85,7 +87,7 @@ public class UhrenbastlerParser extends Parser {
                             if(article.getImage() != null && article.getContent() != null)
                                 article.setContent(article.getContent().replaceFirst("<img.+?>", ""));
 // (Optional) Log a minimized version of the toString() output
-                            Logger.info(article.toShortString());
+                            Logger.debug(article.toShortString());
 // Add article object to list
                             articleList.add(article);
                         }
@@ -126,7 +128,9 @@ public class UhrenbastlerParser extends Parser {
             else if (tag.equalsIgnoreCase("description")) {
                 String encoded = xmlParser.getText();
                 article.setImage(Uri.parse(pullImageLink(encoded)));
-                article.setDescription(Html.fromHtml(encoded.replaceAll("<img.+?>", "")).toString());
+                String description = Html.fromHtml(encoded.replaceAll("<img.+?>", "")).toString();
+                description = StringUtils.abbreviate(description.replaceAll("\\n\\s*\\n","\n").replaceAll("\\s\\s+"," ").trim(),150);
+                article.setDescription(description);
             }
             else if (tag.equalsIgnoreCase("content:encoded"))
                 article.setContent(xmlParser.getText().replaceAll("[<](/)?div[^>]*[>]", ""));

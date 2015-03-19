@@ -11,17 +11,13 @@ import com.pkmmte.pkrss.Article;
 import com.pkmmte.pkrss.Callback;
 import com.pkmmte.pkrss.PkRSS;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import de.uhrenbastler.watchcheck.R;
-import de.uhrenbastler.watchcheck.SettingsActivity;
 import de.uhrenbastler.watchcheck.tools.Logger;
 
 /**
@@ -108,10 +104,10 @@ public class AsyncRssLoader extends AsyncTask<Context, Integer, List<Article>> i
             sharedPref.edit().putLong(LAST_RSS_TIMESTAMP, System.currentTimeMillis()).apply();
         }
 
-        List<Article> newArticles = filterArticles(articles, sharedPref.getLong(LATEST_ARTICLE_TIMESTAMP,0));
+        List<Article> newArticles = filterArticles(articles, sharedPref.getLong(LATEST_ARTICLE_TIMESTAMP,0),10);
 
         if ( newArticles!=null && !newArticles.isEmpty()) {
-            Collections.sort(newArticles, new ArticleByPubDateSorter());
+            Collections.sort(newArticles, new ArticleByPubDateDescSorter());
             sharedPref.edit().putLong(LATEST_ARTICLE_TIMESTAMP, newArticles.get(0).getDate()).apply();
         }
 
@@ -119,11 +115,14 @@ public class AsyncRssLoader extends AsyncTask<Context, Integer, List<Article>> i
         loadIsInProgress=false;
     }
 
-    private List<Article> filterArticles(List<Article> articles, long latestArticleTimestamp) {
+    private List<Article> filterArticles(List<Article> articles, long latestArticleTimestamp, int maxArticles) {
         List<Article> ret = new ArrayList<Article>();
         for ( Article article  : articles ) {
             if ( article.getDate() > latestArticleTimestamp ) {
                 ret.add(article);
+                if ( ret.size() >= maxArticles ) {
+                    break;
+                }
             }
         }
         return ret;
@@ -134,10 +133,13 @@ public class AsyncRssLoader extends AsyncTask<Context, Integer, List<Article>> i
         Logger.error("Could not load RSS feed");
     }
 
-    private class ArticleByPubDateSorter implements java.util.Comparator<Article> {
+    /**
+     * Sort by latest articles first
+     */
+    private class ArticleByPubDateDescSorter implements java.util.Comparator<Article> {
         @Override
         public int compare(Article lhs, Article rhs) {
-            return new Long(lhs.getDate()).compareTo(new Long(rhs.getDate()));
+            return new Long(rhs.getDate()).compareTo(new Long(lhs.getDate()));
         }
     }
 }

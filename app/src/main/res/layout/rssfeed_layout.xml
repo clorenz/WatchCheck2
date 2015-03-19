@@ -3,35 +3,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:layout_marginBottom="10dp"
     >
-    <!--
+
     <ImageView
         android:id="@+id/rss_image_article"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
-        android:paddingRight="10dp"
+        android:paddingRight="5dp"
         android:paddingBottom="10dp"
+        android:maxWidth="60dp"
+        android:src="@drawable/icon"
         />
-    -->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:gravity="top"
         >
-        <TextView
-            android:id="@+id/rss_headline_article"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
-            />
+            android:orientation="horizontal"
+            android:gravity="top">
+
+            <TextView
+                android:id="@+id/rss_headline_article"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:layout_gravity="top"
+                android:layout_weight="0.7"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                />
+            <TextView
+                android:id="@+id/rss_date_article"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="8sp"
+                android:layout_gravity="top|end"
+                android:layout_weight="0.3"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:gravity="end" />
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/rss_body_article"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10dp"
+            android:textSize="10sp"
+            android:gravity="top"
             />
     </LinearLayout>
 </LinearLayout>

@@ -29,6 +29,7 @@ import android.webkit.WebSettings;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.gc.materialdesign.views.ButtonFloat;
 import com.gc.materialdesign.widgets.Dialog;
 import com.pkmmte.pkrss.Article;
@@ -333,7 +334,7 @@ public class MainActivity extends WatchCheckActionBarActivity
     public void processFinish(List<Article> articles) {
         Logger.debug("RSS articles to display=" + articles);
         if ( articles!=null && !articles.isEmpty()) {
-            Dialog dialog = new UhrenbastlerRssFeedDisplayDialog(this, articles).getDialog();
+            MaterialDialog dialog = new UhrenbastlerRssFeedDisplayDialog(this, articles).getDialog();
         }
     }
 }
