@@ -33,41 +33,43 @@ public class AsyncRssLoader extends AsyncTask<Context, Integer, List<Article>> i
     List<Article> result = null;
     boolean loadIsInProgress=false;
     static final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+    int maxItems=0;
+    boolean limitedMode=false;
 
-    public AsyncRssLoader(Context context, AsyncRssResponse responseDelegate) {
+    public AsyncRssLoader(Context context, AsyncRssResponse responseDelegate, int maxItems, boolean limitedMode) {
         super();
         this.context = context;
         this.responseDelegate = responseDelegate;
         sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        this.maxItems = maxItems;
+        this.limitedMode = limitedMode;
     }
 
     @Override
     protected List<Article> doInBackground(Context... params) {
-        // BEGIN FAKE
-        sharedPref.edit().putLong(LAST_RSS_TIMESTAMP,0).putLong(LATEST_ARTICLE_TIMESTAMP,0).apply();
-        // END FAKE
-        
-        
-        // Check, if feature is enabled in settings. If not, exit!
-        Boolean rssEnabled = sharedPref.getBoolean("pref_rss", false);
-        if ( !rssEnabled ) {
-            return null;
-        }
+        if ( limitedMode ) {
+            // Check, if feature is enabled in settings. If not, exit!
+            Boolean rssEnabled = sharedPref.getBoolean("pref_rss", false);
+            if (!rssEnabled) {
+                return null;
+            }
 
-        // Check, if RSS was fetched today. If yes, exit
-        Long lastFetchTimestamp = sharedPref.getLong(LAST_RSS_TIMESTAMP, 0);
-        String strToday = sdf.format(new Date());
-        String strLastFetch = sdf.format(new Date(lastFetchTimestamp));
-        if ( strToday.equals(strLastFetch)) {
-            Logger.info("Feed was already fetched today!");
-            return null;
-        }
+            // Check, if RSS was fetched today. If yes, exit
+            Long lastFetchTimestamp = sharedPref.getLong(LAST_RSS_TIMESTAMP, 0);
+            String strToday = sdf.format(new Date());
+            String strLastFetch = sdf.format(new Date(lastFetchTimestamp));
+            if (strToday.equals(strLastFetch)) {
+                Logger.info("Feed was already fetched today!");
+                return null;
+            }
 
-        // Only fetch when on WLAN!
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifiNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (wifiNetwork == null || !wifiNetwork.isConnected() ) {
-            Logger.debug("Not on a connected WIFI");
+            // Only fetch when on WLAN!
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo wifiNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            if (wifiNetwork == null || !wifiNetwork.isConnected()) {
+                Logger.debug("Not on a connected WIFI");
+                return null;
+            }
         }
 
         // Feature is enabled, RSS was fetched long enough ago, so fetch now! And if successful, save timestamp in settings
@@ -101,14 +103,18 @@ public class AsyncRssLoader extends AsyncTask<Context, Integer, List<Article>> i
     @Override
     public void OnLoaded(List<Article> articles) {
         if ( articles!=null && !articles.isEmpty()) {
-            sharedPref.edit().putLong(LAST_RSS_TIMESTAMP, System.currentTimeMillis()).apply();
+            if ( limitedMode ) {
+                sharedPref.edit().putLong(LAST_RSS_TIMESTAMP, System.currentTimeMillis()).apply();
+            }
         }
 
-        List<Article> newArticles = filterArticles(articles, sharedPref.getLong(LATEST_ARTICLE_TIMESTAMP,0),10);
+        List<Article> newArticles = filterArticles(articles, limitedMode?sharedPref.getLong(LATEST_ARTICLE_TIMESTAMP,0):0,maxItems);
 
         if ( newArticles!=null && !newArticles.isEmpty()) {
             Collections.sort(newArticles, new ArticleByPubDateDescSorter());
-            sharedPref.edit().putLong(LATEST_ARTICLE_TIMESTAMP, newArticles.get(0).getDate()).apply();
+            if ( limitedMode ) {
+                sharedPref.edit().putLong(LATEST_ARTICLE_TIMESTAMP, newArticles.get(0).getDate()).apply();
+            }
         }
 
         result = newArticles;

@@ -136,7 +136,7 @@ public class MainActivity extends WatchCheckActionBarActivity
             // And maybe display a nice background instead
         }
         
-        asyncRssLoader = new AsyncRssLoader(getApplicationContext(), this);
+        asyncRssLoader = new AsyncRssLoader(getApplicationContext(), this, 10, true);
         asyncRssLoader.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 

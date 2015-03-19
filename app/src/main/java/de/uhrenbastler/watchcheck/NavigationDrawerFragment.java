@@ -13,12 +13,10 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -36,12 +34,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gc.materialdesign.widgets.Dialog;
-import com.pkmmte.pkrss.Article;
-import com.pkmmte.pkrss.PkRSS;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.uhrenbastler.watchcheck.rss.RssFeedActivity;
 import de.uhrenbastler.watchcheck.tools.DataExporter;
 import de.uhrenbastler.watchcheck.tools.DataImporter;
 import de.uhrenbastler.watchcheck.tools.Logger;
@@ -371,18 +368,9 @@ public class NavigationDrawerFragment extends Fragment {
                 return true;
             }
             case R.id.menu_rss: {
-                try {
-                    // This is a hack! Better to call network operations in async mode
-                    if (android.os.Build.VERSION.SDK_INT > 9) {
-                        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                        StrictMode.setThreadPolicy(policy);
-                    }
-                    List<Article> articles = PkRSS.with(getActivity()).load(getString(R.string.rss_url)).get();
-                    Logger.debug(articles.toString());
-                    return true;
-                } catch ( Exception e) {
-                    Logger.error("Cannot load rss feed at "+getString(R.string.rss_url)+": ",e);
-                }
+                Intent rssFeedIntent = new Intent(getActivity(), RssFeedActivity.class);
+                startActivity(rssFeedIntent);
+                return true;
             }
             case R.id.menu_about: {
                 PackageInfo pInfo=null;
