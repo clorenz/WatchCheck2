@@ -1,11 +1,13 @@
+Bugs
+- TimePicker.getCurrentHour():
+  Caused by: android.view.ViewRootImpl$CalledFromWrongThreadException: Only the original thread that created a view hierarchy can touch its views.
+
 
 Features 2.2
 - RSS Feed von Uhrenbaster / 17Jewels
-  ( http://www.uhrenbastler.de/index.php?option=com_content&view=featured&format=feed&type=rss )
-- Called only when on WLAN
-- Called only with enabled in settings (-> requires settings screen)
-- Called (in background) not more often than once a day
-- Check with maybe md5 checksum, if sth. has changed
+  - Icons are too small on large screens
+- Redirect auf uhrenbastler.de für die Feed-URLs
+- On Lollipop/Settings, the headline "News" is green and below(!) the top bar!
 
 
 Features 2.3

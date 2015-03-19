@@ -3,6 +3,7 @@
 
     <string name="app_name" translatable="false">WatchCheck</string>
     <string name="rss_url">http://17jewels.info/index.php?option=com_content&amp;view=featured&amp;format=feed&amp;type=rss</string>
+    <string name="rss_url_alternative">http://17jewels.info/index.php?option=com_content&amp;format=feed&amp;type=rss&amp;view=category&amp;id=0</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
@@ -76,6 +77,10 @@
     <string name="whatsnew">What\'s New</string>
     <string name="changelog">
         <![CDATA[
+            <b>Version 2.2.0</b>
+            <p>
+            - RSS Feed for 17jewels.info
+            <p>
             <b>Version 2.1.1</b>
             <p>
             - Bugfix for displaying summary of vertical positions<br/>
@@ -85,10 +90,6 @@
             <p>
             - New Summary page for results<br/>
             - More than then watches can now be added and selected in the drawer menu
-            <p>
-            <b>Version 2.0.4</b>
-            <p>
-            - Minor design fix on result table<br/>
         ]]>
     </string>
     <string name="ok">OK</string>

@@ -73,8 +73,28 @@ public class AsyncRssLoader extends AsyncTask<Context, Integer, List<Article>> i
         }
 
         // Feature is enabled, RSS was fetched long enough ago, so fetch now! And if successful, save timestamp in settings
+        loadArticlesFromRSS(context.getString(R.string.rss_url));
+
+        if ( result.isEmpty() ) {
+            Long lastFetchTimestamp = sharedPref.getLong(LAST_RSS_TIMESTAMP, 0);
+            if ( System.currentTimeMillis() - lastFetchTimestamp > 86400000L*7) {
+                // More than one week ago!
+                boolean oldLimitedMode = limitedMode;
+                limitedMode = false;
+                loadArticlesFromRSS(context.getString(R.string.rss_url_alternative));
+                Collections.sort(result, new ArticleByPubDateDescSorter());
+                limitedMode = oldLimitedMode;
+            }
+        }
+
+        // The Callback retrieves all articles, whose pubDate is newer than the pubDate saved in the settings
+        // and saves the latest pubDate in the settings
+        return result;
+    }
+
+    private void loadArticlesFromRSS(String rssUrl) {
         loadIsInProgress=true;
-        new PkRSS.Builder(context).parser(new UhrenbastlerParser()).build().load(context.getString(R.string.rss_url)).callback(this).async();
+        new PkRSS.Builder(context).parser(new UhrenbastlerParser()).build().load(rssUrl).callback(this).async();
 
         while ( loadIsInProgress ) {
             try {
@@ -84,10 +104,6 @@ public class AsyncRssLoader extends AsyncTask<Context, Integer, List<Article>> i
                 e.printStackTrace();
             }
         }
-
-        // The Callback retrieves all articles, whose pubDate is newer than the pubDate saved in the settings
-        // and saves the latest pubDate in the settings
-        return result;
     }
 
     @Override
@@ -117,7 +133,22 @@ public class AsyncRssLoader extends AsyncTask<Context, Integer, List<Article>> i
             }
         }
 
-        result = newArticles;
+        if ( result == null) {
+            result = newArticles;
+        } else {
+            for ( Article article : newArticles ) {
+                boolean yetFound=false;
+                for ( Article existingArticle: result ) {
+                    if (article.getSource().equals(existingArticle.getSource())) {
+                        yetFound = true;
+                        break;
+                    }
+                }
+                if ( !yetFound ) {
+                    result.add(article);
+                }
+            }
+        }
         loadIsInProgress=false;
     }
 

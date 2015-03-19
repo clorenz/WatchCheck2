@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="rss_url">http://www.uhrenbastler.de/index.php?option=com_content&amp;view=featured&amp;format=feed&amp;type=rss</string>
+    <string name="rss_url_alternative">http://www.uhrenbastler.de/index.php?option=com_content&amp;format=feed&amp;type=rss&amp;view=category&amp;id=0</string>
     <string name="navigation_drawer_open">Navigationsleiste öffnen</string>
     <string name="navigation_drawer_close">Navigationsleiste schließen</string>
     <string name="action_example">Beispielaktion</string>
@@ -71,6 +72,10 @@
     <string name="whatsnew">Was ist neu</string>
     <string name="changelog">
         <![CDATA[
+            <b>Version 2.2.0</b>
+            <p>
+            - RSS-Feed von uhrenbastler.de zur Anzeige neuer Artikel eingebaut
+            <p>
             <b>Version 2.1.1</b>
             <p>
             - Zusammenfassung der hängenden Lagen gefixed<br/>
@@ -81,9 +86,6 @@
             - Neue Zusammenfassung der Ergebnisse<br/>
             - Im Navigationsmenü können mehr als 10 Uhren verwaltet werden
             <p>
-            <b>Version 2.0.4</b>
-            <p>
-            - Zeilenumbruch in der Ergebnisanzeige behoben<br/>
         ]]>
     </string>
     <string name="ok">OK</string>

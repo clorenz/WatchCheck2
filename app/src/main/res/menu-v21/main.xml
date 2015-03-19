@@ -9,6 +9,8 @@
         android:title="@string/summary"
         android:icon="@drawable/ic_view_list_white_36dp"
         app:showAsAction="always" />
+    <item android:id="@+id/menu_rss" android:title="@string/new_rss"
+        app:showAsAction="withText|ifRoom" />
     <item android:id="@+id/menu_about" android:title="@string/menu_about"
         app:showAsAction="withText|ifRoom" />
     <item android:id="@+id/menu_help" android:title="@string/menu_help"
@@ -19,4 +21,6 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/menu_import" android:title="@string/menu_import"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/settings" android:title="@string/settings"
+        android:orderInCategory="999" app:showAsAction="never" />
 </menu>
