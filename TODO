@@ -11,7 +11,6 @@ Features 2.2
   - split feed loader into two classes to implement a "larger" loader that always
     reads from both feeds (or only from the large one??)
 - Redirect auf uhrenbastler.de für die Feed-URLs
-- On Lollipop/Settings, the headline "News" is green and below(!) the top bar!
 
 
 Features 2.3
