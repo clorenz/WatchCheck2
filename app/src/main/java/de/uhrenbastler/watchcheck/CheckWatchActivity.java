@@ -12,7 +12,6 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -30,7 +29,6 @@ import watchcheck.db.Log;
 import watchcheck.db.Watch;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by clorenz on 09.01.15.
@@ -42,6 +40,7 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
     Watch currentWatch;
     Log lastLog;
     TimePicker timePicker;
+    long objectTime;
     AsyncTask<Context, Integer, Integer> referenceTimeUpdater;
     ITimeProvider gpsTimeProvider;
     ITimeProvider ntpTimeProvider;
@@ -77,12 +76,24 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
             timePicker.setLayoutParams(layoutParams);
         }
 
+        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                GregorianCalendar pickerTime = new GregorianCalendar();
+                pickerTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                pickerTime.set(Calendar.MINUTE, minute);
+                pickerTime.set(Calendar.SECOND,0);
+                pickerTime.set(Calendar.MILLISECOND,0);
+
+                objectTime = pickerTime.getTime().getTime();
+            }
+        });
+
         ButtonRectangle btnMeasure = (ButtonRectangle) findViewById(R.id.buttonMeasure);
         btnMeasure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 long referenceTime = getReferenceTimeMillis();
-                long objectTime = getMillisFromTimePicker(timePicker);
                 referenceTimeUpdater.cancel(true);
                 ((ReferenceTimeUpdater)referenceTimeUpdater).terminate();
                 Intent addLogIntent = new Intent(CheckWatchActivity.this,AddLogActivity.class);
@@ -187,6 +198,7 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
         super.onNewIntent(intent);
         setIntent(intent);
     }
+
 
     // ------------------------------------------------------------------
     private class ReferenceTimeUpdater extends AsyncTask<Context, Integer, Integer> {

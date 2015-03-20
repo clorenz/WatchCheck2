@@ -1,8 +1,3 @@
-Bugs
-- TimePicker.getCurrentHour():
-  Caused by: android.view.ViewRootImpl$CalledFromWrongThreadException: Only the original thread that created a view hierarchy can touch its views.
-  -> http://stackoverflow.com/questions/5161951/android-only-the-original-thread-that-created-a-view-hierarchy-can-touch-its-vi
-
 
 Features 2.2
 - RSS Feed von Uhrenbaster / 17Jewels
