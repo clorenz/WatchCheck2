@@ -19,6 +19,7 @@ import android.widget.TimePicker;
 import com.gc.materialdesign.views.ButtonRectangle;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import de.uhrenbastler.watchcheck.provider.GpsTimeProvider;
@@ -99,6 +100,7 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
                 Intent addLogIntent = new Intent(CheckWatchActivity.this,AddLogActivity.class);
                 addLogIntent.putExtra(AddLogActivity.EXTRA_WATCH, currentWatch);
                 addLogIntent.putExtra(AddLogActivity.EXTRA_REFERENCE_TIME, referenceTime);
+                Logger.debug("objectTime="+new Date(objectTime));
                 addLogIntent.putExtra(AddLogActivity.EXTRA_LOG_TIME, objectTime);
                 addLogIntent.putExtra(AddLogActivity.EXTRA_LAST_LOG, lastLog);
                 Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -124,8 +126,13 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
         } else {
             tvLastDeviation.setText(getString(R.string.no_last_deviation));
         }
+
+        now.set(Calendar.SECOND,0);
+        now.set(Calendar.MILLISECOND,0);
         timePicker.setCurrentHour(now.get(Calendar.HOUR_OF_DAY));
         timePicker.setCurrentMinute(now.get(Calendar.MINUTE));
+
+        objectTime = now.getTimeInMillis();
 
     }
 
