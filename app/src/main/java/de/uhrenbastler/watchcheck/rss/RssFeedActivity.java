@@ -2,6 +2,7 @@ package de.uhrenbastler.watchcheck.rss;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 
 import com.pkmmte.pkrss.Article;
@@ -25,7 +26,7 @@ public class RssFeedActivity extends WatchCheckActionBarActivity implements Asyn
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_rssfeed);
-        setTitle(getString(R.string.new_rss));
+        setTitle(getString(R.string.new_rss_activity));
         asyncRssLoaderForActivity = new AsyncRssLoaderForActivity(getApplicationContext(), this, 50);
         asyncRssLoaderForActivity.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
@@ -33,6 +34,8 @@ public class RssFeedActivity extends WatchCheckActionBarActivity implements Asyn
 
     @Override
     public void processFinish(List<Article> articles) {
+        findViewById(R.id.rss_progress_wheel).setVisibility(View.INVISIBLE);
+
         ListView articleListView = (ListView) findViewById(R.id.rssListView);
         SimpleDateFormat sdf = new SimpleDateFormat(getString(R.string.rss_date_format));
 

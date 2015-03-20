@@ -60,7 +60,7 @@ public class UhrenbastlerRssFeedDisplayDialog  {
                 .theme(Theme.LIGHT)
                 .adapter(articleAdapter)
                 .positiveText(R.string.ok)
-                .positiveColorRes(R.color.accent_material_light)
+                .positiveColorRes(R.color.colorAccent)
                 .iconRes(R.drawable.icon)
                 .maxIconSize(50)
                 .build();

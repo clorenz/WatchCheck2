@@ -9,7 +9,7 @@
         android:title="@string/summary"
         android:icon="@drawable/ic_view_list_white_36dp"
         app:showAsAction="always" />
-    <item android:id="@+id/menu_rss" android:title="@string/new_rss"
+    <item android:id="@+id/menu_rss" android:title="@string/new_rss_activity"
         app:showAsAction="withText|ifRoom" />
     <item android:id="@+id/menu_about" android:title="@string/menu_about"
         app:showAsAction="withText|ifRoom" />

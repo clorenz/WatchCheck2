@@ -3,6 +3,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:wheel="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,6 +27,13 @@
             android:layout_height="match_parent"
             android:background="@color/background_material_light"
             android:layout_below="@+id/toolbar">
+
+            <com.pnikosis.materialishprogress.ProgressWheel
+                android:id="@+id/rss_progress_wheel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                wheel:matProg_barColor="@color/colorAccent"
+                wheel:matProg_progressIndeterminate="true" />
 
             <ListView
                 android:id="@+id/rssListView"
