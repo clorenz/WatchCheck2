@@ -47,11 +47,10 @@ public class AsyncRssLoaderForPopup extends AsyncTask<Context, Integer, List<Art
     @Override
     protected List<Article> doInBackground(Context... params) {
         // Check, if feature is enabled in settings. If not, exit!
-        Boolean rssEnabled = sharedPref.getBoolean("pref_rss", false);
+        Boolean rssEnabled = sharedPref.getBoolean("pref_rss", true);
         if (!rssEnabled) {
             return null;
         }
-
 
         // Check, if RSS was fetched today. If yes, exit
         Long lastFetchTimestamp = sharedPref.getLong(LAST_RSS_TIMESTAMP, 0);
@@ -69,6 +68,12 @@ public class AsyncRssLoaderForPopup extends AsyncTask<Context, Integer, List<Art
             Logger.debug("Not on a connected WIFI");
             return null;
         }
+
+        /*
+        sharedPref.edit().putLong(LATEST_ARTICLE_TIMESTAMP,0).apply();
+        sharedPref.edit().putLong(LAST_RSS_TIMESTAMP,0).apply();
+        sharedPref.edit().putLong(LAST_SUCCESSFUL_RSS_TIMESTAMP,0).apply();
+        */
 
 
         // Feature is enabled, RSS was fetched long enough ago, so fetch now! And if successful, save timestamp in settings

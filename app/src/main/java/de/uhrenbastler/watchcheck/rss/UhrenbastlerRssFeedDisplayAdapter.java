@@ -2,7 +2,9 @@ package de.uhrenbastler.watchcheck.rss;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,7 +25,9 @@ import de.uhrenbastler.watchcheck.R;
  */
 public class UhrenbastlerRssFeedDisplayAdapter extends SimpleAdapter {
 
+    private static final int SIZE_IN_DP = 80;
     private Context context;
+    private final int SIZE_IN_PIXEL;
 
     /**
      * Constructor
@@ -42,12 +46,14 @@ public class UhrenbastlerRssFeedDisplayAdapter extends SimpleAdapter {
     public UhrenbastlerRssFeedDisplayAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
         super(context, data, resource, from, to);
         this.context = context;
+        Resources r = context.getResources();
+        SIZE_IN_PIXEL = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, SIZE_IN_DP, r.getDisplayMetrics());
     }
 
 
     @Override
     public void setViewImage(ImageView v, String value) {
-        Ion.with(v).resizeWidth(80).placeholder(R.drawable.icon).load(value);
+        Ion.with(v).resizeWidth(SIZE_IN_PIXEL).placeholder(R.drawable.icon).load(value);
     }
 
 

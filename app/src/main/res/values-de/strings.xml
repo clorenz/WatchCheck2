@@ -74,7 +74,8 @@
         <![CDATA[
             <b>Version 2.2.0</b>
             <p>
-            - RSS-Feed von uhrenbastler.de zur Anzeige neuer Artikel eingebaut
+            - RSS-Feed von uhrenbastler.de zur Anzeige neuer Artikel<br/>
+            - Crash auf Sony Xperia-Devices (hoffentlich) behoben
             <p>
             <b>Version 2.1.1</b>
             <p>
