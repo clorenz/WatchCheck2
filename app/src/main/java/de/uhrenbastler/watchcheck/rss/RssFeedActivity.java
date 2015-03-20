@@ -14,23 +14,20 @@ import java.util.List;
 
 import de.uhrenbastler.watchcheck.R;
 import de.uhrenbastler.watchcheck.WatchCheckActionBarActivity;
-import de.uhrenbastler.watchcheck.rss.AsyncRssLoader;
-import de.uhrenbastler.watchcheck.rss.AsyncRssResponse;
-import de.uhrenbastler.watchcheck.rss.UhrenbastlerRssFeedDisplayAdapter;
 
 /**
  * Created by clorenz on 19.03.15.
  */
 public class RssFeedActivity extends WatchCheckActionBarActivity implements AsyncRssResponse {
 
-    private AsyncRssLoader asyncRssLoader;
+    private AsyncRssLoaderForActivity asyncRssLoaderForActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_rssfeed);
         setTitle(getString(R.string.new_rss));
-        asyncRssLoader = new AsyncRssLoader(getApplicationContext(), this, 50, false);
-        asyncRssLoader.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncRssLoaderForActivity = new AsyncRssLoaderForActivity(getApplicationContext(), this, 50);
+        asyncRssLoaderForActivity.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 

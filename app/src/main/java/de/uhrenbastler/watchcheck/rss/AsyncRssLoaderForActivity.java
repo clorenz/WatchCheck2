@@ -23,10 +23,8 @@ import de.uhrenbastler.watchcheck.tools.Logger;
 /**
  * Created by clorenz on 18.03.15.
  */
-public class AsyncRssLoader extends AsyncTask<Context, Integer, List<Article>> implements Callback {
+public class AsyncRssLoaderForActivity extends AsyncTask<Context, Integer, List<Article>> implements Callback {
 
-    public static final String LAST_RSS_TIMESTAMP = "last_rss_timestamp";
-    public static final String LATEST_ARTICLE_TIMESTAMP = "latest_article_timestamp";
     Context context;
     SharedPreferences sharedPref;
     AsyncRssResponse responseDelegate;
@@ -34,58 +32,21 @@ public class AsyncRssLoader extends AsyncTask<Context, Integer, List<Article>> i
     boolean loadIsInProgress=false;
     static final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
     int maxItems=0;
-    boolean limitedMode=false;
 
-    public AsyncRssLoader(Context context, AsyncRssResponse responseDelegate, int maxItems, boolean limitedMode) {
+    public AsyncRssLoaderForActivity(Context context, AsyncRssResponse responseDelegate, int maxItems) {
         super();
         this.context = context;
         this.responseDelegate = responseDelegate;
         sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         this.maxItems = maxItems;
-        this.limitedMode = limitedMode;
     }
 
     @Override
     protected List<Article> doInBackground(Context... params) {
-        if ( limitedMode ) {
-            // Check, if feature is enabled in settings. If not, exit!
-            Boolean rssEnabled = sharedPref.getBoolean("pref_rss", false);
-            if (!rssEnabled) {
-                return null;
-            }
-
-            // Check, if RSS was fetched today. If yes, exit
-            Long lastFetchTimestamp = sharedPref.getLong(LAST_RSS_TIMESTAMP, 0);
-            String strToday = sdf.format(new Date());
-            String strLastFetch = sdf.format(new Date(lastFetchTimestamp));
-            if (strToday.equals(strLastFetch)) {
-                Logger.info("Feed was already fetched today!");
-                return null;
-            }
-
-            // Only fetch when on WLAN!
-            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo wifiNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-            if (wifiNetwork == null || !wifiNetwork.isConnected()) {
-                Logger.debug("Not on a connected WIFI");
-                return null;
-            }
-        }
-
-        // Feature is enabled, RSS was fetched long enough ago, so fetch now! And if successful, save timestamp in settings
+        // Fetch from both URLs and mix the data
         loadArticlesFromRSS(context.getString(R.string.rss_url));
-
-        if ( result.isEmpty() ) {
-            Long lastFetchTimestamp = sharedPref.getLong(LAST_RSS_TIMESTAMP, 0);
-            if ( System.currentTimeMillis() - lastFetchTimestamp > 86400000L*7) {
-                // More than one week ago!
-                boolean oldLimitedMode = limitedMode;
-                limitedMode = false;
-                loadArticlesFromRSS(context.getString(R.string.rss_url_alternative));
-                Collections.sort(result, new ArticleByPubDateDescSorter());
-                limitedMode = oldLimitedMode;
-            }
-        }
+        loadArticlesFromRSS(context.getString(R.string.rss_url_alternative));
+        Collections.sort(result, new ArticleByPubDateDescSorter());
 
         // The Callback retrieves all articles, whose pubDate is newer than the pubDate saved in the settings
         // and saves the latest pubDate in the settings
@@ -118,19 +79,10 @@ public class AsyncRssLoader extends AsyncTask<Context, Integer, List<Article>> i
 
     @Override
     public void OnLoaded(List<Article> articles) {
-        if ( articles!=null && !articles.isEmpty()) {
-            if ( limitedMode ) {
-                sharedPref.edit().putLong(LAST_RSS_TIMESTAMP, System.currentTimeMillis()).apply();
-            }
-        }
-
-        List<Article> newArticles = filterArticles(articles, limitedMode?sharedPref.getLong(LATEST_ARTICLE_TIMESTAMP,0):0,maxItems);
+        List<Article> newArticles = filterArticles(articles,maxItems);
 
         if ( newArticles!=null && !newArticles.isEmpty()) {
             Collections.sort(newArticles, new ArticleByPubDateDescSorter());
-            if ( limitedMode ) {
-                sharedPref.edit().putLong(LATEST_ARTICLE_TIMESTAMP, newArticles.get(0).getDate()).apply();
-            }
         }
 
         if ( result == null) {
@@ -152,14 +104,12 @@ public class AsyncRssLoader extends AsyncTask<Context, Integer, List<Article>> i
         loadIsInProgress=false;
     }
 
-    private List<Article> filterArticles(List<Article> articles, long latestArticleTimestamp, int maxArticles) {
+    private List<Article> filterArticles(List<Article> articles, int maxArticles) {
         List<Article> ret = new ArrayList<Article>();
         for ( Article article  : articles ) {
-            if ( article.getDate() > latestArticleTimestamp ) {
-                ret.add(article);
-                if ( ret.size() >= maxArticles ) {
-                    break;
-                }
+            ret.add(article);
+            if ( ret.size() >= maxArticles ) {
+                break;
             }
         }
         return ret;

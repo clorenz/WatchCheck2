@@ -4,29 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
-import android.graphics.PorterDuff;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.internal.view.menu.ActionMenuItemView;
 import android.text.Html;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.webkit.WebSettings;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -38,11 +26,10 @@ import java.util.List;
 
 import de.uhrenbastler.watchcheck.managers.AppStateManager;
 import de.uhrenbastler.watchcheck.managers.WatchManager;
-import de.uhrenbastler.watchcheck.rss.AsyncRssLoader;
+import de.uhrenbastler.watchcheck.rss.AsyncRssLoaderForPopup;
 import de.uhrenbastler.watchcheck.rss.AsyncRssResponse;
 import de.uhrenbastler.watchcheck.rss.UhrenbastlerRssFeedDisplayDialog;
 import de.uhrenbastler.watchcheck.tools.Logger;
-import de.uhrenbastler.watchcheck.views.*;
 import watchcheck.db.Watch;
 
 
@@ -67,7 +54,7 @@ public class MainActivity extends WatchCheckActionBarActivity
     private CharSequence mTitle;
 
     private Watch selectedWatch;
-    private AsyncRssLoader asyncRssLoader;
+    private AsyncRssLoaderForPopup asyncRssLoaderForPopup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,8 +123,8 @@ public class MainActivity extends WatchCheckActionBarActivity
             // And maybe display a nice background instead
         }
         
-        asyncRssLoader = new AsyncRssLoader(getApplicationContext(), this, 10, true);
-        asyncRssLoader.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncRssLoaderForPopup = new AsyncRssLoaderForPopup(getApplicationContext(), this, 10);
+        asyncRssLoaderForPopup.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private List<Watch> addAddWatch(List<Watch> watches) {
