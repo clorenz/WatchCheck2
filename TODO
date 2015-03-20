@@ -1,12 +1,5 @@
-
-Features 2.2
-- RSS Feed von Uhrenbaster / 17Jewels
-  - Icons are too small on large screens
-  - Check, that if no articles were found, the next fetch is not on the same day!
-  - split feed loader into two classes to implement a "larger" loader that always
-    reads from both feeds (or only from the large one??)
+Features 2.2.x
 - Redirect auf uhrenbastler.de für die Feed-URLs
-
 
 Features 2.3
 - Reminders to check watch next time
