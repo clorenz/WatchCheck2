@@ -33,6 +33,7 @@ public class DataImporter {
     LogDao logDao;
     WatchDao watchDao;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private boolean lastImportWasAWatch=false;
 
 
     public void doImport(FragmentActivity act, String filename) throws Exception {
@@ -89,11 +90,29 @@ public class DataImporter {
                 watchesData.add(rawData);
             }
         } else {
+
             if ( rawData.startsWith("WATCH: ")) {
                 watchesData.add(rawData.substring(7));
-            }
-            if ( rawData.startsWith("LOG: ")) {
+                lastImportWasAWatch=true;
+            } else if ( rawData.startsWith("LOG: ")) {
                 logsData.add(rawData.substring(5));
+                lastImportWasAWatch=false;
+            } else if ( isVersion2 ) {
+                Logger.warn("Version 2: Found illegal line, trying to append it: "+rawData);
+                // There was a newline in the data. Append it to former line
+                if ( lastImportWasAWatch ) {
+                    String lastWatchesDataItem = watchesData.get(watchesData.size()-1);
+                    lastWatchesDataItem += " " + rawData;
+                    watchesData.set(watchesData.size()-1, lastWatchesDataItem);
+                    Logger.warn("Fixed newline on watchesData item="+lastWatchesDataItem);
+                } else {
+                    String lastLogDataItem = logsData.get(logsData.size()-1);
+                    lastLogDataItem += " " + rawData;
+                    logsData.set(logsData.size()-1, lastLogDataItem);
+                    Logger.warn("Fixed newline on logsData item="+lastLogDataItem);
+                }
+            } else {
+                Logger.error("Bogus line on version1 import found: "+rawData);
             }
         }
     }

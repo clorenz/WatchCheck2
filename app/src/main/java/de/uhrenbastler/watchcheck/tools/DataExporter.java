@@ -62,14 +62,26 @@ public class DataExporter {
 
     private void exportWatches(BufferedWriter writer, List<Watch> allWatches) throws IOException {
         for ( Watch watch : allWatches) {
-            writer.append("WATCH: "+watch.getId()+"|"+watch.getName()+"|"+watch.getSerial()+"|"+(watch.getCreatedAt()!=null?watch.getCreatedAt().getTime():"")+"|"+watch.getComment()+"\n");
+            writer.append("WATCH: "+filterNewlines(watch.getId()+"|"+watch.getName()+"|"+watch.getSerial()+"|"+(watch.getCreatedAt()!=null?watch.getCreatedAt().getTime():"")+"|"+noNull(watch.getComment()))+"\n");
         }
     }
 
     private void exportLogs(BufferedWriter writer, List<Log> allLogs) throws IOException {
         for ( Log log : allLogs) {
-            writer.append("LOG: "+log.getId()+"|"+log.getWatchId()+"|"+log.getPeriod()+"|"+log.getReferenceTime().getTime()
-                    +"|"+log.getWatchTime().getTime()+"|"+log.getPosition()+"|"+log.getTemperature()+"|"+log.getComment()+"\n");
+            writer.append("LOG: "+filterNewlines(log.getId()+"|"+log.getWatchId()+"|"+log.getPeriod()+"|"+log.getReferenceTime().getTime()
+                    +"|"+log.getWatchTime().getTime()+"|"+log.getPosition()+"|"+log.getTemperature()+"|"+noNull(log.getComment()))+"\n");
         }
+    }
+
+    private String noNull(String comment) {
+        if ( comment==null || "null".equalsIgnoreCase(comment)) {
+            return "";
+        } else {
+            return comment;
+        }
+    }
+
+    private String filterNewlines(String s) {
+        return s.replaceAll("\\n"," ").replaceAll("\\r"," ");
     }
 }

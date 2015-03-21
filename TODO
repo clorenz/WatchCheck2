@@ -1,5 +1,5 @@
-Features 2.2.x
-- Redirect auf uhrenbastler.de für die Feed-URLs
+Bugs
+- "New period" is sometimes checked automatically and cannot be unchecked!
 
 Features 2.3
 - Reminders to check watch next time

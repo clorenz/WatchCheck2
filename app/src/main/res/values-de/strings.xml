@@ -72,21 +72,21 @@
     <string name="whatsnew">Was ist neu</string>
     <string name="changelog">
         <![CDATA[
+            <b>Version 2.2.2</b>
+            <p>
+            - Diverse Verbesserungen im Importer und Exporter
+            <p>
             <b>Versionen 2.2.1 und 2.2.0</b>
             <p>
             - RSS-Feed von uhrenbastler.de zur Anzeige neuer Artikel<br/>
-            - Crash auf Sony Xperia-Devices (hoffentlich) behoben
+            - Crash auf Sony Xperia-Devices behoben
             <p>
-            <b>Version 2.1.1</b>
-            <p>
-            - Zusammenfassung der hängenden Lagen gefixed<br/>
-            - Designkorrektur auf der der Zusammenfassungsseite
-            <p>
-            <b>Version 2.1.0</b>
+            <b>Versionen 2.1.1 und 2.1.0</b>
             <p>
             - Neue Zusammenfassung der Ergebnisse<br/>
-            - Im Navigationsmenü können mehr als 10 Uhren verwaltet werden
-            <p>
+            - Im Navigationsmenü können mehr als 10 Uhren verwaltet werden<br/>
+            - Zusammenfassung der hängenden Lagen gefixed<br/>
+            - Designkorrektur auf der der Zusammenfassungsseite
         ]]>
     </string>
     <string name="ok">OK</string>

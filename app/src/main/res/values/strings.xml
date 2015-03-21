@@ -77,20 +77,21 @@
     <string name="whatsnew">What\'s New</string>
     <string name="changelog">
         <![CDATA[
+            <b>Version 2.2.2</b>
+            <p>
+            - Various fixes for importer and exporter
+            <p>
             <b>Versions 2.2.1 and 2.2.0</b>
             <p>
             - RSS Feed for new articles on 17jewels.info<br/>
-            - (hopefully) fixed crash on Sony Xperia devices
+            - Fixed crash on Sony Xperia devices
             <p>
-            <b>Version 2.1.1</b>
-            <p>
-            - Bugfix for displaying summary of vertical positions<br/>
-            - Minor design fix for summary page
-            <p>
-            <b>Version 2.1.0</b>
+            <b>Versions 2.1.1 and 2.1.0</b>
             <p>
             - New Summary page for results<br/>
-            - More than then watches can now be added and selected in the drawer menu
+            - More than then watches can now be added and selected in the drawer menu<br/>
+            - Bugfix for displaying summary of vertical positions<br/>
+            - Minor design fix for summary page
         ]]>
     </string>
     <string name="ok">OK</string>
