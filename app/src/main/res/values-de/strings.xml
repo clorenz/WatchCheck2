@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="rss_url">http://www.uhrenbastler.de/index.php?option=com_content&amp;view=featured&amp;format=feed&amp;type=rss</string>
-    <string name="rss_url_alternative">http://www.uhrenbastler.de/index.php?option=com_content&amp;format=feed&amp;type=rss&amp;view=category&amp;id=0</string>
+    <string name="rss_url">http://www.uhrenbastler.de/news.xml</string>
+    <string name="rss_url_alternative">http://www.uhrenbastler.de/news_extended.xml</string>
     <string name="navigation_drawer_open">Navigationsleiste öffnen</string>
     <string name="navigation_drawer_close">Navigationsleiste schließen</string>
     <string name="action_example">Beispielaktion</string>
@@ -72,7 +72,7 @@
     <string name="whatsnew">Was ist neu</string>
     <string name="changelog">
         <![CDATA[
-            <b>Version 2.2.0</b>
+            <b>Versionen 2.2.1 und 2.2.0</b>
             <p>
             - RSS-Feed von uhrenbastler.de zur Anzeige neuer Artikel<br/>
             - Crash auf Sony Xperia-Devices (hoffentlich) behoben

@@ -190,15 +190,6 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private long getMillisFromTimePicker(TimePicker timePicker) {
-        GregorianCalendar pickerTime = new GregorianCalendar();
-        pickerTime.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
-        pickerTime.set(Calendar.MINUTE, timePicker.getCurrentMinute());
-        pickerTime.set(Calendar.SECOND,0);
-        pickerTime.set(Calendar.MILLISECOND,0);
-
-        return pickerTime.getTime().getTime();
-    }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -319,7 +310,7 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
                 }
 
                 valid = localValid;
-                deviation = (((double)getMillisFromTimePicker(timePicker) - (double)referenceMillis )/1000);
+                deviation = (((double)objectTime - (double)referenceMillis )/1000);
                 publishProgress((++progress % 2));
                 try {
                     Thread.sleep(100);

@@ -2,8 +2,8 @@
 <resources>
 
     <string name="app_name" translatable="false">WatchCheck</string>
-    <string name="rss_url">http://17jewels.info/index.php?option=com_content&amp;view=featured&amp;format=feed&amp;type=rss</string>
-    <string name="rss_url_alternative">http://17jewels.info/index.php?option=com_content&amp;format=feed&amp;type=rss&amp;view=category&amp;id=0</string>
+    <string name="rss_url">http://17jewels.info/news.xml</string>
+    <string name="rss_url_alternative">http://17jewels.info/news_extended.xml</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
@@ -77,7 +77,7 @@
     <string name="whatsnew">What\'s New</string>
     <string name="changelog">
         <![CDATA[
-            <b>Version 2.2.0</b>
+            <b>Versions 2.2.1 and 2.2.0</b>
             <p>
             - RSS Feed for new articles on 17jewels.info<br/>
             - (hopefully) fixed crash on Sony Xperia devices

@@ -31,7 +31,11 @@ public class WatchCheckActionBarActivity extends ActionBarActivity {
     private static final String PREFERENCE_CURRENT_WATCH = "currentWatch";
 
     protected void onCreate(Bundle savedInstanceState, int viewResource) {
-        super.onCreate(savedInstanceState);
+        try {
+            super.onCreate(savedInstanceState);
+        } catch ( IllegalStateException e) {
+            Logger.error("Could not call super action: ",e);
+        }
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
