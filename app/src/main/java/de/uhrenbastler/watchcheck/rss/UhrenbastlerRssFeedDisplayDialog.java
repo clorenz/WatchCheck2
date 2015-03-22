@@ -62,7 +62,7 @@ public class UhrenbastlerRssFeedDisplayDialog  {
                 .positiveText(R.string.ok)
                 .positiveColorRes(R.color.colorAccent)
                 .iconRes(R.drawable.icon)
-                .maxIconSize(50)
+                .maxIconSize(80)
                 .build();
         View title = rssDialog.getTitleFrame();
         title.setPadding(16,16,16,6);

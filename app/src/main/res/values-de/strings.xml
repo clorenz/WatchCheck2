@@ -74,7 +74,8 @@
         <![CDATA[
             <b>Version 2.2.2</b>
             <p>
-            - Diverse Verbesserungen im Importer und Exporter
+            - Diverse Verbesserungen im Importer und Exporter<br/>
+            - Neues Icon im Material Design Style
             <p>
             <b>Versionen 2.2.1 und 2.2.0</b>
             <p>
@@ -86,7 +87,7 @@
             - Neue Zusammenfassung der Ergebnisse<br/>
             - Im Navigationsmenü können mehr als 10 Uhren verwaltet werden<br/>
             - Zusammenfassung der hängenden Lagen gefixed<br/>
-            - Designkorrektur auf der der Zusammenfassungsseite
+            - Designkorrektur auf der Zusammenfassungsseite
         ]]>
     </string>
     <string name="ok">OK</string>
