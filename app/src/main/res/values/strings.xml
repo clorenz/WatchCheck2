@@ -123,4 +123,12 @@
     <string name="news">News</string>
     <string name="rss_date_format">yyyy-MM-dd</string>
     <string name="new_rss_activity">Articles on 17jewels.info</string>
+    <string name="preference_reminder">Reminder</string>
+    <string name="pref_check_reminder">Reminder enabled</string>
+    <string name="pref_check_reminder_summ">Reminds daily at the same time to check your watch</string>
+    <string name="pref_reminder_tone">Reminder sound</string>
+    <string name="pref_time_reminder">Reminder time</string>
+    <string name="pref_time_reminder_summ">Reminds daily at that time to check your watch</string>
+    <string name="reminder_time_unset">unset</string>
+    <string name="notification_text">Check your watch now!</string>
 </resources>

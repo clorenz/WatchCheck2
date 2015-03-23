@@ -49,6 +49,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
+        <receiver android:name=".reminder.ReminderReceiver"></receiver>
     </application>
 
     <uses-sdk

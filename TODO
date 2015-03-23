@@ -3,6 +3,8 @@ Bugs
 
 Features 2.3
 - Reminders to check watch next time
+  We need an own Checkbox preference, which does the same, as new Application(): Launch the alaarm
+  http://stackoverflow.com/questions/20262711/send-notification-once-in-a-week
 
 Feature 3.0
 - Sync with Google Drive
