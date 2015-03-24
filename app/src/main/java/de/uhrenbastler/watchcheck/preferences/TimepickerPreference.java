@@ -20,6 +20,7 @@ import java.util.prefs.Preferences;
 
 import de.uhrenbastler.watchcheck.R;
 import de.uhrenbastler.watchcheck.reminder.OnDataChangeAlarmScheduler;
+import de.uhrenbastler.watchcheck.reminder.ReminderManager;
 import de.uhrenbastler.watchcheck.tools.Logger;
 
 /**
@@ -121,7 +122,7 @@ public class TimepickerPreference extends DialogPreference implements OnDataChan
             setSummary(getSummary());
             if (callChangeListener(calendar.getTimeInMillis())) {
                 persistLong(calendar.getTimeInMillis());
-                notifyChanged();
+                onSettingDataChanged();
             }
         }
     }
@@ -162,14 +163,22 @@ public class TimepickerPreference extends DialogPreference implements OnDataChan
     }
 
 
-    @Override
-    protected void notifyChanged() {
-        super.notifyChanged();
-        onSettingDataChanged();
-    }
 
     @Override
     public void onSettingDataChanged() {
-        // TODO
+        String reminderEnabledKey = getDependency();
+        Preference reminderEnabled = findPreferenceInHierarchy(reminderEnabledKey);
+        if (reminderEnabled != null) {
+            if (((CheckBoxPreference) reminderEnabled).isChecked()) {
+                ReminderManager.cancelAlarmSilently(getContext());
+                ReminderManager.setAlarm(getContext(), getPersistedLong(0));
+            } else {
+                ReminderManager.cancelAlarm(getContext());
+            }
+        }
+    }
+
+    public long getTime() {
+        return getPersistedLong(0);
     }
 }

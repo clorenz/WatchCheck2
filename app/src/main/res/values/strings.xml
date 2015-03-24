@@ -131,4 +131,6 @@
     <string name="pref_time_reminder_summ">Reminds daily at that time to check your watch</string>
     <string name="reminder_time_unset">unset</string>
     <string name="notification_text">Check your watch now!</string>
+    <string name="cancel_reminder">Cancelled reminder</string>
+    <string name="set_reminder">Daily reminder at %s set</string>
 </resources>

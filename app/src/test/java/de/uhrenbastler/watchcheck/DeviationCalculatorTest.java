@@ -24,7 +24,7 @@ public class DeviationCalculatorTest {
     @Test
     public void testDeviationsOneLogOnePositionReturnsEmptyList() {
         ArrayList<Log> logs = new ArrayList<Log>();
-        logs.add(createLog(0L, 0, 1000, DeviationCalculator.ZO));
+        logs.add(createLog(0L, 0, 1000, Deviations.DU.nameForLog));
         DeviationCalculator calc = new DeviationCalculator(logs);
         assertTrue(calc.getDeviations().isEmpty());
     }
@@ -33,83 +33,83 @@ public class DeviationCalculatorTest {
     @Test
     public void testDeviationsTwoLogsOnePosition() {
         ArrayList<Log> logs = new ArrayList<Log>();
-        logs.add(createLog(0L,0,0,DeviationCalculator.ZO));
-        logs.add(createLog(1L,86400000,1000,DeviationCalculator.ZO));
+        logs.add(createLog(0L,0,0,Deviations.DU.nameForLog));
+        logs.add(createLog(1L,86400000,1000,Deviations.DU.nameForLog));
         DeviationCalculator calc = new DeviationCalculator(logs);
 
         assertEquals("Deviations="+calc.getDeviations(),1,calc.getDeviations().size());
-        assertEquals(1d, calc.getDeviations().get(DeviationCalculator.ZO), EPSILON);
+        assertEquals(1d, calc.getDeviations().get(Deviations.DU.nameForLog), EPSILON);
     }
 
     // Three logs of the same position will return one single deviation
     @Test
     public void testDeviationsThreeLogsOnePosition() {
         ArrayList<Log> logs = new ArrayList<Log>();
-        logs.add(createLog(0L,0,0,DeviationCalculator.ZO));
-        logs.add(createLog(1L,86400000,1000,DeviationCalculator.ZO));
-        logs.add(createLog(1L,86400000*2,2000,DeviationCalculator.ZO));
+        logs.add(createLog(0L,0,0,Deviations.DU.nameForLog));
+        logs.add(createLog(1L,86400000,1000,Deviations.DU.nameForLog));
+        logs.add(createLog(1L,86400000*2,2000,Deviations.DU.nameForLog));
         DeviationCalculator calc = new DeviationCalculator(logs);
 
         assertEquals("Deviations="+calc.getDeviations(),1,calc.getDeviations().size());
-        assertEquals(1d, calc.getDeviations().get(DeviationCalculator.ZO),EPSILON);
+        assertEquals(1d, calc.getDeviations().get(Deviations.DU.nameForLog),EPSILON);
     }
 
     // Three logs of the same position will return one single deviation
     @Test
     public void testDeviationsThreeLogsOnePositionDifferentDeviations() {
         ArrayList<Log> logs = new ArrayList<Log>();
-        logs.add(createLog(0L,0,0,DeviationCalculator.ZO));
-        logs.add(createLog(1L,86400000,1000,DeviationCalculator.ZO));       // day 1: 1 second
-        logs.add(createLog(2L,86400000*10,2000,DeviationCalculator.ZO));    // day 10: 2 seconds
+        logs.add(createLog(0L,0,0,Deviations.DU.nameForLog));
+        logs.add(createLog(1L,86400000,1000,Deviations.DU.nameForLog));       // day 1: 1 second
+        logs.add(createLog(2L,86400000*10,2000,Deviations.DU.nameForLog));    // day 10: 2 seconds
         DeviationCalculator calc = new DeviationCalculator(logs);
 
         assertEquals("Deviations="+calc.getDeviations(),1,calc.getDeviations().size());
-        assertEquals(0.2d, calc.getDeviations().get(DeviationCalculator.ZO),EPSILON);
+        assertEquals(0.2d, calc.getDeviations().get(Deviations.DU.nameForLog),EPSILON);
     }
 
 
     @Test
     public void testDeviationsThreeLogsTwoPosition() {
         ArrayList<Log> logs = new ArrayList<Log>();
-        logs.add(createLog(0L,0,0,DeviationCalculator.ZO));
-        logs.add(createLog(1L,86400000,1000,DeviationCalculator.ZO));   // Day 1: 1 second per day in Dial up
-        logs.add(createLog(2L,86400000*2,3000,DeviationCalculator.ZU));   // Day 2: 2 seconds per day in Dial Down
+        logs.add(createLog(0L,0,0,Deviations.DU.nameForLog));
+        logs.add(createLog(1L,86400000,1000,Deviations.DU.nameForLog));   // Day 1: 1 second per day in Dial up
+        logs.add(createLog(2L,86400000*2,3000,Deviations.DD.nameForLog));   // Day 2: 2 seconds per day in Dial Down
         DeviationCalculator calc = new DeviationCalculator(logs);
 
         assertEquals("Deviations="+calc.getDeviations(),2,calc.getDeviations().size());
-        assertEquals(1d, calc.getDeviations().get(DeviationCalculator.ZO), EPSILON);
-        assertEquals(2d, calc.getDeviations().get(DeviationCalculator.ZU), EPSILON);
+        assertEquals(1d, calc.getDeviations().get(Deviations.DU.nameForLog), EPSILON);
+        assertEquals(2d, calc.getDeviations().get(Deviations.DD.nameForLog), EPSILON);
     }
 
 
     @Test
     public void testDeviationsFourLogsTwoPositions() {
         ArrayList<Log> logs = new ArrayList<Log>();
-        logs.add(createLog(0L,0,0,DeviationCalculator.ZO));
-        logs.add(createLog(1L,86400000,1000,DeviationCalculator.ZO));   // Day 1: 1 second per day in Dial up
-        logs.add(createLog(2L,86400000*2,3000,DeviationCalculator.ZU));   // Day 2: 2 seconds per day in Dial Down
-        logs.add(createLog(3L,86400000*3,4000,DeviationCalculator.ZO)); // Day 3: 1 second in Dial up
+        logs.add(createLog(0L,0,0,Deviations.DU.nameForLog));
+        logs.add(createLog(1L,86400000,1000,Deviations.DU.nameForLog));   // Day 1: 1 second per day in Dial up
+        logs.add(createLog(2L,86400000*2,3000,Deviations.DD.nameForLog));   // Day 2: 2 seconds per day in Dial Down
+        logs.add(createLog(3L,86400000*3,4000,Deviations.DU.nameForLog)); // Day 3: 1 second in Dial up
         DeviationCalculator calc = new DeviationCalculator(logs);
 
         assertEquals("Deviations="+calc.getDeviations(),2,calc.getDeviations().size());
-        assertEquals(1d, calc.getDeviations().get(DeviationCalculator.ZO), EPSILON);
-        assertEquals(2d, calc.getDeviations().get(DeviationCalculator.ZU), EPSILON);
+        assertEquals(1d, calc.getDeviations().get(Deviations.DU.nameForLog), EPSILON);
+        assertEquals(2d, calc.getDeviations().get(Deviations.DD.nameForLog), EPSILON);
     }
 
 
     @Test
     public void testDeviationsFiveLogsTwoPositions() {
         ArrayList<Log> logs = new ArrayList<Log>();
-        logs.add(createLog(0L,0,0,DeviationCalculator.ZO));
-        logs.add(createLog(1L,86400000,1000,DeviationCalculator.ZO));   // Day 1: 1 second per day in Dial up
-        logs.add(createLog(2L,86400000*2,3000,DeviationCalculator.ZU));   // Day 2: 2 seconds per day in Dial Down
-        logs.add(createLog(3L,86400000*3,4000,DeviationCalculator.ZO)); // Day 3: 1 second in Dial up
-        logs.add(createLog(4L,86400000*4,8000,DeviationCalculator.ZU)); // Day 4: 4 seconds in Dial down
+        logs.add(createLog(0L,0,0,Deviations.DU.nameForLog));
+        logs.add(createLog(1L,86400000,1000,Deviations.DU.nameForLog));   // Day 1: 1 second per day in Dial up
+        logs.add(createLog(2L,86400000*2,3000,Deviations.DD.nameForLog));   // Day 2: 2 seconds per day in Dial Down
+        logs.add(createLog(3L,86400000*3,4000,Deviations.DU.nameForLog)); // Day 3: 1 second in Dial up
+        logs.add(createLog(4L,86400000*4,8000,Deviations.DD.nameForLog)); // Day 4: 4 seconds in Dial down
         DeviationCalculator calc = new DeviationCalculator(logs);
 
         assertEquals("Deviations="+calc.getDeviations(),2,calc.getDeviations().size());
-        assertEquals(1d, calc.getDeviations().get(DeviationCalculator.ZO), EPSILON);
-        assertEquals(3d, calc.getDeviations().get(DeviationCalculator.ZU), EPSILON);
+        assertEquals(1d, calc.getDeviations().get(Deviations.DU.nameForLog), EPSILON);
+        assertEquals(3d, calc.getDeviations().get(Deviations.DD.nameForLog), EPSILON);
     }
 
 

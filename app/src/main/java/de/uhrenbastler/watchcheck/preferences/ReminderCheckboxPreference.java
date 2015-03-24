@@ -7,9 +7,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.CheckBoxPreference;
+import android.preference.Preference;
 import android.util.AttributeSet;
 
 import de.uhrenbastler.watchcheck.reminder.OnDataChangeAlarmScheduler;
+import de.uhrenbastler.watchcheck.reminder.ReminderManager;
 import de.uhrenbastler.watchcheck.reminder.ReminderReceiver;
 import de.uhrenbastler.watchcheck.tools.Logger;
 
@@ -45,21 +47,11 @@ public class ReminderCheckboxPreference extends CheckBoxPreference implements On
 
     @Override
     public void onSettingDataChanged() {
-        // TODO: Move this into a helper class, which also reads TimepickerPreference. And this class should also
-        // change the alarm manager, if the time changes. Maybe use interfaces here?
-        Logger.info("Is checked="+isChecked());
-        if ( isChecked() ) {
-            Intent intent = new Intent(getContext(), ReminderReceiver.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 0, intent, 0);
-            AlarmManager am = (AlarmManager)getContext().getSystemService(Activity.ALARM_SERVICE);
-            am.setRepeating(am.RTC_WAKEUP, System.currentTimeMillis() + (60 * 1000), 60 * 1000, pendingIntent);         // am.INTERVAL_DAY
-            Logger.info("Setting alarmmanager");
+        if (isChecked()) {
+            Preference reminderTimepicker = findPreferenceInHierarchy("pref_reminder_time");
+            ReminderManager.setAlarm(getContext(), ((TimepickerPreference) reminderTimepicker).getTime());
         } else {
-            Intent intent = new Intent(getContext(), ReminderReceiver.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 0, intent, 0);
-            AlarmManager am = (AlarmManager)getContext().getSystemService(Activity.ALARM_SERVICE);
-            am.cancel(pendingIntent);
-            Logger.info("Cancelled intent");
+            ReminderManager.cancelAlarm(getContext());
         }
     }
 }
