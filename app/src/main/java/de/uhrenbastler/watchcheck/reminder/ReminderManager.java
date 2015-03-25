@@ -50,6 +50,14 @@ public class ReminderManager {
         Toast.makeText(context,String.format(context.getString(R.string.set_reminder), timeString),Toast.LENGTH_SHORT).show();
     }
 
+
+    public static boolean isAlarmActive(Context context) {
+        Intent intent = new Intent(context, ReminderReceiver.class);
+        return (PendingIntent.getBroadcast(context, REQUEST_CODE,
+                intent,
+                PendingIntent.FLAG_NO_CREATE) != null);
+    }
+
     public static long getFirstAlarmMillis(long timeInMillis) {
         Calendar alarmTime = new GregorianCalendar();
         alarmTime.setTimeInMillis(timeInMillis);

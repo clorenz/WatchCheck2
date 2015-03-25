@@ -26,6 +26,7 @@ import java.util.List;
 
 import de.uhrenbastler.watchcheck.managers.AppStateManager;
 import de.uhrenbastler.watchcheck.managers.WatchManager;
+import de.uhrenbastler.watchcheck.reminder.ReminderManager;
 import de.uhrenbastler.watchcheck.rss.AsyncRssLoaderForPopup;
 import de.uhrenbastler.watchcheck.rss.AsyncRssResponse;
 import de.uhrenbastler.watchcheck.rss.UhrenbastlerRssFeedDisplayDialog;
