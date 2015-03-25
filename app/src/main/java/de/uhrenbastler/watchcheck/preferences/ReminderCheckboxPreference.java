@@ -12,8 +12,6 @@ import android.util.AttributeSet;
 
 import de.uhrenbastler.watchcheck.reminder.OnDataChangeAlarmScheduler;
 import de.uhrenbastler.watchcheck.reminder.ReminderManager;
-import de.uhrenbastler.watchcheck.reminder.ReminderReceiver;
-import de.uhrenbastler.watchcheck.tools.Logger;
 
 /**
  * Created by clorenz on 23.03.15.
@@ -49,7 +47,7 @@ public class ReminderCheckboxPreference extends CheckBoxPreference implements On
     public void onSettingDataChanged() {
         if (isChecked()) {
             Preference reminderTimepicker = findPreferenceInHierarchy("pref_reminder_time");
-            ReminderManager.setAlarm(getContext(), ((TimepickerPreference) reminderTimepicker).getTime());
+            ReminderManager.setAlarm(getContext(), ((TimepickerPreference) reminderTimepicker).getTime(), false, true);
         } else {
             ReminderManager.cancelAlarm(getContext());
         }

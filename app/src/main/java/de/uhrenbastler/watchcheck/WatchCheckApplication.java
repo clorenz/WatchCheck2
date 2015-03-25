@@ -50,7 +50,7 @@ public class WatchCheckApplication extends Application {
                     sharedPref.edit().putLong("pref_reminder_time",alarmSchedule).apply();
                     Logger.info("Alarm was enabled, but reminder time was unset. Setting to now");
                 }
-                ReminderManager.setAlarm(getApplicationContext(), alarmSchedule);
+                ReminderManager.setAlarm(getApplicationContext(), alarmSchedule, !reminderPreferenceExists, false);
             } else {
                 Logger.info("No alarm to schedule. User actively disabled feature");
             }

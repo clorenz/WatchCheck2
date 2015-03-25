@@ -126,11 +126,15 @@
     <string name="preference_reminder">Reminder</string>
     <string name="pref_check_reminder">Reminder enabled</string>
     <string name="pref_check_reminder_summ">Reminds daily at the same time to check your watch</string>
-    <string name="pref_reminder_tone">Reminder sound</string>
     <string name="pref_time_reminder">Reminder time</string>
     <string name="pref_time_reminder_summ">Reminds daily at that time to check your watch</string>
     <string name="reminder_time_unset">unset</string>
     <string name="notification_text">Check your watch now!</string>
     <string name="cancel_reminder">Cancelled reminder</string>
     <string name="set_reminder">Daily reminder at %s set</string>
+    <string name="reminder_set">Set reminder</string>
+    <string name="reminder_set_text_initial"><![CDATA[You will be reminded daily at %s to check your watch.<br/>If you want to, you can disable the reminder in the settings.]]></string>
+    <string name="reminder_set_text"><![CDATA[You will be reminded daily at %s to check your watch.<br/>]]></string>
+    <string name="reminder_unset">Cancelled reminder</string>
+    <string name="reminder_unset_text">Cancelled your daily check-your-watch reminder.</string>
 </resources>

@@ -16,15 +16,6 @@
             android:title="@string/pref_check_reminder"
             android:summary="@string/pref_check_reminder_summ"
             android:defaultValue="true"/>
-        <!-- remove the ringtone preference! It's of no use! -->
-        <RingtonePreference
-            android:key="pref_reminder_tone"
-            android:title="@string/pref_reminder_tone"
-            android:ringtoneType="all"
-            android:defaultValue="content://settings/system/notification_sound"
-            android:showDefault="true"
-            android:dependency="pref_reminder"
-            android:shouldDisableView="true"/>
         <de.uhrenbastler.watchcheck.preferences.TimepickerPreference
             android:key="pref_reminder_time"
             android:title="@string/pref_time_reminder"

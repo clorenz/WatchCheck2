@@ -171,7 +171,7 @@ public class TimepickerPreference extends DialogPreference implements OnDataChan
         if (reminderEnabled != null) {
             if (((CheckBoxPreference) reminderEnabled).isChecked()) {
                 ReminderManager.cancelAlarmSilently(getContext());
-                ReminderManager.setAlarm(getContext(), getPersistedLong(0));
+                ReminderManager.setAlarm(getContext(), getPersistedLong(0), false, true);
             } else {
                 ReminderManager.cancelAlarm(getContext());
             }

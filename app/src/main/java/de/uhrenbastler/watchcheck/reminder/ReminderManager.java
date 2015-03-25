@@ -5,7 +5,11 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.gc.materialdesign.widgets.Dialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,6 +26,7 @@ public class ReminderManager {
 
     public static final int REQUEST_CODE = 3733713;
     private static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+    private static String initialAlarmDialog=null;
 
     public static void cancelAlarm(Context context) {
         cancelAlarm(context, true);
@@ -33,12 +38,13 @@ public class ReminderManager {
         AlarmManager am = (AlarmManager)context.getSystemService(Activity.ALARM_SERVICE);
         am.cancel(pendingIntent);
         if ( showToast ) {
-            Toast.makeText(context, context.getString(R.string.cancel_reminder), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, context.getString(R.string.cancel_reminder), Toast.LENGTH_SHORT).show();
+            cancelAlarmDialog(context);
         }
     }
 
 
-    public static void setAlarm(Context context, long alarmTimeInMillis) {
+    public static void setAlarm(Context context, long alarmTimeInMillis, boolean isInitialAlarm, boolean displayAlarm) {
         long timeInMillis = getFirstAlarmMillis(alarmTimeInMillis);
 
         Logger.info("Setting alarm to "+new Date(timeInMillis));
@@ -47,7 +53,61 @@ public class ReminderManager {
         AlarmManager am = (AlarmManager)context.getSystemService(Activity.ALARM_SERVICE);
         am.setRepeating(am.RTC_WAKEUP, timeInMillis, am.INTERVAL_DAY, pendingIntent);
         String timeString = sdf.format(timeInMillis);
-        Toast.makeText(context,String.format(context.getString(R.string.set_reminder), timeString),Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context,String.format(context.getString(R.string.set_reminder), timeString),Toast.LENGTH_SHORT).show();
+        if ( !isInitialAlarm ) {
+            if ( displayAlarm ) { setAlarmSetDialog(context, timeString); }
+        } else {
+            prepareInitialAlarmDialog(timeString);
+        }
+    }
+
+    private static void prepareInitialAlarmDialog(String timeString) {
+        Logger.info("Preparing initial alarm at "+timeString);
+        initialAlarmDialog=timeString;
+    }
+
+
+    public static String getInitialAlarmDialogValue() {
+        return initialAlarmDialog;
+    }
+
+
+    public static void displayInitialAlarmDialog(Context context) {
+        final Dialog initialReminderDialog = new Dialog(context,
+                context.getString(R.string.reminder_set),"");
+        initialReminderDialog.setButtonCancel(null);
+        initialReminderDialog.show();
+        initialReminderDialog.getButtonAccept().setText(context.getString(R.string.ok));
+        TextView textview = initialReminderDialog.getMessageTextView();
+        textview.setText(Html.fromHtml( String.format(context.getString(R.string.reminder_set_text_initial), initialAlarmDialog)));
+        cancelInitialAlarmDialogPreparations();
+    }
+
+    private static void cancelInitialAlarmDialogPreparations() {
+        Logger.info("Cancelled initial alarm dialog preparations");
+        initialAlarmDialog=null;
+    }
+
+
+    private static void setAlarmSetDialog(Context context, String timeString) {
+        final Dialog reminderDialog = new Dialog(context,
+                context.getString(R.string.reminder_set),"");
+        reminderDialog.setButtonCancel(null);
+        reminderDialog.show();
+        reminderDialog.getButtonAccept().setText(context.getString(R.string.ok));
+        TextView textview = reminderDialog.getMessageTextView();
+        textview.setText(Html.fromHtml( String.format(context.getString(R.string.reminder_set_text), timeString)));
+    }
+
+
+    private static void cancelAlarmDialog(Context context) {
+        final Dialog cancelAlarmDialog = new Dialog(context,
+                context.getString(R.string.reminder_unset),"");
+        cancelAlarmDialog.setButtonCancel(null);
+        cancelAlarmDialog.show();
+        cancelAlarmDialog.getButtonAccept().setText(context.getString(R.string.ok));
+        TextView textview = cancelAlarmDialog.getMessageTextView();
+        textview.setText(Html.fromHtml(context.getString(R.string.reminder_unset_text)));
     }
 
 

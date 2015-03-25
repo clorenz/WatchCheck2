@@ -126,6 +126,10 @@ public class MainActivity extends WatchCheckActionBarActivity
         
         asyncRssLoaderForPopup = new AsyncRssLoaderForPopup(getApplicationContext(), this, 10);
         asyncRssLoaderForPopup.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        if ( ReminderManager.getInitialAlarmDialogValue()!=null) {
+            ReminderManager.displayInitialAlarmDialog(this);
+        }
     }
 
     private List<Watch> addAddWatch(List<Watch> watches) {
