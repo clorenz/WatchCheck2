@@ -4,6 +4,7 @@
         android:title="@string/news"
         android:key="pref_key_storage_news">
         <CheckBoxPreference
+            android:widgetLayout="@layout/material_switch"
             android:key="pref_rss"
             android:title="@string/pref_check_rss"
             android:summary="@string/pref_check_rss_summ"
@@ -12,6 +13,7 @@
     <PreferenceCategory
         android:title="@string/preference_reminder">
         <de.uhrenbastler.watchcheck.preferences.ReminderCheckboxPreference
+            android:widgetLayout="@layout/material_switch"
             android:key="pref_reminder"
             android:title="@string/pref_check_reminder"
             android:summary="@string/pref_check_reminder_summ"
@@ -21,6 +23,7 @@
             android:title="@string/pref_time_reminder"
             android:summary="@string/pref_time_reminder_summ"
             android:dependency="pref_reminder"
+            android:timePickerMode="clock"
             android:shouldDisableView="true"/>
     </PreferenceCategory>
 </PreferenceScreen>

@@ -72,22 +72,16 @@
     <string name="whatsnew">Was ist neu</string>
     <string name="changelog">
         <![CDATA[
-            <b>Version 2.2.2</b>
+            <b>Version 2.3</b>
+            <p>
+            - tägliche Erinnerung zum Messen der Uhr
+            <p>
+            <b>Versionen 2.2.x</b>
             <p>
             - Diverse Verbesserungen im Importer und Exporter<br/>
-            - Neues Icon im Material Design Style
-            <p>
-            <b>Versionen 2.2.1 und 2.2.0</b>
-            <p>
+            - Neues Icon im Material Design Style<br/>
             - RSS-Feed von uhrenbastler.de zur Anzeige neuer Artikel<br/>
             - Crash auf Sony Xperia-Devices behoben
-            <p>
-            <b>Versionen 2.1.1 und 2.1.0</b>
-            <p>
-            - Neue Zusammenfassung der Ergebnisse<br/>
-            - Im Navigationsmenü können mehr als 10 Uhren verwaltet werden<br/>
-            - Zusammenfassung der hängenden Lagen gefixed<br/>
-            - Designkorrektur auf der Zusammenfassungsseite
         ]]>
     </string>
     <string name="ok">OK</string>
@@ -120,4 +114,18 @@
     <string name="news">Neuigkeiten</string>
     <string name="rss_date_format">dd.MM.yyyy</string>
     <string name="new_rss_activity">Artikel auf uhrenbastler.de</string>
+    <string name="cancel_reminder">Erinnerung ausgeschaltet</string>
+    <string name="notification_text">Uhr jetzt messen!</string>
+    <string name="pref_check_reminder">Erinnerung eingeschaltet</string>
+    <string name="pref_check_reminder_summ">Erinnert täglich zur selben Uhrzeit, die Uhr zu messen</string>
+    <string name="pref_time_reminder">Erinnerungszeit</string>
+    <string name="pref_time_reminder_summ">Erinnert jeden Tag zu dieser Uhrzeit, die Uhr zu messen</string>
+    <string name="preference_reminder">Erinnerung</string>
+    <string name="reminder_set">Erinnerung eingeschaltet</string>
+    <string name="reminder_set_text"><![CDATA[Sie werden täglich um %s Uhr erinnert, Ihre Uhr zu messen.<br/>]]></string>
+    <string name="reminder_set_text_initial"><![CDATA[Sie werden täglich um %s Uhr daran erinnert, Ihre Uhr zu messen.<br/>Wenn Sie wollen, können Sie die Erinnerung in den Einstellungen abschalten.]]></string>
+    <string name="reminder_time_unset">ausgeschaltet</string>
+    <string name="reminder_unset">Erinnerung ausgeschaltet</string>
+    <string name="reminder_unset_text">Ihre tägliche Erinnerung zum Messen der Uhr wurde ausgeschaltet</string>
+    <string name="set_reminder">Tägliche Erinnung auf %s Uhr gesetzt</string>
 </resources>

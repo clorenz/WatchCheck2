@@ -10,6 +10,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.util.AttributeSet;
 
+import de.uhrenbastler.watchcheck.R;
 import de.uhrenbastler.watchcheck.reminder.OnDataChangeAlarmScheduler;
 import de.uhrenbastler.watchcheck.reminder.ReminderManager;
 

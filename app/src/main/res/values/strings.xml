@@ -77,22 +77,16 @@
     <string name="whatsnew">What\'s New</string>
     <string name="changelog">
         <![CDATA[
-            <b>Version 2.2.2</b>
+            <b>Version 2.3</b>
+            <p>
+            - Daily reminder to check your watch
+            <p>
+            <b>Versions 2.2.x</b>
             <p>
             - Various fixes for importer and exporter<br/>
-            - New icon in Material Design style
-            <p>
-            <b>Versions 2.2.1 and 2.2.0</b>
-            <p>
+            - New icon in Material Design style<br/>
             - RSS Feed for new articles on 17jewels.info<br/>
             - Fixed crash on Sony Xperia devices
-            <p>
-            <b>Versions 2.1.1 and 2.1.0</b>
-            <p>
-            - New Summary page for results<br/>
-            - More than then watches can now be added and selected in the drawer menu<br/>
-            - Bugfix for displaying summary of vertical positions<br/>
-            - Minor design fix for summary page
         ]]>
     </string>
     <string name="ok">OK</string>
