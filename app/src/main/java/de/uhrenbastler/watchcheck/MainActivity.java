@@ -229,9 +229,9 @@ public class MainActivity extends WatchCheckActionBarActivity
         if ( watches!=null && watches.get(position)!=null && watches.get(position).getId()!=null ) {
             showSummary=false;
             ActionMenuItemView otherItem = (ActionMenuItemView)findViewById(R.id.action_results);
-            otherItem.getItemData().getIcon().setAlpha(50);
+            greyOutIcon(otherItem.getItemData());
             ActionMenuItemView thisItem = (ActionMenuItemView)findViewById(R.id.action_summary);
-            thisItem.getItemData().getIcon().setAlpha(255);
+            lightUpIcon(thisItem);
             if ( watches.get(position).getId()>-1 ) {
                 setWatchName(watches.get(position));
                 persistCurrentWatch(watches.get(position).getId().intValue());
@@ -275,7 +275,7 @@ public class MainActivity extends WatchCheckActionBarActivity
             // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.main, menu);
             restoreActionBar();
-            menu.findItem(R.id.action_results).getIcon().setAlpha(50);
+            greyOutIcon(menu.findItem(R.id.action_results));
             menu.findItem(R.id.action_summary).getIcon().setAlpha(255);
             return true;
         }
@@ -293,9 +293,9 @@ public class MainActivity extends WatchCheckActionBarActivity
 
         if ( id == R.id.action_summary) {
             showSummary=true;
-            item.getIcon().setAlpha(50);
+            greyOutIcon(item);
             ActionMenuItemView otherItem = (ActionMenuItemView)findViewById(R.id.action_results);
-            otherItem.getItemData().getIcon().setAlpha(255);
+            lightUpIcon(otherItem);
 
             ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
             prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
@@ -304,9 +304,9 @@ public class MainActivity extends WatchCheckActionBarActivity
 
         if ( id == R.id.action_results ) {
             showSummary=false;
-            item.getIcon().setAlpha(50);
+            greyOutIcon(item);
             ActionMenuItemView otherItem = (ActionMenuItemView)findViewById(R.id.action_summary);
-            otherItem.getItemData().getIcon().setAlpha(255);
+            lightUpIcon(otherItem);
 
             ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
             prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
@@ -319,6 +319,18 @@ public class MainActivity extends WatchCheckActionBarActivity
         }
 
         return false;
+    }
+
+    private void lightUpIcon(ActionMenuItemView otherItem) {
+        if ( otherItem!=null && otherItem.getItemData()!=null && otherItem.getItemData().getIcon()!=null ) {
+            otherItem.getItemData().getIcon().setAlpha(255);
+        }
+    }
+
+    private void greyOutIcon(MenuItem item) {
+        if ( item!=null && item.getIcon()!=null ) {
+            item.getIcon().setAlpha(50);
+        }
     }
 
 
