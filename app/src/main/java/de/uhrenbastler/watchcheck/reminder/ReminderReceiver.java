@@ -30,8 +30,7 @@ public class ReminderReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Logger.info("Received reminder intent "+intent.getAction());
-        if ( intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
+        if ( Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
             rescheduleAlarm(context);
         } else {
             showNotification(context);
