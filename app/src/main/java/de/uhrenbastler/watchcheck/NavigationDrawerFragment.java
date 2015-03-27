@@ -36,6 +36,7 @@ import android.widget.TextView;
 
 import com.gc.materialdesign.widgets.Dialog;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.Drive;
 
@@ -56,7 +57,7 @@ import watchcheck.db.WatchDao;
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class NavigationDrawerFragment extends Fragment {
 
     /**
      * Remember the position of the selected item.
@@ -93,8 +94,6 @@ public class NavigationDrawerFragment extends Fragment implements GoogleApiClien
     Watch selectedWatch;
     WatchDao watchDao;
     LogDao logDao;
-    private GoogleApiClient mGoogleApiClient;
-
 
     public NavigationDrawerFragment() {
     }
@@ -131,14 +130,6 @@ public class NavigationDrawerFragment extends Fragment implements GoogleApiClien
 
         // Select either the default item (0) or the last selected item.
         //selectItem(mCurrentSelectedPosition);
-
-        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
-                .addApi(Drive.API)
-                .addScope(Drive.SCOPE_FILE)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
-
     }
 
     @Override
@@ -390,10 +381,18 @@ public class NavigationDrawerFragment extends Fragment implements GoogleApiClien
                 try {
                     pInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), PackageManager.GET_META_DATA);
                 } catch (PackageManager.NameNotFoundException e) {}
+
+                String about = this.getString(R.string.app_about);
+                String playServicesAbout = GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(getActivity());
+                if ( playServicesAbout!=null && !"null".equals(playServicesAbout) ) {
+                    about += "\n "+playServicesAbout;
+                }
+
                 final Dialog aboutDialog = new Dialog(getActivity(),
                         this.getString(R.string.app_name)+" "+
                                 (pInfo!=null?pInfo.versionName:"unknown"),
-                        this.getString(R.string.app_about));
+                        about
+                        );
                 aboutDialog.setButtonCancel(null);
                 aboutDialog.show();
                 return true;
@@ -410,10 +409,6 @@ public class NavigationDrawerFragment extends Fragment implements GoogleApiClien
                     Logger.error(e.getMessage(),e);
                 }
                 return true;
-            }
-
-            case R.id.menu_export_googledrive: {
-
             }
 
             case R.id.menu_import: {
@@ -489,21 +484,6 @@ public class NavigationDrawerFragment extends Fragment implements GoogleApiClien
 
     private ActionBar getActionBar() {
         return ((ActionBarActivity) getActivity()).getSupportActionBar();
-    }
-
-    @Override
-    public void onConnected(Bundle bundle) {
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
     }
 
     /**

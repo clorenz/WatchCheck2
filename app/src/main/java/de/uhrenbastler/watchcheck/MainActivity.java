@@ -24,6 +24,7 @@ import com.pkmmte.pkrss.Article;
 
 import java.util.List;
 
+import de.uhrenbastler.watchcheck.googledrive.SyncDownloader;
 import de.uhrenbastler.watchcheck.managers.AppStateManager;
 import de.uhrenbastler.watchcheck.managers.WatchManager;
 import de.uhrenbastler.watchcheck.reminder.ReminderManager;
@@ -61,6 +62,9 @@ public class MainActivity extends WatchCheckActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_main);
         init();
+
+        Intent syncDownloaderIntent = new Intent(this, SyncDownloader.class);
+        startActivity(syncDownloaderIntent);
     }
 
 
