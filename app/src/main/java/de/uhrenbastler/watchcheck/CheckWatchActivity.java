@@ -12,7 +12,6 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -20,6 +19,7 @@ import android.widget.TimePicker;
 import com.gc.materialdesign.views.ButtonRectangle;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import de.uhrenbastler.watchcheck.provider.GpsTimeProvider;
@@ -30,7 +30,6 @@ import watchcheck.db.Log;
 import watchcheck.db.Watch;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by clorenz on 09.01.15.
@@ -42,6 +41,7 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
     Watch currentWatch;
     Log lastLog;
     TimePicker timePicker;
+    long objectTime;
     AsyncTask<Context, Integer, Integer> referenceTimeUpdater;
     ITimeProvider gpsTimeProvider;
     ITimeProvider ntpTimeProvider;
@@ -77,17 +77,30 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
             timePicker.setLayoutParams(layoutParams);
         }
 
+        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                GregorianCalendar pickerTime = new GregorianCalendar();
+                pickerTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                pickerTime.set(Calendar.MINUTE, minute);
+                pickerTime.set(Calendar.SECOND,0);
+                pickerTime.set(Calendar.MILLISECOND,0);
+
+                objectTime = pickerTime.getTime().getTime();
+            }
+        });
+
         ButtonRectangle btnMeasure = (ButtonRectangle) findViewById(R.id.buttonMeasure);
         btnMeasure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 long referenceTime = getReferenceTimeMillis();
-                long objectTime = getMillisFromTimePicker(timePicker);
                 referenceTimeUpdater.cancel(true);
                 ((ReferenceTimeUpdater)referenceTimeUpdater).terminate();
                 Intent addLogIntent = new Intent(CheckWatchActivity.this,AddLogActivity.class);
                 addLogIntent.putExtra(AddLogActivity.EXTRA_WATCH, currentWatch);
                 addLogIntent.putExtra(AddLogActivity.EXTRA_REFERENCE_TIME, referenceTime);
+                Logger.debug("objectTime="+new Date(objectTime));
                 addLogIntent.putExtra(AddLogActivity.EXTRA_LOG_TIME, objectTime);
                 addLogIntent.putExtra(AddLogActivity.EXTRA_LAST_LOG, lastLog);
                 Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -113,8 +126,13 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
         } else {
             tvLastDeviation.setText(getString(R.string.no_last_deviation));
         }
+
+        now.set(Calendar.SECOND,0);
+        now.set(Calendar.MILLISECOND,0);
         timePicker.setCurrentHour(now.get(Calendar.HOUR_OF_DAY));
         timePicker.setCurrentMinute(now.get(Calendar.MINUTE));
+
+        objectTime = now.getTimeInMillis();
 
     }
 
@@ -172,21 +190,13 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private long getMillisFromTimePicker(TimePicker timePicker) {
-        GregorianCalendar pickerTime = new GregorianCalendar();
-        pickerTime.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
-        pickerTime.set(Calendar.MINUTE, timePicker.getCurrentMinute());
-        pickerTime.set(Calendar.SECOND,0);
-        pickerTime.set(Calendar.MILLISECOND,0);
-
-        return pickerTime.getTime().getTime();
-    }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
     }
+
 
     // ------------------------------------------------------------------
     private class ReferenceTimeUpdater extends AsyncTask<Context, Integer, Integer> {
@@ -300,7 +310,7 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
                 }
 
                 valid = localValid;
-                deviation = (((double)getMillisFromTimePicker(timePicker) - (double)referenceMillis )/1000);
+                deviation = (((double)objectTime - (double)referenceMillis )/1000);
                 publishProgress((++progress % 2));
                 try {
                     Thread.sleep(100);

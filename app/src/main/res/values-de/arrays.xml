@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="positions">
-        <item>am Arm</item>
-        <item>liegend, Zifferblatt oben</item>
-        <item>liegend, Zifferblatt unten</item>
-        <item>hängend, 12 oben</item>
-        <item>hängend, 3 oben</item>
-        <item>hängend, 6 oben</item>
-        <item>hängend, 9 oben</item>
+        <item>@string/worn</item>
+        <item>@string/horizontal_dial_up</item>
+        <item>@string/horizontal_dial_down</item>
+        <item>@string/vertical_12o</item>
+        <item>@string/vertical_3o</item>
+        <item>@string/vertical_6o</item>
+        <item>@string/vertical_9o</item>
     </string-array>
     <string-array name="result_positions">
         <item>am Arm</item>

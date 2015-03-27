@@ -25,12 +25,14 @@ public class DisplayResultPagerAdapter extends FragmentPagerAdapter {
     private long watchId;
     private List<Integer>periods;
     private Context context;
+    boolean displaySummary=false;
 
-    public DisplayResultPagerAdapter(Context context, FragmentManager fragmentManager, long watchId) {
+    public DisplayResultPagerAdapter(Context context, FragmentManager fragmentManager, long watchId, boolean displaySummary) {
         super(fragmentManager);
 
         this.context = context;
         this.watchId = watchId;
+        this.displaySummary = displaySummary;
         periods = ResultManager.getPeriodsForWatch(context, watchId);
 
         Logger.debug("Found fragments: "+fragmentManager.getFragments().size());
@@ -49,7 +51,7 @@ public class DisplayResultPagerAdapter extends FragmentPagerAdapter {
         // Returns the fragment to display for that page
         @Override
         public Fragment getItem(int position) {
-            return DisplayResultFragment.newInstance(watchId, periods.get(position));
+            return DisplayResultFragment.newInstance(watchId, periods.get(position), displaySummary);
         }
 
         // Returns the page title for the top indicator
@@ -83,4 +85,9 @@ public class DisplayResultPagerAdapter extends FragmentPagerAdapter {
 
             return sb;
         }
+
+
+    public int getPeriodOfPosition(int position) {
+        return periods.get(position);
+    }
 }

@@ -2,6 +2,8 @@
 <resources>
 
     <string name="app_name" translatable="false">WatchCheck</string>
+    <string name="rss_url">http://17jewels.info/news.xml</string>
+    <string name="rss_url_alternative">http://17jewels.info/news_extended.xml</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
@@ -31,6 +33,7 @@
     <string name="no_current_deviation">Current deviation: -</string>
     <string name="deviation">Deviation:</string>
     <string name="deviation_format">%+.1f sec.</string>
+    <string name="deviation_per_day_format">%+.1f s/d</string>
     <string name="newPeriod">New period:</string>
     <string name="position">Position:</string>
     <string name="temperature">Temperature:</string>
@@ -57,20 +60,33 @@
     <string name="dataImported">Data imported</string>
     <string name="menu_whatsnew">What\'s new?</string>
     <string name="worn">worn</string>
+    <string name="horizontal_dial_up">horizontal, dial up</string>
     <string name="dial_up">dial up</string>
+    <string name="horizontal_dial_down">horizontal, dial down</string>
     <string name="dial_down">dial down</string>
     <string name="pos_12o">12 up</string>
+    <string name="vertical_12o">vertical, 12 up</string>
     <string name="pos_3o">3 up</string>
+    <string name="vertical_3o">vertical, 3 up</string>
     <string name="pos_6o">6 up</string>
+    <string name="vertical_6o">vertical, 6 up</string>
     <string name="pos_9o">9 up</string>
+    <string name="vertical_9o">vertical, 9 up</string>
     <string name="menu_help">Help</string>
     <string name="url_help">http://17jewels.info/44-workbench/software/268-watchcheck2-en.html</string>
     <string name="whatsnew">What\'s New</string>
     <string name="changelog">
         <![CDATA[
-            <b>Version 2.0.3</b>
+            <b>Version 2.3</b>
             <p>
-            - Display log comments<br/>
+            - Daily reminder to check your watch
+            <p>
+            <b>Versions 2.2.x</b>
+            <p>
+            - Various fixes for importer and exporter<br/>
+            - New icon in Material Design style<br/>
+            - RSS Feed for new articles on 17jewels.info<br/>
+            - Fixed crash on Sony Xperia devices
         ]]>
     </string>
     <string name="ok">OK</string>
@@ -89,4 +105,31 @@
     <string name="no_last_deviation">Last deviation: -</string>
     <string name="check_watch_guide">Time of your watch (seconds to :00)</string>
     <string name="menu_export_googledrive">Export to Google Drive</string>
+    <string name="summary">Summary</string>
+    <string name="results">results</string>
+    <string name="labelSummaryDialUp">dial up</string>
+    <string name="summary_overall">average deviation</string>
+    <string name="empty_value">-</string>
+    <string name="summary_worn">worn</string>
+    <string name="new_rss">New on 17jewels.info</string>
+    <string name="pref_check_rss">Display new articles</string>
+    <string name="pref_check_rss_summ">Check at max. once a day, and only on WLAN, for new artices on 17jewels.info and display them</string>
+    <string name="settings">Settings</string>
+    <string name="news">News</string>
+    <string name="rss_date_format">yyyy-MM-dd</string>
+    <string name="new_rss_activity">Articles on 17jewels.info</string>
+    <string name="preference_reminder">Reminder</string>
+    <string name="pref_check_reminder">Reminder enabled</string>
+    <string name="pref_check_reminder_summ">Reminds daily at the same time to check your watch</string>
+    <string name="pref_time_reminder">Reminder time</string>
+    <string name="pref_time_reminder_summ">Reminds daily at that time to check your watch</string>
+    <string name="reminder_time_unset">unset</string>
+    <string name="notification_text">Check your watch now!</string>
+    <string name="cancel_reminder">Cancelled reminder</string>
+    <string name="set_reminder">Daily reminder at %s set</string>
+    <string name="reminder_set">Set reminder</string>
+    <string name="reminder_set_text_initial"><![CDATA[You will be reminded daily at %s to check your watch.<br/>If you want to, you can disable the reminder in the settings.]]></string>
+    <string name="reminder_set_text"><![CDATA[You will be reminded daily at %s to check your watch.<br/>]]></string>
+    <string name="reminder_unset">Cancelled reminder</string>
+    <string name="reminder_unset_text">Cancelled your daily check-your-watch reminder.</string>
 </resources>

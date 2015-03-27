@@ -4,42 +4,43 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
-import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.PagerTabStrip;
+import android.os.AsyncTask;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v7.internal.view.menu.ActionMenuItemView;
 import android.text.Html;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
-import android.webkit.WebSettings;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.gc.materialdesign.views.ButtonFloat;
 import com.gc.materialdesign.widgets.Dialog;
+import com.pkmmte.pkrss.Article;
 
 import java.util.List;
 
+import de.uhrenbastler.watchcheck.managers.AppStateManager;
 import de.uhrenbastler.watchcheck.managers.WatchManager;
+import de.uhrenbastler.watchcheck.reminder.ReminderManager;
+import de.uhrenbastler.watchcheck.rss.AsyncRssLoaderForPopup;
+import de.uhrenbastler.watchcheck.rss.AsyncRssResponse;
+import de.uhrenbastler.watchcheck.rss.UhrenbastlerRssFeedDisplayDialog;
 import de.uhrenbastler.watchcheck.tools.Logger;
-import de.uhrenbastler.watchcheck.views.*;
 import watchcheck.db.Watch;
 
 
 public class MainActivity extends WatchCheckActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, AsyncRssResponse {
 
     private List<Watch> watches;
     private static final String PRIVATE_PREF = "myapp";
     private static final String VERSION_KEY = "version_number";
-
+    private boolean showSummary=false;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -54,6 +55,7 @@ public class MainActivity extends WatchCheckActionBarActivity
     private CharSequence mTitle;
 
     private Watch selectedWatch;
+    private AsyncRssLoaderForPopup asyncRssLoaderForPopup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +91,7 @@ public class MainActivity extends WatchCheckActionBarActivity
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
-        mNavigationDrawerFragment.setWatches(watches);
+        mNavigationDrawerFragment.setWatches(addAddWatch(watches));
         mNavigationDrawerFragment.setSelectedWatch(selectedWatch);
         mTitle = getTitle();
 
@@ -101,7 +103,7 @@ public class MainActivity extends WatchCheckActionBarActivity
         ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
         ButtonFloat fab = (ButtonFloat) findViewById(R.id.buttonAddLog);
         if ( selectedWatch != null ) {
-            prepareResultPager(vpPager, selectedWatch.getId());
+            prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -121,9 +123,24 @@ public class MainActivity extends WatchCheckActionBarActivity
             fab.setVisibility(View.INVISIBLE);
             // And maybe display a nice background instead
         }
+        
+        asyncRssLoaderForPopup = new AsyncRssLoaderForPopup(getApplicationContext(), this, 10);
+        asyncRssLoaderForPopup.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        if ( ReminderManager.getInitialAlarmDialogValue()!=null) {
+            ReminderManager.displayInitialAlarmDialog(this);
+        }
     }
 
-    private void prepareResultPager(ViewPager vpPager, long selectedWatchId) {
+    private List<Watch> addAddWatch(List<Watch> watches) {
+        Watch addWatch = new Watch(-1L);
+        addWatch.setName(getString(R.string.add_watch));
+        watches.add(addWatch);
+        return watches;
+    }
+
+
+    private void prepareResultPager(ViewPager vpPager, long selectedWatchId, boolean showSummary) {
         FragmentManager manager = getSupportFragmentManager();
         if (manager.getBackStackEntryCount() > 0) {
             FragmentManager.BackStackEntry first = manager.getBackStackEntryAt(0);
@@ -137,9 +154,21 @@ public class MainActivity extends WatchCheckActionBarActivity
 
         if ( !logDao._queryWatch_Logs(selectedWatchId).isEmpty()) {
             vpPager.setVisibility(View.VISIBLE);
-            adapterViewPager = new DisplayResultPagerAdapter(getApplicationContext(), getSupportFragmentManager(), selectedWatchId);
+
+            adapterViewPager = new DisplayResultPagerAdapter(getApplicationContext(), getSupportFragmentManager(), selectedWatchId, showSummary);
+
             vpPager.setAdapter(adapterViewPager);
-            vpPager.setCurrentItem(adapterViewPager.getCount());
+            ResultOnPageChangeListener resultOnPageChangeListener = new ResultOnPageChangeListener(adapterViewPager);
+            vpPager.setOnPageChangeListener(resultOnPageChangeListener);
+
+            if ( AppStateManager.getInstance().getPage()>=0 ) {
+                vpPager.setCurrentItem(AppStateManager.getInstance().getPage());
+            } else {
+                vpPager.setCurrentItem(adapterViewPager.getCount());
+                AppStateManager.getInstance().setPage(adapterViewPager.getCount());
+            }
+
+            resultOnPageChangeListener.setEnabled(true);
 
             /*
             PagerTabStrip mPagerTabStrip = (PagerTabStrip) findViewById(R.id.pager_header);
@@ -152,6 +181,7 @@ public class MainActivity extends WatchCheckActionBarActivity
             }
             */
         } else {
+            Logger.debug("Invisible pager");
             vpPager.setVisibility(View.INVISIBLE);
         }
     }
@@ -197,21 +227,32 @@ public class MainActivity extends WatchCheckActionBarActivity
 
         // Only persist, if a real watch (and not "add watch") is selected
         if ( watches!=null && watches.get(position)!=null && watches.get(position).getId()!=null ) {
-            setWatchName(watches.get(position));
-            persistCurrentWatch(watches.get(position).getId().intValue());
+            showSummary=false;
+            ActionMenuItemView otherItem = (ActionMenuItemView)findViewById(R.id.action_results);
+            greyOutIcon(otherItem.getItemData());
+            ActionMenuItemView thisItem = (ActionMenuItemView)findViewById(R.id.action_summary);
+            lightUpIcon(thisItem);
+            if ( watches.get(position).getId()>-1 ) {
+                setWatchName(watches.get(position));
+                persistCurrentWatch(watches.get(position).getId().intValue());
 
-            if (logDao._queryWatch_Logs(watches.get(position).getId()).isEmpty()) {
-                Logger.debug("Selecting watch w/o results from drawer");
-                ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
-                vpPager.setVisibility(View.INVISIBLE);
+                if (logDao._queryWatch_Logs(watches.get(position).getId()).isEmpty()) {
+                    Logger.debug("Selecting watch w/o results from drawer");
+                    ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
+                    vpPager.setVisibility(View.INVISIBLE);
+                } else {
+                    selectedWatch = watches.get(position);
+                    Logger.debug("Selecting watch " + selectedWatch.getId() + " from drawer");
+                    // Otherwise: update the main content by replacing fragments
+                    ButtonFloat fab = (ButtonFloat) findViewById(R.id.buttonAddLog);
+                    ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
+                    prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
+                    fab.setVisibility(View.VISIBLE);
+                }
             } else {
-                selectedWatch = watches.get(position);
-                Logger.debug("Selecting watch " + selectedWatch.getId() + " from drawer");
-                // Otherwise: update the main content by replacing fragments
-                ButtonFloat fab = (ButtonFloat) findViewById(R.id.buttonAddLog);
-                ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
-                prepareResultPager(vpPager, selectedWatch.getId());
-                fab.setVisibility(View.VISIBLE);
+                // "Add watch"
+                Intent addWatchIntent = new Intent(getApplicationContext(), EditWatchActivity.class);
+                startActivity(addWatchIntent);
             }
         }
     }
@@ -234,8 +275,12 @@ public class MainActivity extends WatchCheckActionBarActivity
             // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.main, menu);
             restoreActionBar();
+            greyOutIcon(menu.findItem(R.id.action_results));
+            menu.findItem(R.id.action_summary).getIcon().setAlpha(255);
             return true;
         }
+
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -246,11 +291,54 @@ public class MainActivity extends WatchCheckActionBarActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        if ( id == R.id.action_summary) {
+            showSummary=true;
+            greyOutIcon(item);
+            ActionMenuItemView otherItem = (ActionMenuItemView)findViewById(R.id.action_results);
+            lightUpIcon(otherItem);
+
+            ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
+            prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
+            return true;
+        }
+
+        if ( id == R.id.action_results ) {
+            showSummary=false;
+            greyOutIcon(item);
+            ActionMenuItemView otherItem = (ActionMenuItemView)findViewById(R.id.action_summary);
+            lightUpIcon(otherItem);
+
+            ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
+            prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
+            return true;
+        }
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
 
         return false;
+    }
+
+    private void lightUpIcon(ActionMenuItemView otherItem) {
+        if ( otherItem!=null && otherItem.getItemData()!=null && otherItem.getItemData().getIcon()!=null ) {
+            otherItem.getItemData().getIcon().setAlpha(255);
+        }
+    }
+
+    private void greyOutIcon(MenuItem item) {
+        if ( item!=null && item.getIcon()!=null ) {
+            item.getIcon().setAlpha(50);
+        }
+    }
+
+
+    @Override
+    public void processFinish(List<Article> articles) {
+        Logger.debug("RSS articles to display=" + articles);
+        if ( articles!=null && !articles.isEmpty()) {
+            MaterialDialog dialog = new UhrenbastlerRssFeedDisplayDialog(this, articles).getDialog();
+        }
     }
 }

@@ -3,6 +3,7 @@ package de.uhrenbastler.watchcheck;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.internal.view.menu.ActionMenuItemView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,8 +16,10 @@ import android.widget.TextView;
 import com.gc.materialdesign.views.ButtonFloat;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 
+import de.uhrenbastler.watchcheck.managers.AppStateManager;
 import de.uhrenbastler.watchcheck.managers.ResultManager;
 import de.uhrenbastler.watchcheck.managers.WatchManager;
 import de.uhrenbastler.watchcheck.tools.Logger;
@@ -37,22 +40,24 @@ public class DisplayResultFragment extends Fragment {
     private Log lastLog;
     private long watchId;
     private int period;
-    private ArrayAdapter resultListAdapter;
+    private ArrayAdapter resultAdapter;
     private ListView listView;
     private TextView averageDeviation;
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
     private LogDao logDao;
     private WatchDao watchDao;
+    private boolean displaySummary;
+    private View resultView;
 
 
     // newInstance constructor for creating fragment with arguments
-    public static DisplayResultFragment newInstance(Long watchId, int page) {
-        Logger.debug("No resume, but new instance: watchId="+watchId);
+    public static DisplayResultFragment newInstance(Long watchId, int page, boolean displaySummary) {
         DisplayResultFragment fragmentFirst = new DisplayResultFragment();
         Bundle args = new Bundle();
         args.putLong("watchId", watchId);
         args.putInt("period", page);
         fragmentFirst.setArguments(args);
+        fragmentFirst.displaySummary = displaySummary;
         return fragmentFirst;
     }
 
@@ -79,26 +84,39 @@ public class DisplayResultFragment extends Fragment {
             watchId = currentWatch.getId();
         }
 
-        Logger.debug("on resume: currentWatchId=" + watchId);
         log = ResultManager.getLogsForWatchAndPeriod(getActivity().getApplicationContext(), watchId, period);
 
         lastLog = ResultManager.getLastLogForWatch(getActivity().getApplicationContext(), watchId);
-        if (listView != null) {
-            resultListAdapter.clear();
-            resultListAdapter.addAll(log);
-            resultListAdapter.notifyDataSetChanged();
-            listView.invalidateViews();
-            preparePlusButton();
+
+        HashMap<String, Double> deviations = new DeviationCalculator(log).getDeviations();
+
+        if ( displaySummary ) {
+            if ( resultView!=null ) {
+                displayDeviation(deviations.get(Deviations.DU.nameForLog), (TextView) resultView.findViewById(R.id.summaryDialUp), R.string.deviation_per_day_format, R.string.empty_value);
+                displayDeviation(deviations.get(Deviations.DD.nameForLog), (TextView) resultView.findViewById(R.id.summaryDialDown), R.string.deviation_per_day_format, R.string.empty_value);
+                displayDeviation(deviations.get(Deviations.O3.nameForLog), (TextView) resultView.findViewById(R.id.summary3o), R.string.deviation_per_day_format, R.string.empty_value);
+                displayDeviation(deviations.get(Deviations.O6.nameForLog), (TextView) resultView.findViewById(R.id.summary6o), R.string.deviation_per_day_format, R.string.empty_value);
+                displayDeviation(deviations.get(Deviations.O9.nameForLog), (TextView) resultView.findViewById(R.id.summary9o), R.string.deviation_per_day_format, R.string.empty_value);
+                displayDeviation(deviations.get(Deviations.O12.nameForLog), (TextView) resultView.findViewById(R.id.summary12o), R.string.deviation_per_day_format, R.string.empty_value);
+                displayDeviation(deviations.get(Deviations.WORN.nameForLog), (TextView) resultView.findViewById(R.id.summary_worn), R.string.deviation_per_day_format, R.string.empty_value);
+                displayDeviation(deviations.get(Deviations.ALL.nameForLog), averageDeviation, R.string.deviation_per_day_format, R.string.empty_value);
+            }
+        } else {
+            if (listView != null) {
+                resultAdapter.clear();
+                resultAdapter.addAll(log);
+                resultAdapter.notifyDataSetChanged();
+                listView.invalidateViews();
+                preparePlusButton();
+            }
+            displayDeviation(deviations.get(Deviations.ALL.nameForLog), averageDeviation, R.string.list_average_deviation, R.string.list_no_average_deviation);
         }
-        calculateAverageDeviation();
-
-
     }
 
-    private void calculateAverageDeviation() {
+    private void calculateAverageDeviation(int stringId, int stringNoDeviationId) {
         // avg. deviation
         if (averageDeviation != null) {
-            String avgDeviationFormat = getString(R.string.list_average_deviation);
+            String avgDeviationFormat = getString(stringId);
             if (log.size() > 1) {
                 // We can calculate the avg. deviation only if we have at least one daily rate!
                 long diffReferenceMillis = log.get(log.size() - 1).getReferenceTime().getTime() - log.get(0).getReferenceTime().getTime();
@@ -109,7 +127,7 @@ public class DisplayResultFragment extends Fragment {
 
                 averageDeviation.setText(String.format(avgDeviationFormat, avgDeviation));
             } else {
-                averageDeviation.setText(getString(R.string.list_no_average_deviation));
+                averageDeviation.setText(getString(stringNoDeviationId));
             }
         }
     }
@@ -117,11 +135,21 @@ public class DisplayResultFragment extends Fragment {
     // Inflate the view for the fragment based on layout XML
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_display_result, container, false);
-        listView = (ListView) view.findViewById(R.id.resultListView);
-        averageDeviation = (TextView) view.findViewById(R.id.result_footer);
-        resultListAdapter = new ResultListAdapter(this.getActivity().getApplicationContext(), log);
-        listView.setAdapter(resultListAdapter);
+        if (displaySummary) {
+            return onCreateSummaryView(inflater, container, savedInstanceState);
+        } else {
+            return onCreateResultView(inflater, container, savedInstanceState);
+        }
+    }
+
+
+    private View onCreateResultView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        resultView = inflater.inflate(R.layout.fragment_display_result, container, false);
+        listView = (ListView) resultView.findViewById(R.id.resultListView);
+        averageDeviation = (TextView) resultView.findViewById(R.id.result_footer);
+        resultAdapter = new ResultListAdapter(this.getActivity().getApplicationContext(), log);
+        listView.setAdapter(resultAdapter);
+        HashMap<String,Double> deviations = new DeviationCalculator(log).getDeviations();
 
         preparePlusButton();
         listView.setOnTouchListener(new View.OnTouchListener() {
@@ -140,9 +168,9 @@ public class DisplayResultFragment extends Fragment {
                 addLogIntent.putExtra(AddLogActivity.EXTRA_EDIT_LOG, logToHandle);
                 startActivity(addLogIntent);
                 if (listView != null) {
-                    resultListAdapter.clear();
-                    resultListAdapter.addAll(log);
-                    resultListAdapter.notifyDataSetChanged();
+                    resultAdapter.clear();
+                    resultAdapter.addAll(log);
+                    resultAdapter.notifyDataSetChanged();
                     listView.invalidateViews();
                 }
                 return true;
@@ -150,9 +178,41 @@ public class DisplayResultFragment extends Fragment {
         });
 
         Logger.debug("Before avg. deviation");
-        calculateAverageDeviation();
+        displayDeviation(deviations.get(Deviations.ALL.nameForLog), averageDeviation, R.string.list_average_deviation, R.string.list_no_average_deviation);
+
+        return resultView;
+    }
+
+
+    private View onCreateSummaryView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_display_summary, container, false);
+        averageDeviation = (TextView) view.findViewById(R.id.summary_overall);
+        HashMap<String,Double> deviations = new DeviationCalculator(log).getDeviations();
+        Logger.debug("Deviations="+deviations);
+
+        displayDeviation(deviations.get(Deviations.DU.nameForLog), (TextView) view.findViewById(R.id.summaryDialUp), R.string.deviation_per_day_format, R.string.empty_value);
+        displayDeviation(deviations.get(Deviations.DD.nameForLog), (TextView) view.findViewById(R.id.summaryDialDown), R.string.deviation_per_day_format, R.string.empty_value);
+        displayDeviation(deviations.get(Deviations.O3.nameForLog), (TextView) view.findViewById(R.id.summary3o), R.string.deviation_per_day_format, R.string.empty_value);
+        displayDeviation(deviations.get(Deviations.O6.nameForLog), (TextView) view.findViewById(R.id.summary6o), R.string.deviation_per_day_format, R.string.empty_value);
+        displayDeviation(deviations.get(Deviations.O9.nameForLog), (TextView) view.findViewById(R.id.summary9o), R.string.deviation_per_day_format, R.string.empty_value);
+        displayDeviation(deviations.get(Deviations.O12.nameForLog), (TextView) view.findViewById(R.id.summary12o), R.string.deviation_per_day_format, R.string.empty_value);
+        displayDeviation(deviations.get(Deviations.WORN.nameForLog), (TextView) view.findViewById(R.id.summary_worn), R.string.deviation_per_day_format, R.string.empty_value);
+        displayDeviation(deviations.get(Deviations.ALL.nameForLog), averageDeviation, R.string.deviation_per_day_format, R.string.empty_value);
+
+        preparePlusButton();
 
         return view;
+    }
+
+
+    private void displayDeviation(Double deviation, TextView tvDeviation, int formatId, int emptyId) {
+        String avgDeviationFormat = getString(formatId);
+
+        if ( deviation!=null ) {
+            tvDeviation.setText(String.format(avgDeviationFormat, deviation));
+        } else {
+            tvDeviation.setText(getString(emptyId));
+        }
     }
 
     private void preparePlusButton() {
