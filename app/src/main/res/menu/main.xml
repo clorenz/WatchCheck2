@@ -19,8 +19,6 @@
         app:showAsAction="withText|ifRoom" />
     <item android:id="@+id/menu_export" android:title="@string/menu_export"
         android:orderInCategory="100" android:showAsAction="never" />
-    <item android:id="@+id/menu_export_googledrive" android:title="@string/menu_export_googledrive"
-        android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/menu_import" android:title="@string/menu_import"
         android:orderInCategory="101" app:showAsAction="never" />
     <item android:id="@+id/settings" android:title="@string/settings"
