@@ -1,12 +1,9 @@
 Bugs
+- "New period" is sometimes checked automatically and cannot be unchecked!
 
-Features 2.1
-- Manual sync Google Drive
-
-Features 2.2
-- Reminders to check watch next time
 
 Feature 3.0
+- Sync with Google Drive
 - Graphical output
 
 Design enhancements

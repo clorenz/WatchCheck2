@@ -1,16 +1,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    <item android:id="@+id/action_results"
+        android:title="@string/results"
+        android:icon="@drawable/ic_receipt_black_36dp"
+        app:showAsAction="always" />
+    <item android:id="@+id/action_summary"
+        android:title="@string/summary"
+        android:icon="@drawable/ic_view_list_black_36dp"
+        app:showAsAction="always" />
+    <item android:id="@+id/menu_rss" android:title="@string/new_rss_activity"
+        app:showAsAction="withText|ifRoom" />
     <item android:id="@+id/menu_about" android:title="@string/menu_about"
-        android:showAsAction="withText|ifRoom" />
+        app:showAsAction="withText|ifRoom" />
     <item android:id="@+id/menu_help" android:title="@string/menu_help"
-        android:showAsAction="withText|ifRoom" />
+        app:showAsAction="withText|ifRoom" />
     <item android:id="@+id/menu_whatsnew" android:title="@string/menu_whatsnew"
-        android:showAsAction="withText|ifRoom" />
+        app:showAsAction="withText|ifRoom" />
     <item android:id="@+id/menu_export" android:title="@string/menu_export"
         android:orderInCategory="100" android:showAsAction="never" />
     <item android:id="@+id/menu_export_googledrive" android:title="@string/menu_export_googledrive"
-        android:orderInCategory="100" android:showAsAction="never" />
+        android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/menu_import" android:title="@string/menu_import"
-        android:orderInCategory="100" android:showAsAction="never" />
+        android:orderInCategory="101" app:showAsAction="never" />
+    <item android:id="@+id/settings" android:title="@string/settings"
+        android:orderInCategory="999" app:showAsAction="never" />
 </menu>

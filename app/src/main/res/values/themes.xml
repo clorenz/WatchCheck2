@@ -44,4 +44,8 @@
         <item name="android:textSize">10sp</item>
         <item name="android:textStyle">italic</item>
     </style>
+
+     <style name="materialSwitchStyle">
+         <item name="colorControlActivated">@color/colorAccent</item>
+     </style>
 </resources>

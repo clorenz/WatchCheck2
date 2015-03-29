@@ -7,8 +7,8 @@ android {
         applicationId 'de.uhrenbastler.watchcheck'
         minSdkVersion 14            // ICS
         targetSdkVersion 21
-        versionCode 19
-        versionName "2.0.3"
+        versionCode 28
+        versionName "2.3.1"
     }
     sourceSets {
         main {
@@ -37,4 +37,10 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.+'
     compile 'de.hdodenhof:circleimageview:1.2.1'
     compile 'com.google.android.gms:play-services-drive:6.5.87'
+    compile 'com.pkmmte.pkrss:pkrss:1.1.2'
+    compile 'com.afollestad:material-dialogs:0.6.4.5'
+    compile 'com.koushikdutta.ion:ion:2.+'
+    compile 'com.pnikosis:materialish-progress:1.4'
+    testCompile 'junit:junit:4.12'
+    testCompile "org.mockito:mockito-core:1.9.5"
 }

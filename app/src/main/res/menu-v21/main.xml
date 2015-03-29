@@ -1,0 +1,26 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    <item android:id="@+id/action_results"
+        android:title="@string/results"
+        android:icon="@drawable/ic_receipt_white_36dp"
+        app:showAsAction="always" />
+    <item android:id="@+id/action_summary"
+        android:title="@string/summary"
+        android:icon="@drawable/ic_view_list_white_36dp"
+        app:showAsAction="always" />
+    <item android:id="@+id/menu_rss" android:title="@string/new_rss_activity"
+        app:showAsAction="withText|ifRoom" />
+    <item android:id="@+id/menu_about" android:title="@string/menu_about"
+        app:showAsAction="withText|ifRoom" />
+    <item android:id="@+id/menu_help" android:title="@string/menu_help"
+        app:showAsAction="withText|ifRoom" />
+    <item android:id="@+id/menu_whatsnew" android:title="@string/menu_whatsnew"
+        app:showAsAction="withText|ifRoom" />
+    <item android:id="@+id/menu_export" android:title="@string/menu_export"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/menu_import" android:title="@string/menu_import"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/settings" android:title="@string/settings"
+        android:orderInCategory="999" app:showAsAction="never" />
+</menu>

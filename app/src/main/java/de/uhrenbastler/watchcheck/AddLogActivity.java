@@ -29,7 +29,15 @@ import watchcheck.db.Watch;
  */
 public class AddLogActivity extends WatchCheckActionBarActivity {
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-    private static final String[] POSITIONARR = { "","DU","DD","12U","3U","6U","9U" };
+    private static final String[] POSITIONARR = {
+            Deviations.WORN.nameForLog,
+            Deviations.DU.nameForLog,
+            Deviations.DD.nameForLog,
+            Deviations.O12.nameForLog,
+            Deviations.O3.nameForLog,
+            Deviations.O6.nameForLog,
+            Deviations.O9.nameForLog
+    };
     private static final int[] TEMPARR = { -273, 4, 20, 36 };
     private Spinner positionSpinner;
     private Spinner temperatureSpinner;

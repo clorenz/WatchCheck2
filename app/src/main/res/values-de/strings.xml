@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="rss_url">http://www.uhrenbastler.de/news.xml</string>
+    <string name="rss_url_alternative">http://www.uhrenbastler.de/news_extended.xml</string>
     <string name="navigation_drawer_open">Navigationsleiste öffnen</string>
     <string name="navigation_drawer_close">Navigationsleiste schließen</string>
     <string name="action_example">Beispielaktion</string>
@@ -27,6 +29,7 @@
     <string name="no_current_deviation">Momentane Abweichung: -</string>
     <string name="deviation">Abweichung:</string>
     <string name="deviation_format">%+.1f sek.</string>
+    <string name="deviation_per_day_format">%+.1f Sek./Tag</string>
     <string name="newPeriod">Neue Meßperiode:</string>
     <string name="position">Position:</string>
     <string name="temperature">Temperatur:</string>
@@ -46,26 +49,44 @@
     <string name="app_about">(C) 2011-2015 by Christoph Lorenz,\nwww.uhrenbastler.de.\n\nAlle Rechte vorbehalten, keinerlei Garantie!\nBenutzung auf eigene Verantwortung!</string>
     <string name="menu_export">Daten exportieren</string>
     <string name="dataExported">Daten exportiert</string>
-    <string name="list_average_deviation">MIttlerer Gang: %+.1f s/d</string>
+    <string name="list_average_deviation">Mittlerer Gang: %+.1f s/d</string>
     <string name="list_no_average_deviation">Noch kein mittlerer Gang vorhanden</string>
     <string name="menu_import">Daten importieren</string>
     <string name="dataImported">Daten importiert</string>
     <string name="menu_whatsnew">Was ist neu?</string>
     <string name="worn">am Arm</string>
+    <string name="horizontal_dial_up">liegend, Zifferblatt oben</string>
     <string name="dial_up">Ziff.Bl. oben</string>
+    <string name="horizontal_dial_down">liegend, Boden oben</string>
     <string name="dial_down">Ziff.Bl. unten</string>
+    <string name="vertical_12o">hängend, 12 oben</string>
     <string name="pos_12o">12 oben</string>
+    <string name="vertical_3o">hängend, 3 oben</string>
     <string name="pos_3o">3 oben</string>
+    <string name="vertical_6o">hängend, 6 oben</string>
     <string name="pos_6o">6 oben</string>
+    <string name="vertical_9o">hängend, 9 oben</string>
     <string name="pos_9o">9 oben</string>
     <string name="menu_help">Hilfe</string>
     <string name="url_help">http://www.uhrenbastler.de/21-werkstatt/software/267-watchcheck2-de.html</string>
     <string name="whatsnew">Was ist neu</string>
     <string name="changelog">
         <![CDATA[
-            <b>Version 2.0.3</b>
+            <b>Version 2.3.1</b>
             <p>
-            - Kommentaranzeige<br/>
+            - Fehler im Importer behoben<br/>
+            - Crashes bei leerer Datenbank behoben
+            <p>
+            <b>Version 2.3</b>
+            <p>
+            - tägliche Erinnerung zum Messen der Uhr
+            <p>
+            <b>Versionen 2.2.x</b>
+            <p>
+            - Diverse Verbesserungen im Importer und Exporter<br/>
+            - Neues Icon im Material Design Style<br/>
+            - RSS-Feed von uhrenbastler.de zur Anzeige neuer Artikel<br/>
+            - Crash auf Sony Xperia-Devices behoben
         ]]>
     </string>
     <string name="ok">OK</string>
@@ -86,4 +107,31 @@
     <string name="no_last_deviation">Letzte Abweichung: -</string>
     <string name="check_watch_guide">Zeit der zu messenden Uhr (Sekunden auf :00)</string>
     <string name="menu_export_googledrive">Datenexport auf Google Drive</string>
+    <string name="summary">Zusammenfassung</string>
+    <string name="results">Ergebnisse</string>
+    <string name="labelSummaryDialUp">Zifferblatt oben</string>
+    <string name="summary_overall">mittlerer Gang</string>
+    <string name="empty_value">-</string>
+    <string name="summary_worn">am Arm</string>
+    <string name="new_rss">Neu auf uhrenbastler.de</string>
+    <string name="pref_check_rss">Neue Artikel anzeigen</string>
+    <string name="pref_check_rss_summ">Maximal 1x pro Tag, nur über WLAN, nach neuen Artikeln auf uhrenbastler.de suchen und anzeigen</string>
+    <string name="settings">Einstellungen</string>
+    <string name="news">Neuigkeiten</string>
+    <string name="rss_date_format">dd.MM.yyyy</string>
+    <string name="new_rss_activity">Artikel auf uhrenbastler.de</string>
+    <string name="cancel_reminder">Erinnerung ausgeschaltet</string>
+    <string name="notification_text">Uhr jetzt messen!</string>
+    <string name="pref_check_reminder">Erinnerung eingeschaltet</string>
+    <string name="pref_check_reminder_summ">Erinnert täglich zur selben Uhrzeit, die Uhr zu messen</string>
+    <string name="pref_time_reminder">Erinnerungszeit</string>
+    <string name="pref_time_reminder_summ">Erinnert jeden Tag zu dieser Uhrzeit, die Uhr zu messen</string>
+    <string name="preference_reminder">Erinnerung</string>
+    <string name="reminder_set">Erinnerung eingeschaltet</string>
+    <string name="reminder_set_text"><![CDATA[Sie werden täglich um %s Uhr erinnert, Ihre Uhr zu messen.<br/>]]></string>
+    <string name="reminder_set_text_initial"><![CDATA[Sie werden täglich um %s Uhr daran erinnert, Ihre Uhr zu messen.<br/>Wenn Sie wollen, können Sie die Erinnerung in den Einstellungen abschalten.]]></string>
+    <string name="reminder_time_unset">ausgeschaltet</string>
+    <string name="reminder_unset">Erinnerung ausgeschaltet</string>
+    <string name="reminder_unset_text">Ihre tägliche Erinnerung zum Messen der Uhr wurde ausgeschaltet</string>
+    <string name="set_reminder">Tägliche Erinnung auf %s Uhr gesetzt</string>
 </resources>
