@@ -292,24 +292,28 @@ public class MainActivity extends WatchCheckActionBarActivity
         int id = item.getItemId();
 
         if ( id == R.id.action_summary) {
-            showSummary=true;
-            greyOutIcon(item);
-            ActionMenuItemView otherItem = (ActionMenuItemView)findViewById(R.id.action_results);
-            lightUpIcon(otherItem);
+            if ( selectedWatch!=null ) {
+                showSummary = true;
+                greyOutIcon(item);
+                ActionMenuItemView otherItem = (ActionMenuItemView) findViewById(R.id.action_results);
+                lightUpIcon(otherItem);
 
-            ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
-            prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
+                ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
+                prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
+            }
             return true;
         }
 
         if ( id == R.id.action_results ) {
-            showSummary=false;
-            greyOutIcon(item);
-            ActionMenuItemView otherItem = (ActionMenuItemView)findViewById(R.id.action_summary);
-            lightUpIcon(otherItem);
+            if ( selectedWatch!=null ) {
+                showSummary = false;
+                greyOutIcon(item);
+                ActionMenuItemView otherItem = (ActionMenuItemView) findViewById(R.id.action_summary);
+                lightUpIcon(otherItem);
 
-            ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
-            prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
+                ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
+                prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
+            }
             return true;
         }
 

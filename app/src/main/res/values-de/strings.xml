@@ -72,6 +72,11 @@
     <string name="whatsnew">Was ist neu</string>
     <string name="changelog">
         <![CDATA[
+            <b>Version 2.3.1</b>
+            <p>
+            - Fehler im Importer behoben<br/>
+            - Crashes bei leerer Datenbank behoben
+            <p>
             <b>Version 2.3</b>
             <p>
             - tägliche Erinnerung zum Messen der Uhr

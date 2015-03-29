@@ -209,11 +209,15 @@ public class DataImporter {
 
         for (String watchData : watchesData) {
             String[] watchDataParts = watchData.split("\\|");
+            Logger.info("watchData='"+watchData+"', parts="+ArrayUtils.toString(watchDataParts));
             long watchId = Long.parseLong(watchDataParts[0]);
             String watchName = watchDataParts[1];
-            String serial = watchDataParts[2];
+            String serial = null;
+            if ( watchDataParts.length>2) {
+                serial = watchDataParts[2];
+            }
             Date createdAt=null;
-            if ( !StringUtils.isBlank(watchDataParts[3])) {
+            if ( watchDataParts.length>3 && !StringUtils.isBlank(watchDataParts[3])) {
                 createdAt = new Date(Long.parseLong(watchDataParts[3]));
             }
             String comment=null;
