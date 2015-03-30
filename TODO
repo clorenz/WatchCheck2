@@ -4,6 +4,9 @@ Bugs
 
 Feature 3.0
 - Sync with Google Drive
+  ( https://github.com/googledrive/android-demos/blob/master/src/com/google/android/gms/drive/sample/demo/CreateFileActivity.java )
+  ( https://github.com/googledrive/android-demos )
+  ( https://developers.google.com/drive/android/examples/ )
 - Graphical output
 
 Design enhancements
