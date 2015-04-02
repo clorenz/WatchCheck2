@@ -48,6 +48,7 @@ public class DisplayResultFragment extends Fragment {
     private WatchDao watchDao;
     private boolean displaySummary;
     private View resultView;
+    private PlusButtonOnClickListener plusButtonOnClickListener;
 
 
     // newInstance constructor for creating fragment with arguments
@@ -72,6 +73,7 @@ public class DisplayResultFragment extends Fragment {
         watchDao = ((WatchCheckApplication) getActivity().getApplicationContext()).getDaoSession().getWatchDao();
         logDao = ((WatchCheckApplication) getActivity().getApplicationContext()).getDaoSession().getLogDao();
         currentWatch = watchDao.load(watchId);
+        plusButtonOnClickListener =  new PlusButtonOnClickListener(getActivity(), currentWatch);
     }
 
 
@@ -82,6 +84,8 @@ public class DisplayResultFragment extends Fragment {
         currentWatch = WatchManager.retrieveCurrentWatch(this.getActivity());
         if ( currentWatch!=null) {
             watchId = currentWatch.getId();
+            Logger.debug("On Resume at DisplayResultFragment");
+            plusButtonOnClickListener.setSelectedWatch(currentWatch);
         }
 
         log = ResultManager.getLogsForWatchAndPeriod(getActivity().getApplicationContext(), watchId, period);
@@ -219,14 +223,6 @@ public class DisplayResultFragment extends Fragment {
         Logger.debug("Plus button: currentWatch="+currentWatch+" with id="+currentWatch.getId());
         ButtonFloat fab = (ButtonFloat) getActivity().findViewById(R.id.buttonAddLog);
         fab.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent checkWatchIntent = new Intent(getActivity(), CheckWatchActivity.class);
-                checkWatchIntent.putExtra(CheckWatchActivity.EXTRA_WATCH, currentWatch);
-                checkWatchIntent.putExtra(CheckWatchActivity.EXTRA_LAST_LOG, lastLog);
-                startActivity(checkWatchIntent);
-            }
-        });
+        fab.setOnClickListener(plusButtonOnClickListener);
     }
 }

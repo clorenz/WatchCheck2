@@ -74,8 +74,11 @@
         <![CDATA[
             <b>Version 2.3.2</b>
             <p>
-            - Crash im Landscape-Modus auf Tablets behoben
-            - Menüleiste auf Tablets bereinigt
+            - Crash im Landscape-Modus auf Tablets behoben<br/>
+            - Menüleiste auf Tablets bereinigt<br/>
+            - ActionBar fixes<br/>
+            - Fehler beseitigt, durch den eine falsche Uhr gemessen werden konnte<br/>
+            - Mögliche Ursache für fälschlich inaktive "Neue Periode" Checkbox behoben
             <p>
             <b>Version 2.3.1</b>
             <p>

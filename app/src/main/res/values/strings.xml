@@ -79,8 +79,11 @@
         <![CDATA[
             <b>Version 2.3.2</b>
             <p>
-            - Fixed crash on landscape tablet startup
-            - Cleaned up menu bar on tablets
+            - Fixed crash on landscape tablet startup<br/>
+            - Cleaned up menu bar on tablets<br/>
+            - ActionBar fixes<br/>
+            - Fixed bug, where wrong watch could be tracked<br/>
+            - (Hopefully) fixed bug with inactive "new period" checkbox
             <p>
             <b>Version 2.3.1</b>
             <p>

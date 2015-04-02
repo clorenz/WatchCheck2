@@ -41,6 +41,7 @@ public class MainActivity extends WatchCheckActionBarActivity
     private static final String PRIVATE_PREF = "myapp";
     private static final String VERSION_KEY = "version_number";
     private boolean showSummary=false;
+    private PlusButtonOnClickListener plusButtonOnClickListener;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -104,18 +105,10 @@ public class MainActivity extends WatchCheckActionBarActivity
         ButtonFloat fab = (ButtonFloat) findViewById(R.id.buttonAddLog);
         if ( selectedWatch != null ) {
             prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent checkWatchIntent = new Intent(getApplication(),CheckWatchActivity.class);
-                    checkWatchIntent.putExtra(CheckWatchActivity.EXTRA_WATCH, selectedWatch);
-                    Logger.debug("FROM MAIN");
-                    startActivity(checkWatchIntent);
-                }
-            });
+            fab.setOnClickListener(plusButtonOnClickListener);
             fab.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
             fab.setVisibility(View.VISIBLE);
-
+            plusButtonOnClickListener.setSelectedWatch(selectedWatch);
         } else {
             // Hide viewPager
             vpPager.setVisibility(View.INVISIBLE);
@@ -205,6 +198,8 @@ public class MainActivity extends WatchCheckActionBarActivity
             editor.putInt(VERSION_KEY, currentVersionNumber);
             editor.commit();
         }
+
+        plusButtonOnClickListener = new PlusButtonOnClickListener(this, selectedWatch);
     }
 
 
@@ -232,14 +227,25 @@ public class MainActivity extends WatchCheckActionBarActivity
             greyOutIcon(otherItem.getItemData());
             ActionMenuItemView thisItem = (ActionMenuItemView)findViewById(R.id.action_summary);
             lightUpIcon(thisItem);
+            thisItem.getItemData().setEnabled(true);
+            otherItem.getItemData().setEnabled(true);
+
             if ( watches.get(position).getId()>-1 ) {
                 setWatchName(watches.get(position));
                 persistCurrentWatch(watches.get(position).getId().intValue());
+                WatchManager.setCurrentWatch(watches.get(position));
 
                 if (logDao._queryWatch_Logs(watches.get(position).getId()).isEmpty()) {
-                    Logger.debug("Selecting watch w/o results from drawer");
+                    Logger.debug("Selecting watch "+watches.get(position).getId()+" w/o results from drawer");
                     ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
                     vpPager.setVisibility(View.INVISIBLE);
+                    // hide both icons
+                    greyOutIcon(thisItem.getItemData());
+                    thisItem.getItemData().setEnabled(false);
+                    otherItem.getItemData().setEnabled(false);
+                    Logger.debug("Disabled icons");
+
+                    plusButtonOnClickListener.setSelectedWatch(watches.get(position));
                 } else {
                     selectedWatch = watches.get(position);
                     Logger.debug("Selecting watch " + selectedWatch.getId() + " from drawer");
@@ -248,11 +254,16 @@ public class MainActivity extends WatchCheckActionBarActivity
                     ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
                     prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
                     fab.setVisibility(View.VISIBLE);
+                    plusButtonOnClickListener.setSelectedWatch(selectedWatch);
+
+                    // unhide both icons
                 }
             } else {
                 // "Add watch"
                 Intent addWatchIntent = new Intent(getApplicationContext(), EditWatchActivity.class);
                 startActivity(addWatchIntent);
+
+                // unhide both icons
             }
         }
     }
@@ -291,13 +302,16 @@ public class MainActivity extends WatchCheckActionBarActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        selectedWatch = WatchManager.getCurrentWatch();
+        Logger.debug("Logs="+logDao._queryWatch_Logs(selectedWatch.getId()).size());
+
         if ( id == R.id.action_summary) {
-            if ( selectedWatch!=null ) {
+            if ( selectedWatch!=null && !logDao._queryWatch_Logs(selectedWatch.getId()).isEmpty() ) {
                 showSummary = true;
                 greyOutIcon(item);
                 ActionMenuItemView otherItem = (ActionMenuItemView) findViewById(R.id.action_results);
-                lightUpIcon(otherItem);
 
+                lightUpIcon(otherItem);
                 ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
                 prepareResultPager(vpPager, selectedWatch.getId(), showSummary);
             }
@@ -305,7 +319,7 @@ public class MainActivity extends WatchCheckActionBarActivity
         }
 
         if ( id == R.id.action_results ) {
-            if ( selectedWatch!=null ) {
+            if ( selectedWatch!=null && !logDao._queryWatch_Logs(selectedWatch.getId()).isEmpty() ) {
                 showSummary = false;
                 greyOutIcon(item);
                 ActionMenuItemView otherItem = (ActionMenuItemView) findViewById(R.id.action_summary);
