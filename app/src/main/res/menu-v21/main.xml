@@ -10,13 +10,13 @@
         android:icon="@drawable/ic_view_list_white_36dp"
         app:showAsAction="always" />
     <item android:id="@+id/menu_rss" android:title="@string/new_rss_activity"
-        app:showAsAction="withText|ifRoom" />
+        app:showAsAction="never" />
     <item android:id="@+id/menu_about" android:title="@string/menu_about"
-        app:showAsAction="withText|ifRoom" />
+        app:showAsAction="never" />
     <item android:id="@+id/menu_help" android:title="@string/menu_help"
-        app:showAsAction="withText|ifRoom" />
+        app:showAsAction="never" />
     <item android:id="@+id/menu_whatsnew" android:title="@string/menu_whatsnew"
-        app:showAsAction="withText|ifRoom" />
+        app:showAsAction="never" />
     <item android:id="@+id/menu_export" android:title="@string/menu_export"
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/menu_import" android:title="@string/menu_import"
