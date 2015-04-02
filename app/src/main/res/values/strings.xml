@@ -77,6 +77,10 @@
     <string name="whatsnew">What\'s New</string>
     <string name="changelog">
         <![CDATA[
+            <b>Version 2.3.2</b>
+            <p>
+            - Fixed crash on landscape tablet startup
+            <p>
             <b>Version 2.3.1</b>
             <p>
             - Fixed a bug in the importer<br/>
@@ -85,13 +89,6 @@
             <b>Version 2.3</b>
             <p>
             - Daily reminder to check your watch
-            <p>
-            <b>Versions 2.2.x</b>
-            <p>
-            - Various fixes for importer and exporter<br/>
-            - New icon in Material Design style<br/>
-            - RSS Feed for new articles on 17jewels.info<br/>
-            - Fixed crash on Sony Xperia devices
         ]]>
     </string>
     <string name="ok">OK</string>
