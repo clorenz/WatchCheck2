@@ -72,6 +72,10 @@
     <string name="whatsnew">Was ist neu</string>
     <string name="changelog">
         <![CDATA[
+            <b>Version 2.3.3</b>
+            <p>
+            - Nullpointer-Crash behoben, wenn keine Uhr gewählt wurde
+            <p>
             <b>Version 2.3.2</b>
             <p>
             - Crash im Landscape-Modus auf Tablets behoben<br/>
@@ -79,22 +83,6 @@
             - ActionBar fixes<br/>
             - Fehler beseitigt, durch den eine falsche Uhr gemessen werden konnte<br/>
             - Mögliche Ursache für fälschlich inaktive "Neue Periode" Checkbox behoben
-            <p>
-            <b>Version 2.3.1</b>
-            <p>
-            - Fehler im Importer behoben<br/>
-            - Crashes bei leerer Datenbank behoben
-            <p>
-            <b>Version 2.3</b>
-            <p>
-            - tägliche Erinnerung zum Messen der Uhr
-            <p>
-            <b>Versionen 2.2.x</b>
-            <p>
-            - Diverse Verbesserungen im Importer und Exporter<br/>
-            - Neues Icon im Material Design Style<br/>
-            - RSS-Feed von uhrenbastler.de zur Anzeige neuer Artikel<br/>
-            - Crash auf Sony Xperia-Devices behoben
         ]]>
     </string>
     <string name="ok">OK</string>

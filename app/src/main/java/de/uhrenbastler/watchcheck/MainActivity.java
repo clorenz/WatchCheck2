@@ -303,7 +303,6 @@ public class MainActivity extends WatchCheckActionBarActivity
         int id = item.getItemId();
 
         selectedWatch = WatchManager.getCurrentWatch();
-        Logger.debug("Logs="+logDao._queryWatch_Logs(selectedWatch.getId()).size());
 
         if ( id == R.id.action_summary) {
             if ( selectedWatch!=null && !logDao._queryWatch_Logs(selectedWatch.getId()).isEmpty() ) {

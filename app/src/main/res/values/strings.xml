@@ -77,6 +77,10 @@
     <string name="whatsnew">What\'s New</string>
     <string name="changelog">
         <![CDATA[
+            <b>Version 2.3.3</b>
+            <p>
+            - Fixed Nullpointer crash when no watch was selected
+            <p>
             <b>Version 2.3.2</b>
             <p>
             - Fixed crash on landscape tablet startup<br/>
@@ -84,15 +88,6 @@
             - ActionBar fixes<br/>
             - Fixed bug, where wrong watch could be tracked<br/>
             - (Hopefully) fixed bug with inactive "new period" checkbox
-            <p>
-            <b>Version 2.3.1</b>
-            <p>
-            - Fixed a bug in the importer<br/>
-            - Fixed crash on empty startup
-            <p>
-            <b>Version 2.3</b>
-            <p>
-            - Daily reminder to check your watch
         ]]>
     </string>
     <string name="ok">OK</string>
