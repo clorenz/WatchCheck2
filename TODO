@@ -3,6 +3,7 @@ Bugs
 Features:
   - Neue Messposition "Im Uhrenbeweger"
   - Schön wäre, wenn die Statistikfunktion zu einer Uhr wahlweise (!) auch über mehrere Messperioden abrufbar wäre.
+  - Export der Daten pro Uhr in ein von Spreadsheets weiter zu verarbeitendes Format ( http://www.codeproject.com/Articles/31516/Export-DataSet-to-Multiple-Excel-Sheets )
 
 Feature 3.0
 - Sync with Google Drive
