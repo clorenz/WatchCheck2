@@ -104,7 +104,7 @@ public class AsyncRssLoaderForPopup extends AsyncTask<Context, Integer, List<Art
 
     private void loadArticlesFromRSS(String rssUrl) {
         loadIsInProgress=true;
-        new PkRSS.Builder(context).parser(new UhrenbastlerParser()).build().load(rssUrl).callback(this).async();
+        new PkRSS.Builder(context).parser(new UhrwerksarchivSAXParser()).build().load(rssUrl).callback(this).async();
 
         while ( loadIsInProgress ) {
             try {

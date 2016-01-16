@@ -3,7 +3,7 @@ package de.uhrenbastler.watchcheck;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.internal.view.menu.ActionMenuItemView;
+import android.support.v7.view.menu.ActionMenuItemView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;

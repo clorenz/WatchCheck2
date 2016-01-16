@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="rss_url">http://www.uhrenbastler.de/news.xml</string>
-    <string name="rss_url_alternative">http://www.uhrenbastler.de/news_extended.xml</string>
+    <string name="rss_url">http://www.uhrwerksarchiv.de/news.xml</string>
+    <string name="rss_url_alternative">http://www.uhrwerksarchiv.de/news_extended.xml</string>
     <string name="navigation_drawer_open">Navigationsleiste öffnen</string>
     <string name="navigation_drawer_close">Navigationsleiste schließen</string>
     <string name="action_example">Beispielaktion</string>
@@ -46,7 +46,7 @@
     <string name="list_header_position">Pos.</string>
     <string name="list_header_temperature">Temp.</string>
     <string name="menu_about">Über</string>
-    <string name="app_about">(C) 2011-2015 by Christoph Lorenz,\nwww.uhrenbastler.de.\n\nAlle Rechte vorbehalten, keinerlei Garantie!\nBenutzung auf eigene Verantwortung!</string>
+    <string name="app_about">(C) 2011-2016 by Christoph Lorenz,\nwww.uhrwerksarchiv.de.\n\nAlle Rechte vorbehalten, keinerlei Garantie!\nBenutzung auf eigene Verantwortung!</string>
     <string name="menu_export">Daten exportieren</string>
     <string name="dataExported">Daten exportiert</string>
     <string name="list_average_deviation">Mittlerer Gang: %+.1f s/d</string>
@@ -68,10 +68,16 @@
     <string name="vertical_9o">hängend, 9 oben</string>
     <string name="pos_9o">9 oben</string>
     <string name="menu_help">Hilfe</string>
-    <string name="url_help">http://www.uhrenbastler.de/21-werkstatt/software/267-watchcheck2-de.html</string>
+    <string name="url_help">http://www.uhrwerksarchiv.de/21-werkstatt/software/267-watchcheck2-de.html</string>
     <string name="whatsnew">Was ist neu</string>
     <string name="changelog">
         <![CDATA[
+            <b>Version 2.4.0</b>
+            <p>
+            - Sporadische Crashes beim Start behoben
+            - Artikel auf uhrwerksarchiv.de werden wieder angezeigt
+            - Webangebot von uhrenbastler.de auf uhrwerksarchiv.de umgezogen
+            <p>
             <b>Version 2.3.3</b>
             <p>
             - Nullpointer-Crash behoben, wenn keine Uhr gewählt wurde
@@ -108,13 +114,13 @@
     <string name="summary_overall">mittlerer Gang</string>
     <string name="empty_value">-</string>
     <string name="summary_worn">am Arm</string>
-    <string name="new_rss">Neu auf uhrenbastler.de</string>
+    <string name="new_rss">Neu auf uhrwerksarchiv.de</string>
     <string name="pref_check_rss">Neue Artikel anzeigen</string>
-    <string name="pref_check_rss_summ">Maximal 1x pro Tag, nur über WLAN, nach neuen Artikeln auf uhrenbastler.de suchen und anzeigen</string>
+    <string name="pref_check_rss_summ">Maximal 1x pro Tag, nur über WLAN, nach neuen Artikeln auf uhrwerksarchiv.de suchen und anzeigen</string>
     <string name="settings">Einstellungen</string>
     <string name="news">Neuigkeiten</string>
     <string name="rss_date_format">dd.MM.yyyy</string>
-    <string name="new_rss_activity">Artikel auf uhrenbastler.de</string>
+    <string name="new_rss_activity">Artikel auf uhrwerksarchiv.de</string>
     <string name="cancel_reminder">Erinnerung ausgeschaltet</string>
     <string name="notification_text">Uhr jetzt messen!</string>
     <string name="pref_check_reminder">Erinnerung eingeschaltet</string>

@@ -77,6 +77,12 @@
     <string name="whatsnew">What\'s New</string>
     <string name="changelog">
         <![CDATA[
+            <b>Version 2.4.0</b>
+            <p>
+            - Fixed occasionally crashes on startup
+            - Fixed articles on 17jewels.info
+            - Moved german website from uhrenbastler.de to uhrwerksarchiv.de
+            <p>
             <b>Version 2.3.3</b>
             <p>
             - Fixed Nullpointer crash when no watch was selected

@@ -7,3 +7,4 @@ gradle/local.properties
 /build
 .idea
 **/*.iml
+app/app-release.apk

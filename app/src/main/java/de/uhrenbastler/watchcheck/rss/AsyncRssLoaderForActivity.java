@@ -2,8 +2,6 @@ package de.uhrenbastler.watchcheck.rss;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 
@@ -14,7 +12,6 @@ import com.pkmmte.pkrss.PkRSS;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import de.uhrenbastler.watchcheck.R;
@@ -55,7 +52,7 @@ public class AsyncRssLoaderForActivity extends AsyncTask<Context, Integer, List<
 
     private void loadArticlesFromRSS(String rssUrl) {
         loadIsInProgress=true;
-        new PkRSS.Builder(context).parser(new UhrenbastlerParser()).build().load(rssUrl).callback(this).async();
+        new PkRSS.Builder(context).parser(new UhrwerksarchivSAXParser()).build().load(rssUrl).callback(this).async();
 
         while ( loadIsInProgress ) {
             try {
