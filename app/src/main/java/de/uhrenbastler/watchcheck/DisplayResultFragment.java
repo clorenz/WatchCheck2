@@ -103,6 +103,8 @@ public class DisplayResultFragment extends Fragment {
                 displayDeviation(deviations.get(Deviations.O9.nameForLog), (TextView) resultView.findViewById(R.id.summary9o), R.string.deviation_per_day_format, R.string.empty_value);
                 displayDeviation(deviations.get(Deviations.O12.nameForLog), (TextView) resultView.findViewById(R.id.summary12o), R.string.deviation_per_day_format, R.string.empty_value);
                 displayDeviation(deviations.get(Deviations.WORN.nameForLog), (TextView) resultView.findViewById(R.id.summary_worn), R.string.deviation_per_day_format, R.string.empty_value);
+                displayDeviation(deviations.get(Deviations.WINDER.nameForLog), (TextView) resultView.findViewById(R.id.summary_winder), R.string.deviation_per_day_format, R.string.empty_value);
+                displayDeviation(deviations.get(Deviations.OTHER.nameForLog), (TextView) resultView.findViewById(R.id.summary_other), R.string.deviation_per_day_format, R.string.empty_value);
                 displayDeviation(deviations.get(Deviations.ALL.nameForLog), averageDeviation, R.string.deviation_per_day_format, R.string.empty_value);
             }
         } else {
@@ -201,6 +203,8 @@ public class DisplayResultFragment extends Fragment {
         displayDeviation(deviations.get(Deviations.O9.nameForLog), (TextView) view.findViewById(R.id.summary9o), R.string.deviation_per_day_format, R.string.empty_value);
         displayDeviation(deviations.get(Deviations.O12.nameForLog), (TextView) view.findViewById(R.id.summary12o), R.string.deviation_per_day_format, R.string.empty_value);
         displayDeviation(deviations.get(Deviations.WORN.nameForLog), (TextView) view.findViewById(R.id.summary_worn), R.string.deviation_per_day_format, R.string.empty_value);
+        displayDeviation(deviations.get(Deviations.WINDER.nameForLog), (TextView) view.findViewById(R.id.summary_winder), R.string.deviation_per_day_format, R.string.empty_value);
+        displayDeviation(deviations.get(Deviations.OTHER.nameForLog), (TextView) view.findViewById(R.id.summary_other), R.string.deviation_per_day_format, R.string.empty_value);
         displayDeviation(deviations.get(Deviations.ALL.nameForLog), averageDeviation, R.string.deviation_per_day_format, R.string.empty_value);
 
         preparePlusButton();

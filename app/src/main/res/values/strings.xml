@@ -60,6 +60,8 @@
     <string name="dataImported">Data imported</string>
     <string name="menu_whatsnew">What\'s new?</string>
     <string name="worn">worn</string>
+    <string name="winder">on the winder</string>
+    <string name="other">misc / unspeficied</string>
     <string name="horizontal_dial_up">horizontal, dial up</string>
     <string name="dial_up">dial up</string>
     <string name="horizontal_dial_down">horizontal, dial down</string>
@@ -83,6 +85,8 @@
             - Fixed articles on 17jewels.info
             - Moved german website from uhrenbastler.de to uhrwerksarchiv.de
             - Translation fix
+            - New positions: Watch winder, unspecified/misc
+            - Fixed time format for non german-speaking countries
             <p>
             <b>Version 2.3.3</b>
             <p>
@@ -118,6 +122,8 @@
     <string name="summary_overall">average rate</string>
     <string name="empty_value">-</string>
     <string name="summary_worn">worn</string>
+    <string name="summary_winder">on the winder</string>
+    <string name="summary_other">misc / unspecified</string>
     <string name="new_rss">New on 17jewels.info</string>
     <string name="pref_check_rss">Display new articles</string>
     <string name="pref_check_rss_summ">Check at max. once a day, and only on WLAN, for new artices on 17jewels.info and display them</string>
@@ -139,4 +145,6 @@
     <string name="reminder_set_text"><![CDATA[You will be reminded daily at %s to check your watch.<br/>]]></string>
     <string name="reminder_unset">Cancelled reminder</string>
     <string name="reminder_unset_text">Cancelled your daily check-your-watch reminder.</string>
+    <string name="time_format">hh:mm:ss aa</string>
+    <string name="result_time_day_format">dd.MM.yyyy\nhh:mm:ss aa</string>
 </resources>

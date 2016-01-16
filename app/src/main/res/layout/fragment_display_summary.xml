@@ -168,6 +168,46 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/textColorPrimary"
                 android:layout_height="wrap_content"
+                android:id="@+id/labelSummaryWinder"
+                android:layout_weight="0.60"
+                android:layout_width="0dp"
+                android:gravity="left"
+                android:text="@string/summary_winder"/>
+            <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/textColorPrimary"
+                android:layout_height="wrap_content"
+                android:id="@+id/summary_winder"
+                android:layout_weight="0.40"
+                android:layout_width="0dp"
+                android:gravity="right"
+                android:text="@string/deviation_per_day_format"/>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow9" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp">
+            <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/textColorPrimary"
+                android:layout_height="wrap_content"
+                android:id="@+id/labelSummaryOther"
+                android:layout_weight="0.60"
+                android:layout_width="0dp"
+                android:gravity="left"
+                android:text="@string/summary_other"/>
+            <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/textColorPrimary"
+                android:layout_height="wrap_content"
+                android:id="@+id/summary_other"
+                android:layout_weight="0.40"
+                android:layout_width="0dp"
+                android:gravity="right"
+                android:text="@string/deviation_per_day_format"/>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow10" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20dp">
+            <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/textColorPrimary"
+                android:layout_height="wrap_content"
                 android:id="@+id/labelSummaryOverall"
                 android:layout_weight="0.60"
                 android:layout_width="0dp"

@@ -8,6 +8,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import de.uhrenbastler.watchcheck.provider.NtpMessage;
@@ -24,6 +25,7 @@ public class NtpTimeProvider implements ITimeProvider{
     final ConnectivityManager cm;
     final int reconnectCounter;
     final int validCounter;
+    private SimpleDateFormat sdf;
 
     int reconnectAttempt=0;
     int validCount=0;
@@ -41,6 +43,10 @@ public class NtpTimeProvider implements ITimeProvider{
 
     }
 
+    @Override
+    public void setDateFormat(SimpleDateFormat sdf) {
+        this.sdf = sdf;
+    }
 
     @Override
     public void terminate() {

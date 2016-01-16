@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.uhrenbastler.watchcheck.tools.Logger;
 import watchcheck.db.Log;
 
 /**
@@ -31,6 +32,7 @@ public class DeviationCalculator {
 
     private void calculateDeviations() {
         for ( int i=1; i<logs.size(); i++ ) {
+            Logger.info("Log=" + logs.get(i));
             Log log = logs.get(i);
             String position = log.getPosition();
             if (StringUtils.isBlank(position))

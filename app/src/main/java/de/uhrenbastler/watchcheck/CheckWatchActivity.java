@@ -18,9 +18,11 @@ import android.widget.TimePicker;
 
 import com.gc.materialdesign.views.ButtonRectangle;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import de.uhrenbastler.watchcheck.provider.GpsTimeProvider;
 import de.uhrenbastler.watchcheck.provider.ITimeProvider;
@@ -111,7 +113,10 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
         });
 
         // Set timepicker to next minute PLUS last known deviation
-        timePicker.setIs24HourView(true);
+        Locale current = getResources().getConfiguration().locale;
+        if ( current.getLanguage().equalsIgnoreCase("de")) {
+            timePicker.setIs24HourView(true);
+        }
         timePicker.setKeepScreenOn(true);
 
         TextView tvLastDeviation= (TextView) findViewById(R.id.lastdeviation);
@@ -158,9 +163,10 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         ntpTimeProvider = new NtpTimeProvider(cm,50,6000);            // TODO: The last one shall be 6000 or so  (10 per second => 10 minutes)
+        ntpTimeProvider.setDateFormat(new SimpleDateFormat(getResources().getString(R.string.time_format)));
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         gpsTimeProvider = new GpsTimeProvider(lm);
-
+        gpsTimeProvider.setDateFormat(new SimpleDateFormat(getResources().getString(R.string.time_format)));
 
         referenceTimeUpdater = new ReferenceTimeUpdater(new ITimeProvider[]{gpsTimeProvider,ntpTimeProvider},
                 new Integer[]{R.id.gpstime,R.id.ntptime},

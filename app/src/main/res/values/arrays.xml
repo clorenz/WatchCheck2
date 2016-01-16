@@ -8,6 +8,8 @@
         <item>@string/vertical_3o</item>
         <item>@string/vertical_6o</item>
         <item>@string/vertical_9o</item>
+        <item>@string/winder</item>
+        <item>@string/other</item>
     </string-array>
     <string-array name="result_positions">
         <item>worn</item>
@@ -17,6 +19,8 @@
         <item>3 up</item>
         <item>6 up</item>
         <item>9 up</item>
+        <item>winder</item>
+        <item>misc</item>
     </string-array>
     <string-array name="temperatures">
         <item>skin</item>

@@ -6,6 +6,7 @@ import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -23,11 +24,17 @@ public class GpsTimeProvider implements ITimeProvider {
     Long offset;
     LocationListener ll;
     LocationManager lm;
+    SimpleDateFormat sdf;
 
     public GpsTimeProvider(LocationManager lm) {
         this.lm = lm;
         ll = new GpsLocationListener();
         this.lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,ll);
+    }
+
+    @Override
+    public void setDateFormat(SimpleDateFormat sdf) {
+        this.sdf = sdf;
     }
 
     @Override

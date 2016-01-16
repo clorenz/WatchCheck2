@@ -20,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import de.uhrenbastler.watchcheck.Deviations;
 import de.uhrenbastler.watchcheck.DisplayResultFragment;
 import de.uhrenbastler.watchcheck.R;
 import de.uhrenbastler.watchcheck.tools.Logger;
@@ -31,14 +32,22 @@ import watchcheck.db.Log;
 public class ResultListAdapter extends ArrayAdapter<Log> {
     private final Context context;
     private final List<Log> logs;
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy\nHH:mm:ss");
-    private static final String[] POSITIONARR = { "","DU","DD","12U","3U","6U","9U" };
+    private static final String[] POSITIONARR = { "",
+                                                  Deviations.DU.name(),
+                                                  Deviations.DD.name(),
+                                                  "12U",
+                                                  "3U",
+                                                  "6U",
+                                                  "9U",
+                                                  Deviations.WINDER.name(),
+                                                  Deviations.OTHER.name() };
     private static final int[] TEMPARR = { -273, 4, 20, 36 };
 
     public ResultListAdapter(Context context, List<Log> logs) {
         super(context, R.layout.result_row, logs);
         this.context = context;
         this.logs = logs;
+
     }
 
 
@@ -46,6 +55,7 @@ public class ResultListAdapter extends ArrayAdapter<Log> {
     public View getView(int position, View convertView, final ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.result_row, parent, false);
+        SimpleDateFormat sdf=new SimpleDateFormat(rowView.getResources().getString(R.string.result_time_day_format));
         final Log log = logs.get(position);
 
         TextView tvTimestampReference = (TextView) rowView.findViewById(R.id.result_timestamp_reference);
@@ -81,8 +91,8 @@ public class ResultListAdapter extends ArrayAdapter<Log> {
         tvPosition.setText(positions[posIndex]);
 
         TextView tvTemperature = (TextView) rowView.findViewById(R.id.result_temperature);
-        if ( posIndex>0) {
-            // Watch was not worn
+        if ( posIndex>=1 && posIndex<=6) {
+            // Watch was not worn, not on the winder and not unspecified
             int tempIndex = ArrayUtils.indexOf(TEMPARR, log.getTemperature());
             if (tempIndex > -1) {
                 tvTemperature.setText(temperatures[tempIndex]);

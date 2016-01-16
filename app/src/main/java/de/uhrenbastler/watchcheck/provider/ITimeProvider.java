@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
  * Created by clorenz on 09.01.15.
  */
 public interface ITimeProvider {
-    final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+    void setDateFormat(SimpleDateFormat sdf);
 
     String getTime();
     boolean isValid();

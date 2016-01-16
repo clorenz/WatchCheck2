@@ -36,7 +36,9 @@ public class AddLogActivity extends WatchCheckActionBarActivity {
             Deviations.O12.nameForLog,
             Deviations.O3.nameForLog,
             Deviations.O6.nameForLog,
-            Deviations.O9.nameForLog
+            Deviations.O9.nameForLog,
+            Deviations.WINDER.nameForLog,
+            Deviations.OTHER.nameForLog
     };
     private static final int[] TEMPARR = { -273, 4, 20, 36 };
     private Spinner positionSpinner;

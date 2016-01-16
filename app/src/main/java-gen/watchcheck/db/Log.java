@@ -103,4 +103,17 @@ public class Log implements java.io.Serializable {
         this.comment = comment;
     }
 
+    @Override
+    public String toString() {
+        return "Log{" +
+                "id=" + id +
+                ", watchId=" + watchId +
+                ", period=" + period +
+                ", referenceTime=" + referenceTime +
+                ", watchTime=" + watchTime +
+                ", position='" + position + '\'' +
+                ", temperature=" + temperature +
+                ", comment='" + comment + '\'' +
+                '}';
+    }
 }

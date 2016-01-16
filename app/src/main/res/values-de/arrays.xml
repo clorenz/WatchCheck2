@@ -8,6 +8,8 @@
         <item>@string/vertical_3o</item>
         <item>@string/vertical_6o</item>
         <item>@string/vertical_9o</item>
+        <item>@string/winder</item>
+        <item>@string/other</item>
     </string-array>
     <string-array name="result_positions">
         <item>am Arm</item>
@@ -17,6 +19,8 @@
         <item>3 oben</item>
         <item>6 oben</item>
         <item>9 oben</item>
+        <item>Uhrenbeweger</item>
+        <item>gemischt</item>
     </string-array>
     <string-array name="temperatures">
         <item>am Arm</item>

@@ -55,6 +55,8 @@
     <string name="dataImported">Daten importiert</string>
     <string name="menu_whatsnew">Was ist neu?</string>
     <string name="worn">am Arm</string>
+    <string name="winder">auf dem Uhrenbeweger</string>
+    <string name="other">gemischt</string>
     <string name="horizontal_dial_up">liegend, Zifferblatt oben</string>
     <string name="dial_up">Ziff.Bl. oben</string>
     <string name="horizontal_dial_down">liegend, Boden oben</string>
@@ -77,6 +79,8 @@
             - Sporadische Crashes beim Start behoben
             - Artikel auf uhrwerksarchiv.de werden wieder angezeigt
             - Webangebot von uhrenbastler.de auf uhrwerksarchiv.de umgezogen
+            - Neue Positionen: Uhrenbeweger, gemischt
+            - Zeit-Format in nicht-deutschsprachigen Ländern angepaßt
             <p>
             <b>Version 2.3.3</b>
             <p>
@@ -114,6 +118,8 @@
     <string name="summary_overall">mittlerer Gang</string>
     <string name="empty_value">-</string>
     <string name="summary_worn">am Arm</string>
+    <string name="summary_winder">auf dem Uhrenbeweger</string>
+    <string name="summary_other">gemischt</string>
     <string name="new_rss">Neu auf uhrwerksarchiv.de</string>
     <string name="pref_check_rss">Neue Artikel anzeigen</string>
     <string name="pref_check_rss_summ">Maximal 1x pro Tag, nur über WLAN, nach neuen Artikeln auf uhrwerksarchiv.de suchen und anzeigen</string>
@@ -135,4 +141,6 @@
     <string name="reminder_unset">Erinnerung ausgeschaltet</string>
     <string name="reminder_unset_text">Ihre tägliche Erinnerung zum Messen der Uhr wurde ausgeschaltet</string>
     <string name="set_reminder">Tägliche Erinnung auf %s Uhr gesetzt</string>
+    <string name="time_format">HH:mm:ss</string>
+    <string name="result_time_day_format">dd.MM.yyyy\nHH:mm:ss</string>
 </resources>

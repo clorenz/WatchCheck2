@@ -3,7 +3,7 @@ Bugs
  - Beim Wechsel auf Promaster wird nicht zur letzten Meßperiode gesprungen
 
 Features:
-  - Neue Messposition "Im Uhrenbeweger" und "Mixed" / "Other"
+  - Datumsformatierung DE, USA, Rest der Welt
   - Schön wäre, wenn die Statistikfunktion zu einer Uhr wahlweise (!) auch über mehrere Messperioden abrufbar wäre.
   - Export der Daten pro Uhr in ein von Spreadsheets weiter zu verarbeitendes Format ( http://www.codeproject.com/Articles/31516/Export-DataSet-to-Multiple-Excel-Sheets )
 

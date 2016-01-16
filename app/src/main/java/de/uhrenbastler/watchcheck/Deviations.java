@@ -7,6 +7,8 @@ public enum Deviations {
 
     ALL("ALL"),
     WORN("WORN"),
+    OTHER("OTHER"),
+    WINDER("WINDER"),
     DD("DD"),
     DU("DU"),
     O3("3U"),

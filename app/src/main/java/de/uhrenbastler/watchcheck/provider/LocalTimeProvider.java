@@ -8,6 +8,8 @@ import java.util.Date;
  */
 public class LocalTimeProvider implements ITimeProvider{
 
+    private SimpleDateFormat sdf;
+
     @Override
     public String getTime() {
         return sdf.format(new Date());
@@ -31,6 +33,11 @@ public class LocalTimeProvider implements ITimeProvider{
     @Override
     public long getMillis() {
         return System.currentTimeMillis();
+    }
+
+    @Override
+    public void setDateFormat(SimpleDateFormat sdf) {
+        this.sdf = sdf;
     }
 
     @Override
