@@ -51,11 +51,11 @@
     <string name="list_header_position">Pos.</string>
     <string name="list_header_temperature">Temp.</string>
     <string name="menu_about">About</string>
-    <string name="app_about">(C) 2011–2015 by Christoph Lorenz,\n<a href="http://17jewels.info/">17jewels.info</a>.\n\nAll rights reserved, no warranty at all!\nUse at your own risk!</string>
+    <string name="app_about">(C) 2011–2016 by Christoph Lorenz,\n<a href="http://17jewels.info/">17jewels.info</a>.\n\nAll rights reserved, no warranty at all!\nUse at your own risk!</string>
     <string name="menu_export">Export data</string>
     <string name="dataExported">Data exported</string>
-    <string name="list_average_deviation">Average deviation: %+.1f s/d</string>
-    <string name="list_no_average_deviation">No average deviation yet</string>
+    <string name="list_average_deviation">Average rate: %+.1f s/d</string>
+    <string name="list_no_average_deviation">No average rate yet</string>
     <string name="menu_import">Import data</string>
     <string name="dataImported">Data imported</string>
     <string name="menu_whatsnew">What\'s new?</string>
@@ -82,6 +82,7 @@
             - Fixed occasionally crashes on startup
             - Fixed articles on 17jewels.info
             - Moved german website from uhrenbastler.de to uhrwerksarchiv.de
+            - Translation fix
             <p>
             <b>Version 2.3.3</b>
             <p>
@@ -114,7 +115,7 @@
     <string name="summary">Summary</string>
     <string name="results">results</string>
     <string name="labelSummaryDialUp">dial up</string>
-    <string name="summary_overall">average deviation</string>
+    <string name="summary_overall">average rate</string>
     <string name="empty_value">-</string>
     <string name="summary_worn">worn</string>
     <string name="new_rss">New on 17jewels.info</string>
