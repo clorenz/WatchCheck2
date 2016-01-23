@@ -3,6 +3,7 @@ package de.uhrenbastler.watchcheck.views;
 import android.content.Context;
 import android.content.res.Resources;
 import android.text.Layout;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.gc.materialdesign.widgets.Dialog;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -24,6 +26,7 @@ import de.uhrenbastler.watchcheck.Deviations;
 import de.uhrenbastler.watchcheck.DisplayResultFragment;
 import de.uhrenbastler.watchcheck.R;
 import de.uhrenbastler.watchcheck.tools.Logger;
+import de.uhrenbastler.watchcheck.utils.LocalizedTimeUtil;
 import watchcheck.db.Log;
 
 /**
@@ -55,11 +58,12 @@ public class ResultListAdapter extends ArrayAdapter<Log> {
     public View getView(int position, View convertView, final ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.result_row, parent, false);
-        SimpleDateFormat sdf=new SimpleDateFormat(rowView.getResources().getString(R.string.result_time_day_format));
         final Log log = logs.get(position);
 
         TextView tvTimestampReference = (TextView) rowView.findViewById(R.id.result_timestamp_reference);
-        tvTimestampReference.setText(sdf.format(log.getReferenceTime()));
+        String showDate = LocalizedTimeUtil.getDate(context, log.getReferenceTime());
+        String showTime = LocalizedTimeUtil.getTime(context, log.getReferenceTime());
+        tvTimestampReference.setText(showDate + "\n" + showTime);
 
         double offset = ((double)(log.getWatchTime().getTime() - log.getReferenceTime().getTime())) / 1000d;
         TextView tvOffset = (TextView) rowView.findViewById(R.id.result_offset);

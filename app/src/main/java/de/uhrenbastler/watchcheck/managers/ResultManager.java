@@ -68,14 +68,37 @@ public class ResultManager {
         }
     }
 
+
+    public static Long getPeriodStartMillis(Context context, long watchId, int period) {
+        LogDao logDao = ((WatchCheckApplication)context.getApplicationContext()).getDaoSession().getLogDao();
+        List<Log> startLogs = getLogsForWatchAndPeriod(context, watchId, period);
+
+        if ( startLogs!=null && !startLogs.isEmpty()) {
+            return startLogs.get(0).getReferenceTime().getTime();
+        } else {
+            return 0L;
+        }
+    }
+
     public static String getPeriodEndDate(Context context, long watchId, int period) {
         LogDao logDao = ((WatchCheckApplication)context.getApplicationContext()).getDaoSession().getLogDao();
         List<Log> endLogs = getLogsForWatchAndPeriod(context, watchId, period);
 
         if ( endLogs!=null && !endLogs.isEmpty()) {
-            return sdf.format(endLogs.get(endLogs.size()-1).getReferenceTime());
+            return sdf.format(endLogs.get(endLogs.size() - 1).getReferenceTime());
         } else {
             return "";
+        }
+    }
+
+    public static Long getPeriodEndMillis(Context context, long watchId, int period) {
+        LogDao logDao = ((WatchCheckApplication)context.getApplicationContext()).getDaoSession().getLogDao();
+        List<Log> endLogs = getLogsForWatchAndPeriod(context, watchId, period);
+
+        if ( endLogs!=null && !endLogs.isEmpty()) {
+            return endLogs.get(endLogs.size()-1).getReferenceTime().getTime();
+        } else {
+            return 0L;
         }
     }
 

@@ -3,9 +3,10 @@ Bugs
  - Beim Wechsel auf Promaster wird nicht zur letzten Meßperiode gesprungen
 
 Features:
-  - Datumsformatierung DE, USA, Rest der Welt
+  - Android 6.0 Rechtemanagement
   - Schön wäre, wenn die Statistikfunktion zu einer Uhr wahlweise (!) auch über mehrere Messperioden abrufbar wäre.
   - Export der Daten pro Uhr in ein von Spreadsheets weiter zu verarbeitendes Format ( http://www.codeproject.com/Articles/31516/Export-DataSet-to-Multiple-Excel-Sheets )
+  - FAB überdeckt letzte zwei Ergebnisse
 
 Feature 3.0
 - Sync with Google Drive

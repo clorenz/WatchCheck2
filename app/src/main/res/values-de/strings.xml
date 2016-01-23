@@ -74,6 +74,9 @@
     <string name="whatsnew">Was ist neu</string>
     <string name="changelog">
         <![CDATA[
+            <b>Version 2.4.1</b>
+            <p>
+            - Datums- und Zeit-Format für alle Länder angepaßt
             <b>Version 2.4.0</b>
             <p>
             - Sporadische Crashes beim Start behoben
@@ -81,18 +84,6 @@
             - Webangebot von uhrenbastler.de auf uhrwerksarchiv.de umgezogen
             - Neue Positionen: Uhrenbeweger, gemischt
             - Zeit-Format in nicht-deutschsprachigen Ländern angepaßt
-            <p>
-            <b>Version 2.3.3</b>
-            <p>
-            - Nullpointer-Crash behoben, wenn keine Uhr gewählt wurde
-            <p>
-            <b>Version 2.3.2</b>
-            <p>
-            - Crash im Landscape-Modus auf Tablets behoben<br/>
-            - Menüleiste auf Tablets bereinigt<br/>
-            - ActionBar fixes<br/>
-            - Fehler beseitigt, durch den eine falsche Uhr gemessen werden konnte<br/>
-            - Mögliche Ursache für fälschlich inaktive "Neue Periode" Checkbox behoben
         ]]>
     </string>
     <string name="ok">OK</string>
@@ -141,6 +132,4 @@
     <string name="reminder_unset">Erinnerung ausgeschaltet</string>
     <string name="reminder_unset_text">Ihre tägliche Erinnerung zum Messen der Uhr wurde ausgeschaltet</string>
     <string name="set_reminder">Tägliche Erinnung auf %s Uhr gesetzt</string>
-    <string name="time_format">HH:mm:ss</string>
-    <string name="result_time_day_format">dd.MM.yyyy\nHH:mm:ss</string>
 </resources>

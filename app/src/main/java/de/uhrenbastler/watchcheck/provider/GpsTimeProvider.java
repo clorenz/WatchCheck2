@@ -1,10 +1,12 @@
 package de.uhrenbastler.watchcheck.provider;
 
+import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -12,6 +14,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import de.uhrenbastler.watchcheck.tools.Logger;
+import de.uhrenbastler.watchcheck.utils.LocalizedTimeUtil;
 
 /**
  * Created by clorenz on 09.01.15.
@@ -24,17 +27,13 @@ public class GpsTimeProvider implements ITimeProvider {
     Long offset;
     LocationListener ll;
     LocationManager lm;
-    SimpleDateFormat sdf;
+    Context context;
 
-    public GpsTimeProvider(LocationManager lm) {
+    public GpsTimeProvider(LocationManager lm, Context context) {
         this.lm = lm;
+        this.context = context;
         ll = new GpsLocationListener();
         this.lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,ll);
-    }
-
-    @Override
-    public void setDateFormat(SimpleDateFormat sdf) {
-        this.sdf = sdf;
     }
 
     @Override
@@ -47,7 +46,11 @@ public class GpsTimeProvider implements ITimeProvider {
         if ( offset!=null) {
             timestamp = new Date(System.currentTimeMillis()-offset);  // = localtime - localtime + referenceTime
         }
-        return valid?sdf.format(timestamp):"--:--:--";
+        if ( valid ) {
+            return LocalizedTimeUtil.getTime(context, timestamp);
+        } else {
+            return "--:--:--";
+        }
     }
 
     @Override

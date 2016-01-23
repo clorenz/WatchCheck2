@@ -33,7 +33,7 @@ public class WatchCheckActionBarActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState, int viewResource) {
         try {
             super.onCreate(savedInstanceState);
-        } catch ( IllegalStateException e) {
+        } catch ( Exception e) {
             Logger.error("Could not call super action: ",e);
         }
 

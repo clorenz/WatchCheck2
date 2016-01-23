@@ -36,11 +36,6 @@ public class LocalTimeProvider implements ITimeProvider{
     }
 
     @Override
-    public void setDateFormat(SimpleDateFormat sdf) {
-        this.sdf = sdf;
-    }
-
-    @Override
     public void terminate() {
 
     }

@@ -43,7 +43,7 @@ public class DisplayResultFragment extends Fragment {
     private ArrayAdapter resultAdapter;
     private ListView listView;
     private TextView averageDeviation;
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+
     private LogDao logDao;
     private WatchDao watchDao;
     private boolean displaySummary;

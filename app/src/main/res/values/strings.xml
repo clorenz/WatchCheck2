@@ -79,6 +79,10 @@
     <string name="whatsnew">What\'s New</string>
     <string name="changelog">
         <![CDATA[
+            <b>Version 2.4.1</b>
+            <p>
+            - Improved time and date format for all language
+            <p>
             <b>Version 2.4.0</b>
             <p>
             - Fixed occasionally crashes on startup
@@ -87,18 +91,6 @@
             - Translation fix
             - New positions: Watch winder, unspecified/misc
             - Fixed time format for non german-speaking countries
-            <p>
-            <b>Version 2.3.3</b>
-            <p>
-            - Fixed Nullpointer crash when no watch was selected
-            <p>
-            <b>Version 2.3.2</b>
-            <p>
-            - Fixed crash on landscape tablet startup<br/>
-            - Cleaned up menu bar on tablets<br/>
-            - ActionBar fixes<br/>
-            - Fixed bug, where wrong watch could be tracked<br/>
-            - (Hopefully) fixed bug with inactive "new period" checkbox
         ]]>
     </string>
     <string name="ok">OK</string>
@@ -145,6 +137,4 @@
     <string name="reminder_set_text"><![CDATA[You will be reminded daily at %s to check your watch.<br/>]]></string>
     <string name="reminder_unset">Cancelled reminder</string>
     <string name="reminder_unset_text">Cancelled your daily check-your-watch reminder.</string>
-    <string name="time_format">hh:mm:ss aa</string>
-    <string name="result_time_day_format">dd.MM.yyyy\nhh:mm:ss aa</string>
 </resources>

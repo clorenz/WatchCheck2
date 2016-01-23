@@ -7,8 +7,8 @@ android {
         applicationId 'de.uhrenbastler.watchcheck'
         minSdkVersion 14            // ICS
         targetSdkVersion 21
-        versionCode 31
-        versionName "2.4.0"
+        versionCode 32
+        versionName "2.4.1"
     }
     sourceSets {
         main {

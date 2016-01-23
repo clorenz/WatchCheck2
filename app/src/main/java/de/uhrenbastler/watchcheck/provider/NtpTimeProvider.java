@@ -3,6 +3,7 @@ package de.uhrenbastler.watchcheck.provider;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.text.format.DateUtils;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -14,6 +15,7 @@ import java.util.Date;
 import de.uhrenbastler.watchcheck.provider.NtpMessage;
 
 import de.uhrenbastler.watchcheck.tools.Logger;
+import de.uhrenbastler.watchcheck.utils.LocalizedTimeUtil;
 
 /**
  * Created by clorenz on 09.01.15.
@@ -25,7 +27,7 @@ public class NtpTimeProvider implements ITimeProvider{
     final ConnectivityManager cm;
     final int reconnectCounter;
     final int validCounter;
-    private SimpleDateFormat sdf;
+    private Context context;
 
     int reconnectAttempt=0;
     int validCount=0;
@@ -36,16 +38,11 @@ public class NtpTimeProvider implements ITimeProvider{
      * @param reconnectCounter - every how many-th call of getTime() triggers an NTP reconnect attempt
      * @param validCounter - every how many-th call of getTime() invalidates the NTP data and forces retrieval of the next one
      */
-    public NtpTimeProvider(ConnectivityManager cm, int reconnectCounter, int validCounter) {
+    public NtpTimeProvider(ConnectivityManager cm, int reconnectCounter, int validCounter, Context context) {
         this.cm = cm;
         this.reconnectCounter = reconnectCounter;
         this.validCounter = validCounter;
-
-    }
-
-    @Override
-    public void setDateFormat(SimpleDateFormat sdf) {
-        this.sdf = sdf;
+        this.context = context;
     }
 
     @Override
@@ -75,7 +72,12 @@ public class NtpTimeProvider implements ITimeProvider{
             offset=null;
             reconnectAttempt=0;
         }
-        return valid?sdf.format(timestamp):"--:--:--";
+
+        if ( valid ) {
+            return LocalizedTimeUtil.getTime(context, timestamp);
+        } else {
+            return "--:--:--";
+        }
     }
 
     @Override

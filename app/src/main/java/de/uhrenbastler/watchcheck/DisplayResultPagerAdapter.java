@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.format.DateUtils;
 import android.text.style.StyleSpan;
 import android.text.style.TextAppearanceSpan;
 
@@ -57,28 +58,11 @@ public class DisplayResultPagerAdapter extends FragmentPagerAdapter {
         // Returns the page title for the top indicator
         @Override
         public CharSequence getPageTitle(int position) {
-            String start = ResultManager.getPeriodStartDate(context, watchId, periods.get(position));
-            String end = ResultManager.getPeriodEndDate(context, watchId, periods.get(position));
+            long startMillis = ResultManager.getPeriodStartMillis(context, watchId, periods.get(position));
+            long endMillis = ResultManager.getPeriodEndMillis(context, watchId, periods.get(position));
 
-            String titleString;
-            if ( start.equals(end)) {
-                titleString = start;
-            } else {
-                String[] startParts = start.split("\\.");
-                String[] endParts = end.split("\\.");
+            String titleString = DateUtils.formatDateRange(context, startMillis, endMillis, DateUtils.FORMAT_SHOW_DATE|DateUtils.FORMAT_ABBREV_MONTH);
 
-                if (endParts[2].equals(startParts[2])) {
-                    // Same year. Omit this from start!
-                    if (endParts[1].equals(startParts[1])) {
-                        // Even the same month! Omit this from start, too
-                        start = startParts[0] + ".";
-                    } else {
-                        start = startParts[0] + "." + startParts[1] + ".";
-                    }
-                }
-
-                titleString = start + " - " + end;
-            }
             SpannableStringBuilder sb = new SpannableStringBuilder(titleString);
             TextAppearanceSpan headerSpan = new TextAppearanceSpan(context, R.style.TextAppearance_AppCompat_Small_Inverse);
             sb.setSpan(headerSpan,0,titleString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);

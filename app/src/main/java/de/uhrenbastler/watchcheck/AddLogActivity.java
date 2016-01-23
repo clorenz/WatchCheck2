@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 import de.uhrenbastler.watchcheck.tools.Logger;
+import de.uhrenbastler.watchcheck.utils.LocalizedTimeUtil;
 import watchcheck.db.Log;
 import watchcheck.db.Watch;
 
@@ -28,7 +29,6 @@ import watchcheck.db.Watch;
  * Created by clorenz on 13.01.15.
  */
 public class AddLogActivity extends WatchCheckActionBarActivity {
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
     private static final String[] POSITIONARR = {
             Deviations.WORN.nameForLog,
             Deviations.DU.nameForLog,
@@ -131,7 +131,7 @@ public class AddLogActivity extends WatchCheckActionBarActivity {
                 public void onClick(View v) {
                     final Dialog deleteLogAlertDialog = new Dialog(AddLogActivity.this,
                             getString(R.string.delete_this_log),String.format(getString(R.string.deleteLogQuestion),
-                            sdf.format(editLog.getReferenceTime())));
+                            LocalizedTimeUtil.getDateAndTime(getApplicationContext(),editLog.getReferenceTime())));
                             deleteLogAlertDialog.setCancelable(true);
                             deleteLogAlertDialog.addCancelButton(getString(R.string.no));
                             deleteLogAlertDialog.setOnAcceptButtonClickListener(new View.OnClickListener() {
@@ -140,7 +140,8 @@ public class AddLogActivity extends WatchCheckActionBarActivity {
                                 logDao.delete(editLog);
                                 finish();
                                 Toast.makeText(getApplicationContext(), String.format(getString(R.string.deletedLog),
-                                sdf.format(editLog.getReferenceTime())), Toast.LENGTH_SHORT).show();
+                                        LocalizedTimeUtil.getDateAndTime(getApplicationContext(),editLog.getReferenceTime())),
+                                        Toast.LENGTH_SHORT).show();
 
                         }
                     });

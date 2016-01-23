@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.text.format.DateFormat;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -114,9 +115,7 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
 
         // Set timepicker to next minute PLUS last known deviation
         Locale current = getResources().getConfiguration().locale;
-        if ( current.getLanguage().equalsIgnoreCase("de")) {
-            timePicker.setIs24HourView(true);
-        }
+        timePicker.setIs24HourView(DateFormat.is24HourFormat(getApplicationContext()));
         timePicker.setKeepScreenOn(true);
 
         TextView tvLastDeviation= (TextView) findViewById(R.id.lastdeviation);
@@ -162,11 +161,9 @@ public class CheckWatchActivity extends WatchCheckActionBarActivity {
         Logger.debug("CheckWatchAvtivity: onResume. CurrentWatch="+(currentWatch!=null?currentWatch.getId():"NULL"));
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        ntpTimeProvider = new NtpTimeProvider(cm,50,6000);            // TODO: The last one shall be 6000 or so  (10 per second => 10 minutes)
-        ntpTimeProvider.setDateFormat(new SimpleDateFormat(getResources().getString(R.string.time_format)));
+        ntpTimeProvider = new NtpTimeProvider(cm,50,6000,getApplicationContext());            // TODO: The last one shall be 6000 or so  (10 per second => 10 minutes)
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        gpsTimeProvider = new GpsTimeProvider(lm);
-        gpsTimeProvider.setDateFormat(new SimpleDateFormat(getResources().getString(R.string.time_format)));
+        gpsTimeProvider = new GpsTimeProvider(lm,getApplicationContext());
 
         referenceTimeUpdater = new ReferenceTimeUpdater(new ITimeProvider[]{gpsTimeProvider,ntpTimeProvider},
                 new Integer[]{R.id.gpstime,R.id.ntptime},
