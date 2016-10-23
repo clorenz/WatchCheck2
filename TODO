@@ -3,12 +3,18 @@ Bugs
  - Beim Wechsel auf Promaster wird nicht zur letzten Meßperiode gesprungen
  - Auf dem "Summary"-Screen sollte der Plus-Button gar nicht sichtbar sein!
  - Auf dem normalen Screen sollte der Plus-Button nicht immer das unterste Ergebnis verdecken, wenn nicht nach oben gescrollt werden kann
+ - Typo "misc / unspeficied" bei Positionen
+ - Bei Position "misc" wird keine Temperatur gezeigt (wäre aber sinnvoll, beispielweise für "am Arm" oder für Großuhren)
 
 Features:
+  - Für Quarzuhren: sec/month bzw. sec/year
   - Android 6.0 Rechtemanagement
   - Schön wäre, wenn die Statistikfunktion zu einer Uhr wahlweise (!) auch über mehrere Messperioden abrufbar wäre.
   - Export der Daten pro Uhr in ein von Spreadsheets weiter zu verarbeitendes Format ( http://www.codeproject.com/Articles/31516/Export-DataSet-to-Multiple-Excel-Sheets )
   - FAB überdeckt letzte zwei Ergebnisse
+  - Sortierung der Uhren in der Auflistung
+  - im "Ratings-Screen" muss auch die Seriennummer (evtl. statt "WatchCheck") angezeigt werden
+  - Erweiterung des Temperatur-Dropdowns in ein Freitextfeld
 
 Feature 3.0
 - Sync with Google Drive
@@ -21,3 +27,4 @@ Design enhancements
 Other Enhancements
 - Default temperature is -273. Is this really useful??
 - Back link from "add log" shall go to "measure watch" not to result list (non-trivial)
+- "Lastly, I would love to see some graphics - particularly showing daily rate against reference date/time.  It would provide valuable information on performance over the duration of the watch/clock. Another useful graph might be daily rate against temperature - for those who want to check temperature compensation."
