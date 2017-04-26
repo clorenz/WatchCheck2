@@ -23,6 +23,7 @@ Feature 3.0
 Design enhancements
 - transitions
 - Horizontal design
+- Sort logs list backwards
 
 Other Enhancements
 - Default temperature is -273. Is this really useful??
