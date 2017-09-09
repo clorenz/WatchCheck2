@@ -1,6 +1,8 @@
 Bugs
 
  - Beim Wechsel auf Promaster wird nicht zur letzten Meßperiode gesprungen
+ - Generell wird nach einem Wechsel auf irgendeine zufällige Meßperiode
+   anstatt auf die letzte gesprungen.
  - Auf dem "Summary"-Screen sollte der Plus-Button gar nicht sichtbar sein!
  - Auf dem normalen Screen sollte der Plus-Button nicht immer das unterste Ergebnis verdecken, wenn nicht nach oben gescrollt werden kann
  - Typo "misc / unspeficied" bei Positionen
