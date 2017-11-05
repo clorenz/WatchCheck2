@@ -7,6 +7,7 @@ Bugs
  - Auf dem normalen Screen sollte der Plus-Button nicht immer das unterste Ergebnis verdecken, wenn nicht nach oben gescrollt werden kann
  - Typo "misc / unspeficied" bei Positionen
  - Bei Position "misc" wird keine Temperatur gezeigt (wäre aber sinnvoll, beispielweise für "am Arm" oder für Großuhren)
+ - "When there is a comment alongside a measurement, on the summary screen, a long press to edit that measurement does not show the original comment text for editing; only a blank field."
 
 Features:
   - Für Quarzuhren: sec/month bzw. sec/year
