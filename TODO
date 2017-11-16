@@ -8,6 +8,7 @@ Bugs
  - Typo "misc / unspeficied" bei Positionen
  - Bei Position "misc" wird keine Temperatur gezeigt (wäre aber sinnvoll, beispielweise für "am Arm" oder für Großuhren)
  - "When there is a comment alongside a measurement, on the summary screen, a long press to edit that measurement does not show the original comment text for editing; only a blank field."
+ - Drücken auf die Lautstärke-Buttons sollte auch zum Messen verwendet werden können (parallel zum Touchscreen)
 
 Features:
   - Für Quarzuhren: sec/month bzw. sec/year
