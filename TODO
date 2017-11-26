@@ -10,6 +10,8 @@ Bugs
  - "When there is a comment alongside a measurement, on the summary screen, a long press to edit that measurement does not show the original comment text for editing; only a blank field."
  - Drücken auf die Lautstärke-Buttons sollte auch zum Messen verwendet werden können (parallel zum Touchscreen)
  - Export: Probleme, wenn in den Remarks ein Pipe-Zeichen ist
+ - Import funktioniert nicht aus dem root-Verzeichnis
+ - Nicht angegebene Temperatur wird als -273° abgespeichert/eingelesen
 
 Features:
   - Für Quarzuhren: sec/month bzw. sec/year
@@ -23,7 +25,7 @@ Features:
   - Die Default-Position bei Import/Export sollte "unknown" oder ähnliches sein
 
 Feature 3.0
-- Sync with Google Drive
+- Sync with Google Drive (https://developers.google.com/drive/android/appfolder)
 - Graphical output
 
 Design enhancements
