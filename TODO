@@ -14,6 +14,12 @@ Bugs
  - Nicht angegebene Temperatur wird als -273° abgespeichert/eingelesen
  - "When editing a log entry, if that log entry has anything in the comments field, that data is not preserved upon opening to edit."
 - When I setup 00:00:00 to make measure it think that this is current day begin. But this is next... very wrong value calculated.
+- In ein Messergebniss kann ein Text 
+	eingetragen werden, dieser Text wird 
+	beim Erneuten aufrufen dieser 
+	Messung nicht mehr angezeigt.
+	Eine Änderung des Textes ist also nur
+	durch Neuerstellen möglich.
 
 Features:
   - Für Quarzuhren: sec/month bzw. sec/year
